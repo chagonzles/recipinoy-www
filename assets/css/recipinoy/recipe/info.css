@@ -1,0 +1,19 @@
+.cover-photo {
+  width: 100%;
+  background: #D3D3D3;
+}
+
+.desc {
+  text-align: justify;
+  margin-right: 15px;
+}
+
+.info {
+  text-align: center;
+  width: 100%;
+}
+
+
+.button-text {
+	font-size: 14px;
+}

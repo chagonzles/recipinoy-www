@@ -1,0 +1,109 @@
+
+
+<ons-page>
+  <ons-toolbar class="toolbar" modifier="android" inline>
+      <div class="left">
+          <ons-toolbar-button 
+                ng-click="userMenu.toggleMenu()">
+                <ons-icon icon="fa-bars" class="menu-icon"></ons-icon>
+          </ons-toolbar-button>
+      </div>
+      <div class="center">
+          Recipinoy
+      </div>
+      <div class="right">
+          <ons-toolbar-button ng-click="search()">
+              <ons-icon icon="ion-search"></ons-icon>
+          </ons-toolbar-button>
+      </div>
+  </ons-toolbar>
+ 
+<ons-scroller>
+ <div class="wrapper">
+  <div class="container">
+          <h4>Most Viewed</h4>
+          <div ng-show="isLoadingMostViewed">
+              <ons-icon icon="ion-load-c fa-spin" style="margin-left: 50%"></ons-icon>
+          </div>
+          <div ng-hide="isLoadingMostViewed">
+              
+              <ul class="rig columns-4">
+                <li ng-repeat="recipe in most_viewed | limitTo: 4" ng-click="goToRecipeView(recipe.recipe_id)" ng-hide="isLoading">
+                  <img ng-src="{{ recipe.recipe_img }}" class="thumbnail"/>
+                  <p class="recipe-name">{{ recipe.recipe_name }}</p>
+                  <div class="rating" ng-init="(arrRating = []).length = (recipe.ave_rating | number: 0);(noRating = []).length = 5 - arrRating.length">
+                      <ons-icon icon="ion-android-star" ng-repeat="i in arrRating track by $index" size="18px" class="rating-star"></ons-icon>
+                      <span style="margin-left: -4px"></span>
+                      <ons-icon icon="ion-android-star" class="no-rating-star" size="18px" ng-repeat="i in noRating track by $index"></ons-icon>
+                  </div>  
+                  <div class="view">{{ recipe.no_of_view }} views</div>
+                  <span class="author-name">by {{ recipe.username }}</span>
+                  
+                </li>
+              </ul>
+              <ons-button modifier="cta" ng-click="moreMostViewed()"> More</ons-button>
+          </div>
+           <h4>Recently Added</h4>
+          <div ng-show="isLoadingRecent">
+              <ons-icon icon="ion-load-c fa-spin" style="margin-left: 50%"></ons-icon>
+          </div>
+          <div ng-hide="isLoadingRecent">
+             
+              <ul class="rig columns-4"> 
+                <li ng-repeat="recipe in recipes | limitTo: 4" ng-click="goToRecipeView(recipe.recipe_id)">
+                  <img ng-src="{{ recipe.recipe_img }}" class="thumbnail"/>
+                  <p class="recipe-name">{{ recipe.recipe_name }}</p>
+                  <div class="rating" ng-init="(arrRating = []).length = (recipe.ave_rating | number: 0);(noRating = []).length = 5 - arrRating.length">
+                      <ons-icon icon="ion-android-star" ng-repeat="i in arrRating track by $index" size="18px" class="rating-star"></ons-icon>
+                      <span style="margin-left: -4px"></span>
+                      <ons-icon icon="ion-android-star" class="no-rating-star" size="18px" ng-repeat="i in noRating track by $index"></ons-icon>
+                  </div> 
+                  <div class="view">{{ recipe.no_of_view }} views</div>
+                  <span class="author-name">by {{ recipe.username }}</span>
+                  
+                </li>
+              </ul>
+              <ons-button modifier="cta" ng-click="moreRecentlyAdded()"> More</ons-button>
+          </div>
+          
+          <h4>Top Rated</h4>
+          <div ng-show="isLoadingTopRated">
+              <ons-icon icon="ion-load-c fa-spin" style="margin-left: 50%"></ons-icon>
+          </div>
+          <div ng-hide="isLoadingTopRated">
+              
+              <ul class="rig columns-4"> 
+                <li ng-repeat="recipe in top_rated| limitTo: 4" ng-click="goToRecipeView(recipe.recipe_id)">
+                  <img ng-src="{{ recipe.recipe_img }}" class="thumbnail"/>
+                  <p class="recipe-name">{{ recipe.recipe_name }}</p>
+                  <div class="rating" ng-init="(arrRating = []).length = (recipe.ave_rating | number: 0);(noRating = []).length = 5 - arrRating.length">
+                      <ons-icon icon="ion-android-star" ng-repeat="i in arrRating track by $index" size="18px" class="rating-star"></ons-icon>
+                      <span style="margin-left: -4px"></span>
+                      <ons-icon icon="ion-android-star" class="no-rating-star" size="18px" ng-repeat="i in noRating track by $index"></ons-icon>
+                  </div>  
+                  <div class="view">{{ recipe.no_of_view }} views</div>
+                  <span class="author-name">by {{ recipe.username }}</span>
+                  
+                </li>
+              </ul>
+              <ons-button modifier="cta" ng-click="moreTopRated()"> More</ons-button>
+          </div>
+
+
+
+          
+    
+  </div>
+  <!--/.container-->
+</div>
+
+ </ons-scroller>
+<!--/.wrapper-->
+
+<nav mfb-menu position="br" effect="zoomin"
+     active-icon="ion-plus-round" resting-icon="ion-plus-round"
+     toggling-method="click" ng-click="goToAddRecipe()">
+</nav>
+
+<!--/.wrapper-->
+</ons-page>

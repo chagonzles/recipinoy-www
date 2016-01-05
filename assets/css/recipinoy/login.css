@@ -1,0 +1,56 @@
+.login-form {
+  text-align: center;
+  width: 80%;
+  margin: 60px auto 0;
+}
+
+.login input {
+  display: block;
+  width: 100%;
+  margin: 0 auto;
+  outline: none;
+  padding-top: 24px;
+  padding-bottom: 24px;
+  color: #404040;
+  font-weight: bold;
+}
+
+
+.login-button {
+  width: 100%;
+  margin: 0 auto;
+  background: #388e3c;
+}
+
+.forgot-password {
+  display: block;
+  margin: 8px auto 0 auto;
+  font-size: 14px;
+}
+
+
+.text-input--underbar {
+  border-bottom: 2px solid #23AA64;
+}
+.text-input--underbar:disabled {
+  border-bottom: 2px solid #66F839;
+}
+.text-input--underbar:focus {
+  border-bottom: 2px solid #424242;
+}
+
+.text-input--underbar::-webkit-input-placeholder {
+  color: #0A9A55;
+}
+
+.text-input--underbar:-moz-placeholder {
+  color: #0A9A55;
+};
+
+.text-input--underbar::-moz-placeholder {
+  color: #0A9A55;
+};
+
+.text-input--underbar:-ms-input-placeholder {
+  color: #0A9A55;
+};

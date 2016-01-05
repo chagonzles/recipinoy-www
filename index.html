@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="recipinoy">
+  <head>
+    <meta charset="utf-8">
+    <!-- onsen css -->
+    <link rel="stylesheet" href="assets/css/onsenui.css"/>
+    <link rel="stylesheet" href="assets/css/onsen-css-components.min.css"/>
+    <!-- dependencies -->
+    <link rel="stylesheet" href="assets/css/mfb.css"/>
+    <link rel="stylesheet" href="assets/css/angular-timeago.css">
+    <!-- recipinoy css files -->
+    <link rel="stylesheet" href="assets/css/recipinoy/app.css">
+    <link rel="stylesheet" href="assets/css/recipinoy/login.css">
+    <link rel="stylesheet" href="assets/css/recipinoy/guest/home.css">
+    <link rel="stylesheet" href="assets/css/recipinoy/recipe/main.css">
+    <link rel="stylesheet" href="assets/css/recipinoy/recipe/info.css">
+    <link rel="stylesheet" href="assets/css/recipinoy/recipe/procedures.css">
+    <link rel="stylesheet" href="assets/css/recipinoy/search.css">
+    <link rel="stylesheet" href="assets/css/recipinoy/admin/admin_list.css">
+    <link rel="stylesheet" href="assets/css/recipinoy/admin/notifications.css">
+    <link rel="stylesheet" href="assets/css/recipinoy/admin/options.css">
+    <link rel="stylesheet" href="assets/css/recipinoy/user/sign_up.css">
+    
+    
+  </head>
+  <body ng-controller="AppController" style="font-family: Myfont">
+    <!-- Admin  -->
+    <ons-navigator var="nav" page="app/views/admin/main.html" ng-if="loggedIn && adminLoggedIn">
+    </ons-navigator>
+
+     <!-- User  -->
+    <ons-navigator var="nav" page="app/views/user/home.html" ng-if="loggedIn && userLoggedIn">
+    </ons-navigator>
+
+    <!-- Guest -->
+    <ons-navigator var="nav" page="app/views/login.html" ng-if="!loggedIn">
+    </ons-navigator>
+    
+
+    <!-- dependencies -->
+    <script src="assets/js/angular.min.js"></script>
+    <script src="assets/js/angular-filter.min.js"></script>
+    <script src="assets/js/angular-resource.min.js"></script>
+    <script src="assets/js/onsenui.min.js"></script>
+    <script src="assets/js/ng-cordova.min.js"></script>
+    <script src="cordova.js"></script>
+    <script src="assets/js/mfb-directive.js"></script>
+    <script src="assets/js/angular-moment/moment.min.js"></script>
+    <script src="assets/js/angular-moment/angular-moment.min.js"></script>
+  
+   
+
+    <!-- recipinoy js files --> 
+    <script src="app/recipinoy.js"></script>
+    
+    <!-- services -->
+    <script src="app/services/recipeService.js"></script>
+    <script src="app/services/recipinoyService.js"></script>
+    <script src="app/services/userService.js"></script>
+    <script src="app/services/adminService.js"></script>
+    
+    <!-- controllers -->
+    <script src="app/controllers/login.js"></script>
+    <script src="app/controllers/guest.js"></script>
+    <script src="app/controllers/recipe.js"></script>
+    <script src="app/controllers/admin.js"></script>
+    <script src="app/controllers/user.js"></script>
+   
+   
+  </body>
+</html>

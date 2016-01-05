@@ -1,0 +1,28 @@
+<ons-dialog cancelable style="padding: 5% 2%;" var="addCategoryDialog">
+	
+  <form ng-submit="uploadPicture(addCategory_name);">
+		<!-- <form ng-submit="addCategory(addCategory_name)"> -->
+		<h5 style="margin-top: -10px">Add Category</h5>
+		<img ng-src="{{ imgSrc }}" style="background: #D7D7D7" height="256px" width="256px" />
+    <br>
+ 		<ons-button ng-click="selectPicture()" modifier="large" style="position: relative; z-index: 2;margin-top: -50px;color: #777777;opacity: 0.5;background: transparent" ><ons-icon icon="ion-android-image"></ons-icon>  Select Picture</ons-button>
+
+
+		<ons-row style="margin-top: 10px">
+			<ons-col size="15%">
+				<ons-icon icon="ion-android-list" class="icon-dialog"></ons-icon>
+			</ons-col>
+			<ons-col size="85%">
+				<input type="text" class="text-input--underbar" ng-model="addCategory_name" placeholder="Name">
+			</ons-col>
+		</ons-row>
+		
+
+
+		<ons-row style="margin-top: 20px">
+			<ons-col>
+				<button class="button button--large--cta" ng-disabled="addCategoryDisableInput(addCategory_name,imgSrc)">Ok</button>
+			</ons-col>
+		</ons-row>
+	</form>
+</ons-dialog>

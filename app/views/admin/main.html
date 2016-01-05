@@ -1,0 +1,52 @@
+<div ng-controller="adminCtrlr">
+  <ons-page ng-device-backbutton="exitApplication()">
+  <ons-toolbar>
+    <div class="left"></div>
+    <div class="center">
+      <span ng-show="title != 'Ingredients'">
+          {{ title }}
+      </span>
+      <span ng-hide="title != 'Ingredients'">
+          <ons-icon icon="ion-search"></ons-icon>
+          <input type="text" class="text-input--transparent search" placeholder="Search Ingredients" ng-model="query" value="" ng-change="isValidSearchInput(query)">
+      </span>
+      
+    </div>
+    <div class="right">
+      <ons-toolbar-button ng-click="showLogout()">
+                <ons-icon icon="ion-android-more-vertical" id="logout"></ons-icon>
+      </ons-toolbar-button>
+
+    </div>
+  </ons-toolbar>
+   
+  <ons-tabbar position="top" var="adminTabBar" modifier="top-border">
+      <ons-tab page="app/views/admin/notifications/list.html" active="true" ng-click="changeTitle('Notification')">
+        <ons-icon icon="ion-android-globe"></ons-icon>
+        <span class="notification" ng-show="notifications.length > 0">{{ notifications.length }}</span>
+      </ons-tab>
+      <ons-tab page="app/views/admin/ingredients/list.html" ng-click="changeTitle('Ingredients')">
+        <ons-icon icon="ion-ios-nutrition"></ons-icon>
+      </ons-tab>
+      <ons-tab page="app/views/admin/categories/list.html" ng-click="changeTitle('Categories');">
+        <ons-icon icon="ion-android-list"></ons-icon>
+      </ons-tab>
+      <ons-tab page="app/views/admin/admin/list.html" ng-click="changeTitle('Manage Admins')">
+        <ons-icon icon="ion-android-person-add"></ons-icon>
+      </ons-tab>
+  </ons-tabbar>
+
+
+<ons-modal var="logoutModal">  
+    <ons-icon icon="ion-load-c" spin="true"></ons-icon>  <br><br>  Logging Out
+</ons-modal>
+
+<ons-modal var="categoryModal">  
+    <ons-icon icon="ion-load-c" spin="true"></ons-icon>  <br><br> {{ uploadProgress }}% Adding your category
+</ons-modal>
+
+
+
+  </ons-page>
+</div>
+  

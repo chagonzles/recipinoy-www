@@ -1,0 +1,22 @@
+<ons-list ng-repeat="admin in admins">
+        <ons-list-item modifier="chevron" class="list-item-container">
+          <div class="list-item-left">
+            <img src="assets/img/1.jpg" class="avator">
+          </div>
+          <div class="list-item-right">
+            <div class="list-item-content">
+              <div class="name">{{ admin.fname + ' ' + admin.lname }}
+                <span class="lucent">@ {{ admin.username }}</span>
+              </div>
+
+              <span class="desc">
+                {{ admin.contact_no }}
+                <br>
+                {{ admin.email }}
+              </span>
+            </div>
+          </div>
+        </ons-list-item>      
+</ons-list>
+
+

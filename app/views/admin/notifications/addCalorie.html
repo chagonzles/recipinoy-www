@@ -1,0 +1,37 @@
+<ons-dialog cancelable style="padding: 5% 2%;" var="addCalorieDialog">
+<form ng-submit="addCalorie(addCal_cal)">
+		<h5 style="margin-top: -10px">Add Calorie</h5>
+		<ons-row>
+			<ons-col size="15%">
+				<ons-icon icon="ion-android-restaurant" class="icon-dialog"></ons-icon>
+			</ons-col>
+			<ons-col size="85%">
+				<span class="icon">{{ addCal_name }}</span>
+			</ons-col>
+		</ons-row>
+
+		<ons-row style="margin-top: 10px">
+			<ons-col size="15%">
+				<ons-icon icon="ion-android-list" class="icon-dialog"></ons-icon>
+			</ons-col>
+			<ons-col size="85%">
+				<span class="icon">{{ addCal_measurement }}</span>
+			</ons-col>
+		</ons-row>
+
+		<ons-row style="margin-top: 10px">
+			<ons-col size="15%">
+				<ons-icon icon="ion-calculator" class="icon-dialog"></ons-icon>
+			</ons-col>
+			<ons-col size="85%">
+				<input type="number" class="text-input--underbar" ng-model="addCal_cal" placeholder="Calorie">
+			</ons-col>
+		</ons-row>
+
+		<ons-row style="margin-top: 20px">
+			<ons-col>
+				<button ng-disabled="addCal_cal == undefined" class="button button--large--cta">Ok</button>
+			</ons-col>
+		</ons-row>
+</form>
+</ons-dialog>

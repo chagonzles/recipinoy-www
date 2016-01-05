@@ -1,0 +1,25 @@
+<div class="wrapper">
+  <div class="container">
+     
+       
+            <ul class="rig columns-4">
+              <li ng-repeat="category in categories" style="height: 225px">
+                <!-- ng-click="showUpdateCategoryDialog(category)" -->
+                  <img ng-src="{{ category.category_img }}" class="thumbnail"/>
+                 	
+                  <p class="recipe-name">{{ category.category_name }} </p>
+              </li>
+            </ul>
+        
+  </div>
+  <!--/.container-->
+</div>
+
+
+<nav mfb-menu position="br" effect="zoomin" label="Add New Category"
+     active-icon="ion-plus-round" resting-icon="ion-plus-round"
+     toggling-method="click" ng-click="showAddCategoryDialog()">
+</nav>
+
+
+

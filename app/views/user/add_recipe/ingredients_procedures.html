@@ -1,0 +1,190 @@
+<ons-page ng-controller="userCtrlr">
+<ons-scroller>
+	 <ons-toolbar>
+                <div class="left">
+                      <ons-toolbar-button>
+                              <ons-icon icon="ion-android-arrow-back" ng-click="back()"></ons-icon>
+                      </ons-toolbar-button>
+                </div>
+                <div class="center">
+                    Add New Recipe
+                </div>
+</ons-toolbar>
+<ons-list>
+  <ons-list-header>Ingredients</ons-list-header>
+  <br>
+	<form name="frmAddIngrdntProc" ng-submit="addRcpIngredient(addCal_cal)" ng-init="ingQty = ''">
+	
+			<ons-row>
+				<ons-col size="10%">
+				</ons-col>
+				<ons-col>
+					<input type="number" class="text-input form-input" style="width: 60%;" ng-model="ingQty" placeholder="Qty" id="qty">
+					<select class="text-input form-input" style="width: 36%;" ng-model="ingFraction">
+						<option value="">Fraction</option>
+						<option value="--">--</option>
+						<option value="1/2">1/2</option>
+						<option value="1/4">1/4</option>
+						<option value="1/8">1/8</option>
+						<option value="1/3">1/3</option>
+						<option value="2/3">2/3</option>
+						<option value="3/4">3/4</option>
+		             </select>
+				</ons-col>
+				
+				
+				<ons-col size="5%">
+				</ons-col>
+			</ons-row>
+
+		<ons-row style="margin-top:10px">
+			
+				<ons-col size="10%">
+				</ons-col>
+				<ons-col>
+					<input type="text" class="text-input form-input" style="width: 55%" ng-model="ingName" placeholder="Name" ng-change="checkIngredients();suggestionsClicked = false;existingIngredientsinList()">
+					<select class="text-input form-input" style="width: 30%;" ng-model="ingUnit">
+						<option value="">Unit</option>
+						<option value="cup(s)">cup(s)</option>
+						<option value="tbsp">tbsp</option>
+						<option value="tsp">tsp</option>
+						<option value="pinch">pinch</option>
+						<option value="to taste">to taste</option>
+						<option value="pc(s)">pc(s)</option>
+						<option value="cloves">cloves</option>
+						<option value="bundle">bundle</option>
+						<option value="pound(s)">pound(s)</option>
+						<option value="kilo(s)">kilo(s)</option>
+						<option value="grams">grams</option>
+						<option value="liter(s)">liter(s)</option>
+						<option value="ml">ml</option>
+		         	</select>
+					<!-- <ons-button ng-click="addToRcpIngredient(ingQty,ingFraction,ingName,ingUnit)" style="margin-top:0px;height: 30px" ng-disabled="isValidIngredientInput()">
+							<ons-icon icon="ion-plus" style="font-size: 14px;margin:0"></ons-icon>
+					</ons-button> -->
+
+					<ons-button ng-disabled="disableButton(ingQty,ingFraction,ingName,ingUnit)" ng-click="addToRcpIngredient(ingQty,ingFraction,ingName,ingUnit)">
+						<ons-icon icon="ion-plus" style="font-size: 14px"></ons-icon>
+					</ons-button>
+				</ons-col>
+				<ons-col size="5%">
+					
+				</ons-col>
+
+				
+		</ons-row>
+		
+		<ons-row>
+			<ons-col size="10%">
+			</ons-col>
+			<ons-col>
+					<ons-col>
+						<ons-list>
+							<ons-list-item ng-show="showIngListError">
+										<span class="form-error">
+											{{ ingListError }}
+										</span>
+							</ons-list-item>
+						</ons-list>
+					</ons-col>
+			</ons-col>
+			<ons-col size="5%">
+			</ons-col>
+		</ons-row>
+		<ons-row ng-show="ingName.length > 0">
+			<ons-col size="10%">
+			</ons-col>
+				
+			<ons-col>
+				<ons-list ng-hide="suggestionsClicked">
+					<ons-list-header>Suggestions</ons-list-header>
+						<ons-list-item ng-repeat="ingredient in ingredients | filterBy:['ingredient_name']: ingName" ng-click="pickIngredient(ingredient)" ng-hide="loadingIngredients">
+							{{ ingredient.ingredient_name }}
+						</ons-list-item>
+						<ons-list-item ng-show="(ingredients | filterBy: ['ingredient_name']: ingName).length < 1">
+							<span class="form-error">
+								No suggestions. Just add your ingredient.
+							</span>
+						</ons-list-item>
+						<ons-list-item ng-show="loadingIngredients">
+							<div>
+				              <ons-icon icon="ion-load-c fa-spin"></ons-icon>
+				          	</div>
+						</ons-list-item>
+						
+				</ons-list>
+			</ons-col>
+			<ons-col size="6%">
+			</ons-col>
+		</ons-row>
+		
+		<ons-row style="margin-top: 10px">
+			<ons-col size="10%">
+			</ons-col>
+			<ons-col>
+				<ons-list-header>Current Ingredients</ons-list-header>
+				<ons-list style="background: #FFFFFF;font-size: 11px">
+					<ons-list-item ng-repeat="ingredient in rcpIngredient">
+					<ons-icon icon="ion-close" style="color: #E91818;opacity: 0.7;margin-top: 5px" ng-click="confirmRemoveIngredient(ingredient)"></ons-icon>
+						{{ ingredient.qty + '     ' + ingredient.qty_fraction + '     ' + ingredient.measurement + '     ' + ingredient.name }} 
+					
+					</ons-list-item>
+
+					<ons-list-item ng-show="rcpIngredient.length < 1">
+							<span class="form-error">
+								Please add an ingredient in your recipe
+							</span>
+					</ons-list-item>
+				</ons-list>
+			</ons-col>
+			<ons-col size="6%">
+			</ons-col>
+		</ons-row>
+	<br>
+	<ons-list-header>Procedure</ons-list-header>
+	<br>
+      <!-- PROCEDURE -->
+     <ons-row class="sign_up_row">
+         
+           <ons-col size="10%">
+          </ons-col>
+            <ons-col size="80%">
+                  <textarea class="textarea full" rows="20" name="procedure" ng-model="procedure" placeholder="procedure" required></textarea>
+                  <span ng-show="frmAddIngrdntProc.procedure.$invalid" class="form-error">
+                          Procedure is required
+                  </span>
+            </ons-col>
+            <ons-col size="2%">
+            </ons-col>
+            <ons-col size="5%">
+                   <span ng-show="frmAddIngrdntProc.procedure.$valid" class="icon-form">
+                      <ons-icon icon="ion-checkmark-round"></ons-icon>
+                    </span>
+                    <span ng-show="frmAddIngrdntProc.procedure.$invalid && frmAddIngrdntProc.procedure.$dirty" class="icon-form-error">
+                        <ons-icon icon="ion-close"></ons-icon>
+                    </span>
+            </ons-col>
+            <ons-col size="3%">
+            </ons-col>
+        </ons-row>
+
+        	<ons-row style="margin-top: 20px">
+			<ons-col>
+					<ons-button modifier="large--cta" ng-disabled="frmAddIngrdntProc.procedure.$invalid || rcpIngredient.length < 1" ng-click="uploadRecipeImg()">Share Recipe</ons-button>
+			</ons-col>
+		
+		</ons-row>
+
+	</form>
+	</ons-list>
+</ons-scroller>
+
+<ons-modal var="addRecipeModal">  
+    <ons-icon icon="ion-load-c" spin="true"></ons-icon>
+	<span ng-show="uploadRecipeImgProgress < 100"> 
+	{{ uploadRecipeImgProgress }}% Uploading your Recipe Image
+	</span>
+     <br><br> Please wait. We're adding up your recipe.
+</ons-modal>
+
+</ons-page>

@@ -1,0 +1,165 @@
+<ons-scroller>
+<img ng-src="{{ recipe.recipe_img }}" alt="" class="cover-photo">
+<ons-list style="font-size: 12px" class="info">  
+
+          <ons-list-item class="list-item-container">
+               
+              <p style="font-weight: bold;color: #525852;font-size: 1.25em;margin-right: 10px;margin-top: -10px">
+                {{ recipe.recipe_name }}
+              </p>
+                
+                <div class="rpauthor" style="color: #3C3C3C;font-size: 11px;margin-top: -10px">
+                 posted by {{ recipe.username }}
+                </div>
+                <div style="font-size: 1.75em">
+                    {{ recipe.ave_rating }}
+                     <span style=""> 
+                    
+                     
+                        <ons-icon icon="ion-android-star" class="rating-star" ng-repeat="i in starRating track by $index" size="18px"></ons-icon>
+                        <span style="margin-left: -4px"></span>
+                        <ons-icon icon="ion-android-star" class="no-rating-star" size="18px" ng-repeat="i in noStarRating track by $index"></ons-icon>
+                      </span>  
+               
+                </div>
+
+               
+                 <div>
+                   <ons-icon icon="ion-android-list" style="vertical-align: 0%" class="filter-icon"></ons-icon>
+                    {{ recipe.category_name }}
+
+               
+                 </div>
+                 <div>
+                   <ons-icon icon="ion-location" style="color: #EC0C0C"></ons-icon>
+                {{ recipe.region }}
+                  <ons-icon icon="ion-android-map" style="color: #EC0C0C"></ons-icon>
+                  {{ recipe.province }}
+                 </div>
+  
+                <div class="location">
+                  
+               <div style="font-size: 11px">
+                  <ons-icon icon="ion-android-time"></ons-icon>
+                    posted <span am-time-ago="recipe.date_posted"></span>
+                  <ons-icon icon="ion-eye"></ons-icon>
+                    {{ recipe.no_of_view }} views
+               </div>
+                 
+                  
+                </div>
+                <p style="white-space: pre-line;text-align: justify;margin-right: 10px">
+                  {{ recipe.recipe_desc }}
+                </p>
+               <div class="desc">
+                  <div style="float: left">
+                    <ons-icon icon="ion-person-stalker" class="filter-icon"></ons-icon>
+                    <b> {{ recipe.no_of_serving }} Servings</b>
+                  </div>
+                  <div style="float: right">
+                      <ons-icon icon="ion-calculator" class="filter-icon"></ons-icon> 
+                      <b>{{ getTotalCalorie(ingredients,recipe.no_of_serving) }}</b>
+                  </div>
+
+               </div>
+              
+
+
+              <ons-button modifier="large" class="button-text" ng-click="showRateDialog(recipe.recipe_id,recipe.name,recipeReviews[0].review_content,recipeReviews[0].rating)"
+              ng-hide="userAlreadyReviewed || (loggedUsername == undefined || loggedUsername == null)"
+              ><ons-icon icon="ion-star"></ons-icon> 
+              
+              <span>Review</span> Recipe</ons-button>
+              <!-- (loggedUsername == null || loggedUsername == undefined || loggedUsername == '') --> 
+
+              <br><br>
+              <!-- <p>You already have reviewed this recipe. You can just change your review</p> -->
+              <!-- <ons-button class="button-text" modifier="cta" ng-click="addToFavorites(recipe.recipe_id)"><ons-icon icon="ion-android-favorite"></ons-icon> Add To Favorites</ons-button> -->
+           		
+        
+        </ons-list-item>
+</ons-list>
+
+<div style="font-size: 10px !important" ng-show="recipeReviews.length > 0 && loggedUsername">
+    
+  <h4 style="text-align: center;color: #636556; font-size: 13px">User Reviews</h4>
+      <ons-list>
+       <div ng-repeat="review in recipeReviews">
+          <ons-list-item class="list-item-container" ng-click="goToUserReplies(review)">
+          <ons-row>
+          <ons-col width="80px">
+          <img src="assets/img/user.png" alt="" style="width: 50px;height: 50px" ng-click="goToUserProfile(review.rvwpostedby)">
+          </ons-col>
+              <ons-col>
+
+                <div class="rpuser">
+                 <b>{{ review.fname + ' ' + review.lname }}</b>
+                 <span style="opacity: 0.5;font-size: 0.90em">{{ '@' + review.username }}</span>
+
+
+                <ons-icon icon="ion-android-more-vertical" style="float: right;margin-right: 5px" ng-if="review.username == loggedUsername" id="editDeleteReview" ng-click="showEditDeleteReview(review.rating,review.review_content,review.review_id)"></ons-icon>
+
+                </div>
+                
+
+                  
+                  <span style="font-size: 10px;color: #A7A7A7">
+                    <ons-icon icon="ion-android-time"></ons-icon>
+                    <div ng-if="review.date_edited == '0000-00-00 00:00:00'">
+                      posted <span am-time-ago="review.date_reviewed"></span>
+                    </div>
+                    <div ng-if="review.date_edited != '0000-00-00 00:00:00'">
+                      updated <span am-time-ago="review.date_edited"></span>
+                    </div>
+                    
+                  </span>
+
+                  <div ng-init="(userRating = []).length = (review.rating | number: 0);(noUserRating = []).length = 5 - userRating.length" style="display: block">
+
+                      <ons-icon icon="ion-android-star" ng-repeat="i in userRating track by $index" size="18px" class="rating-star"></ons-icon>
+                      <span style="margin-left: -4px"></span>
+                      <ons-icon icon="ion-android-star" class="no-rating-star" size="18px" ng-repeat="i in noUserRating track by $index"></ons-icon>
+                  </div> 
+                  <!-- <div style="font-size: 0.95em" ng-init="">
+                    {{ review.rating }}
+                     <span style=""> 
+                     
+                        <ons-icon icon="ion-android-star" class="rating-star" ng-repeat="i in starRating track by $index" size="18px"></ons-icon>
+                        <span style="margin-left: -4px"></span>
+                        <ons-icon icon="ion-android-star" class="no-rating-star" size="18px" ng-repeat="i in noStarRating track by $index"></ons-icon>
+                      </span>  
+               
+                  </div> -->
+                  
+                 
+
+                  <div style="font-size: 0.90em;">
+                  {{ review.review_content }} 
+                  </div>
+
+                  <div style="font-size: 0.88em;opacity: 0.90;float: right;margin-right: 10px">
+                    <ons-icon icon="ion-chatboxes"></ons-icon> <span></span> reply
+                  </div>
+            </div>
+                
+              </ons-col>
+          </ons-row>
+        </ons-list-item>
+       </div>
+      </ons-list>
+
+      
+</div>
+
+
+
+<!--  <ons-bottom-toolbar style="background: #FFFFFF"> -->
+<!--  	<input type="text" class="text-input--underbar" ng-model="userreview"
+	  placeholder="Tell something about the recipe" value="" style="margin-left: 10px;display:inline;width: 85%;" > -->
+ <!--    <textarea class="textarea--transparent" ng-model="userreview" placeholder="Write a review for this recipe" style="width: 85%;float:left">
+    </textarea> -->
+	 <!--  <ons-icon icon="ion-android-send" style="display: inline;float: right;margin-top: 10px;margin-right: 10px;color: black" ng-click="postReview(userreview,recipe[0].rpno)"></ons-icon> -->
+<!--  </ons-bottom-toolbar> -->
+
+
+</ons-scroller>

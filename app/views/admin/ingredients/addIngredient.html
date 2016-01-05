@@ -1,0 +1,52 @@
+<ons-dialog cancelable style="padding: 5% 2%;" var="addIngredientDialog">
+<form ng-submit="addIngredient(addIng_name,addIng_measurement,addIng_cal)">
+		<h5 style="margin-top: -10px">Add New Ingredient</h5>
+		<ons-row style="margin-top: 10px">
+			<ons-col size="15%">
+				<ons-icon icon="ion-android-restaurant" class="icon-dialog"></ons-icon>
+			</ons-col>
+			<ons-col size="85%">
+				<input type="text" class="text-input--underbar" ng-model="addIng_name" placeholder="Name">
+			</ons-col>
+		</ons-row>
+		<ons-row style="margin-top: 10px">
+			<ons-col size="15%">
+				<ons-icon icon="ion-android-list" class="icon-dialog"></ons-icon>
+			</ons-col>
+			<ons-col size="85%">
+				<!-- <input type="text" class="text-input--underbar" ng-model="addIng_measurement" placeholder="Measurement"> -->
+				<select class="text-input form-input select" style="margin-top: -10px;width:100%" ng-model="addIng_measurement">
+						<option value="">Unit</option>
+						<option value="cup(s)">cup(s)</option>
+						<option value="tbsp">tbsp</option>
+						<option value="tsp">tsp</option>
+						<option value="pinch">pinch</option>
+						<option value="to taste">to taste</option>
+						<option value="pc(s)">pc(s)</option>
+						<option value="cloves">cloves</option>
+						<option value="bundle">bundle</option>
+						<option value="pound(s)">pound(s)</option>
+						<option value="kilo(s)">kilo(s)</option>
+						<option value="grams">grams</option>
+						<option value="liter(s)">liter(s)</option>
+						<option value="ml">ml</option>
+		         	</select>
+			</ons-col>
+		</ons-row>
+
+		<ons-row style="margin-top: 10px">
+			<ons-col size="15%">
+				<ons-icon icon="ion-calculator" class="icon-dialog"></ons-icon>
+			</ons-col>
+			<ons-col size="85%">
+				<input type="tel" class="text-input--underbar" ng-model="addIng_cal" placeholder="Calorie">
+			</ons-col>
+		</ons-row>
+
+		<ons-row style="margin-top: 20px">
+			<ons-col>
+				<button class="button button--large--cta" ng-disabled="addIngDisableInput(addIng_name,addIng_measurement,addIng_cal)">Ok</button>
+			</ons-col>
+		</ons-row>
+</form>
+</ons-dialog>

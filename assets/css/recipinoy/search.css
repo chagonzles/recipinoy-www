@@ -1,0 +1,143 @@
+.search {
+  margin-top: 5px;
+} 
+.search.text-input--underbar {
+  border-bottom: 2px solid #6EF190;
+}
+.search.text-input--underbar:focus {
+  border-bottom: 2px solid #BEE8D2;
+}
+
+.filter-icon {
+  margin-top: 5px;
+  color: #4caf50;
+}
+
+.list {
+  background-color: transparent;
+}
+
+.text-input--transparent {
+ /* border-bottom: 2px solid #FFFFFF;*/
+  color: #FFFFFF;
+}
+.text-input--transparent:disabled {
+ 
+}
+.text-input--transparent:focus {
+  /*border-bottom: 2px solid #FFFFFF;*/
+}
+
+.text-input--transparent::-webkit-input-placeholder {
+  color: #EBEDEB; 
+  opacity: 0.5;
+}
+
+.text-input--transparent:-moz-placeholder {
+  color: #EBEDEB;
+  opacity: 0.5;
+};
+
+.text-input--transparent::-moz-placeholder {
+  color: #EBEDEB;
+  opacity: 0.5;
+};
+
+.text-input--transparent:-ms-input-placeholder {
+  color: #EBEDEB;
+  opacity: 0.5;
+};
+
+
+input.search {
+  color: #FFFFFF;
+  font-weight: bold;
+}
+.list-item-container {
+  line-height: 1;
+  padding: 10px 0px 10px 10px;
+  background-color: #FFFFFF;
+  margin: 10px; 
+  border-bottom: 1px solid;
+}
+
+.results-thumbnail {
+  width: 40px;
+  height: 40px;
+  border-radius: 3px;
+  -webkit-border-radius: 100px;
+}
+
+.thumbnail-my-recipes {
+  width: 80px;
+  height: 80px;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  background-color: #EEEFF0;
+}
+
+.results-rcpname {
+  font-size: 14px;
+  font-weight: bolder;
+  color: black;
+}
+
+.results-postedby {
+  font-weight: 500;
+  line-height: 16px;
+  font-size: 11px;
+  margin-bottom: 6px;
+  color: #04937D;
+}
+
+.postedby {
+  font-weight: bold;
+  line-height: 16px;
+  font-size: 11px;
+  margin-bottom: 6px;
+  color: #04937D;
+}
+
+.results-location {
+  font-weight: 500;
+  line-height: 16px;
+  font-size: 11px;
+  margin-bottom: 6px;
+  opacity: 0.4;
+}
+
+
+.rcpname {
+  font-weight: 500;
+  line-height: 16px;
+  font-size: 10px;
+  margin-bottom: 6px;
+  color: #04937D;
+}
+
+
+.myrecipes-name {
+  font-weight: bold;
+  font-size: 14px;
+  color: #10A9B1;
+}
+
+
+.name {
+  font-weight: bold;
+  font-size: 12px;
+  color: black;
+}
+
+.location {
+  font-size: 14px;
+  opacity: 0.4;
+  margin-bottom: 6px;
+}
+
+.desc {
+  line-height: 1.2;
+  font-size: 13px;
+}
+
+

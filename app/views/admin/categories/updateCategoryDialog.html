@@ -1,0 +1,28 @@
+<ons-dialog cancelable style="padding: 5% 2%;" var="updateCategoryDialog">
+	
+  <form ng-submit="updateCategoryImg(updateCategory_name)">
+		
+		<h5 style="margin-top: -10px">Update Category</h5>
+		<img ng-src="{{ updateCategory_img }}" style="background: #D7D7D7" height="256px" width="256px" />
+    <br>
+ 		<ons-button ng-click="selectUpdateCategoryPicture()" modifier="large" style="position: relative; z-index: 2;margin-top: -50px;color: #777777;opacity: 0.5;background: transparent" ><ons-icon icon="ion-android-image"></ons-icon>  Select Picture</ons-button>
+
+
+		<ons-row style="margin-top: 10px">
+			<ons-col size="15%">
+				<ons-icon icon="ion-android-list" class="icon-dialog"></ons-icon>
+			</ons-col>
+			<ons-col size="85%">
+				<input type="text" class="text-input--underbar" ng-model="updateCategory_name" placeholder="Name">
+			</ons-col>
+		</ons-row>
+		
+
+
+		<ons-row style="margin-top: 20px">
+			<ons-col>
+				<button class="button button--large--cta" ng-disabled="updateCategoryDisableInput(updateCategory_name)">Ok</button>
+			</ons-col>
+		</ons-row>
+	</form>
+</ons-dialog>

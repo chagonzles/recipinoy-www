@@ -1,0 +1,26 @@
+<ons-page ng-device-backbutton="backToUserDiscover()">
+	<ons-toolbar class="toolbar" modifier="android" inline>
+      <div class="left">
+      </div>
+      <div class="center">
+          Congratulations
+      </div>
+      <div class="right">
+      </div>
+  	</ons-toolbar>
+
+	<div class="login-form">
+      <img src="assets/img/logo.png" height="100px" width="100px">
+      <h6>
+        	Your recipe {{ addedRecipeName }} has been successfully posted to Recipinoy. You can now view your recipe by clicking
+          the Continue button below. 
+      </h6>
+  	</div>
+
+  	<ons-bottom-toolbar style="background: transparent;margin-right: 20px">
+                <ons-button ng-click="goToMyRecipes()" style="float:right!important"> Continue 
+					         <ons-icon icon="ion-arrow-right-c"></ons-icon>
+                </ons-button>
+          
+    </ons-bottom-toolbar>
+</ons-page>

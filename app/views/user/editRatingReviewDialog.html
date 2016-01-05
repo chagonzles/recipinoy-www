@@ -1,0 +1,39 @@
+<ons-dialog cancelable style="padding: 5% 2%;" var="ratingReviewDialog">
+	
+  <form ng-submit="updateReviewRating(review)" name="frmAddRatingReview" novalidate ng-init="review = recipeReviews[0].review_content;">
+		<!-- <form ng-submit="addCategory(addCategory_name)"> -->
+		
+				
+			   <div class="login-form" style="margin-top: -5px;font-size: 0.7em">
+			   		<img ng-src="assets/img/user.png" alt=""  class="profile-image" style="width: 50px;height: 50px;"><br>
+			   		{{ userProfile[0].username }}
+			   		<br><br>
+			   	<div style="font-size: 0.95em">
+					You are rating {{ rateDialogRecipe_Name }}
+				</div>
+			  	<div style="font-size: 1.75em">
+			  		 {{ userRating }}
+			  	</div>
+			  	
+			   	<ons-icon icon="ion-android-star" ng-class="{'rating-star': i < userRating,'no-rating-star': i >= userRating}" ng-repeat="i in dialogInitRating track by $index" size="18px" ng-click="getRatingNo(i)"></ons-icon>
+			   </div>
+			
+
+			   <textarea class="textarea" rows="10" style="width: 100%;font-size: 11px" placeholder="Write a review for this recipe" ng-model="review" name="review" required></textarea>
+			   <span ng-show="frmAddRatingReview.review.$error.required || userRating == undefined || userRating == 0 || userRating == null" class="form-error" style="font-size: 11px">
+                   
+                </span>
+
+
+                <span ng-show="userRating == undefined || userRating == 0 || userRating == null" class="form-error" style="font-size: 11px">
+                   
+                </span>
+
+		
+		<ons-row style="margin-top: 20px">
+			<ons-col>
+				<button class="button button--large--cta" ng-disabled="(review == null || review == undefined || review == '')  || (userRating == null || userRating == undefined || userRating == 0)">Submit</button>
+			</ons-col>
+		</ons-row>
+	</form>
+</ons-dialog>

@@ -1,0 +1,256 @@
+<ons-page modifier="bg-main" ng-controller="userCtrlr">
+  <ons-toolbar class="toolbar" modifier="android" inline>
+      <div class="left">
+        <ons-back-button ng-show="false">
+        </ons-back-button>
+          <ons-toolbar-button ng-click="back()">
+              <ons-icon icon="ion-android-arrow-back"></ons-icon>
+          </ons-toolbar-button>
+      </div>
+      <div class="center">
+          Sign Up for a Recipinoy Account
+      </div>
+  </ons-toolbar>
+ <ons-scroller>
+  <div class="login-form">
+  <form name="frmSignUp" ng-submit="signUp()" style="margin-top: -30px" novalidate>
+  <legend><h4>Personal Information</h4></legend>   
+        <ons-row class="sign_up_row">
+          <!-- FIRST NAME -->
+          <ons-col size="90%">
+                  <input type="text" name="fname" class="text-input full form-input" placeholder="First Name" value="" ng-model="fname" ng-minlength="2" ng-pattern="/^[a-zA-Z0-9., ]*$/" required>
+                  <span ng-show="frmSignUp.fname.$error.required" class="form-error">
+                    First Name is required
+                  </span>
+          </ons-col>
+          <ons-col>
+                  <span ng-show="frmSignUp.fname.$valid" class="icon-form">
+                      <ons-icon icon="ion-checkmark-round"></ons-icon>
+                  </span>
+                  <span ng-show="frmSignUp.fname.$invalid && frmSignUp.fname.$dirty" class="icon-form-error">
+                      <ons-icon icon="ion-close"></ons-icon>
+                  </span>
+          </ons-col>
+        </ons-row>
+
+        <!-- LAST NAME -->
+        <ons-row class="sign_up_row">
+          <ons-col size="90%">
+                  <input type="text" name="lname" class="text-input full form-input" placeholder="Last Name" value="" ng-model="lname" ng-pattern="/^[a-zA-Z0-9., ]*$/"  required>
+                  <span ng-show="frmSignUp.lname.$error.required" class="form-error">
+                    Last Name is required
+                  </span>
+          </ons-col>
+          <ons-col>
+                  <span ng-show="frmSignUp.lname.$valid" class="icon-form">
+                      <ons-icon icon="ion-checkmark-round"></ons-icon>
+                  </span>
+                  <span ng-show="frmSignUp.lname.$invalid && frmSignUp.lname.$dirty" class="icon-form-error">
+                      <ons-icon icon="ion-close"></ons-icon>
+                  </span>
+          </ons-col>
+        </ons-row>
+
+        <!-- MIDDLE NAME --> 
+        <ons-row class="sign_up_row">
+          <ons-col size="90%">
+                  <input type="text" name="mname" class="text-input full form-input" placeholder="Middle Name" value="" ng-model="mname" ng-pattern="/^[a-zA-Z0-9., ]*$/"  required>
+                  <span ng-show="frmSignUp.mname.$error.required" class="form-error">
+                    Middle Name is required
+                  </span>
+          </ons-col>
+          <ons-col>
+                  <span ng-show="frmSignUp.mname.$valid" class="icon-form">
+                      <ons-icon icon="ion-checkmark-round"></ons-icon>
+                  </span>
+                  <span ng-show="frmSignUp.mname.$invalid && frmSignUp.mname.$dirty" class="icon-form-error">
+                      <ons-icon icon="ion-close"></ons-icon>
+                  </span>
+          </ons-col>
+        </ons-row>
+        
+        
+        <ons-row class="sign_up_row">
+        <!-- DATE OF BIRTH -->
+            <ons-col size="45% ">
+                  <label for class="form-label">Date of Birth</label>
+                  <input type="date" class="text-input full form-input"  max="2002-12-31" min="1949-12-31" ng-model="dob" required>
+                  <span ng-show="dob == undefined || dob == null || dob == ''" class="form-error">
+                    You must be at least 12 years old or above
+                  </span>
+            </ons-col>
+            <ons-col size="5px">
+            </ons-col>
+            <!-- <ons-col size="30px">
+                  <span ng-show="frmSignUp.dob.$valid" class="icon-form">
+                    <ons-icon icon="ion-checkmark-round"></ons-icon>
+                  </span>
+                  <span ng-show="frmSignUp.dob.$invalid && frmSignUp.dob.$dirty" class="icon-form-error">
+                      <ons-icon icon="ion-close"></ons-icon>
+                  </span>
+            </ons-col> -->
+        <!-- GENDER -->
+            <ons-col size="44%">
+                  <label for="" class="form-label">Gender</label>
+                  <select class="text-input full form-input" ng-model="gender">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                  </select>
+            </ons-col>
+        </ons-row>
+        
+        <!-- ADDRESS -->
+        <ons-row class="sign_up_row">
+            <ons-col size="90%">
+                  <textarea class="textarea full" rows="3" name="address" ng-model="address" placeholder="Address" required></textarea>
+                  <span ng-show="frmSignUp.address.$error.required" class="form-error">
+                          Address is required
+                  </span>
+            </ons-col>
+            <ons-col>
+                   <span ng-show="frmSignUp.address.$valid" class="icon-form">
+                      <ons-icon icon="ion-checkmark-round"></ons-icon>
+                    </span>
+                    <span ng-show="frmSignUp.address.$invalid && frmSignUp.address.$dirty" class="icon-form-error">
+                        <ons-icon icon="ion-close"></ons-icon>
+                    </span>
+            </ons-col>
+        </ons-row>
+
+    <legend><h4>Contact Information</h4></legend>
+        <!-- EMAIL -->
+        <ons-row class="sign_up_row">
+            <ons-col size="90%">
+                  <input type="email" class="text-input full form-input" placeholder="Email" name="email" ng-model="email" ng-change="checkEmail()"required>
+                  <span ng-show="frmSignUp.email.$error.required" class="form-error">
+                          Email is required
+                  </span>
+                  <span ng-show="frmSignUp.email.$invalid && frmSignUp.email.$dirty && ( email != '' || email != null || email != undefined)" class="form-error">
+                          Not a valid email address
+                  </span>
+                  <span ng-show="frmSignUp.email.$dirty && frmSignUp.email.$valid && isEmailAvailable && !emailChecking" class="form-valid">
+                     Email address is available
+                  </span>
+                  <span ng-show="frmSignUp.email.$dirty && frmSignUp.email.$valid && !isEmailAvailable && !emailChecking" class="form-error">
+                      Email address is not available
+                  </span>
+                  <span ng-show="emailChecking" class="form-valid">
+                      <ons-icon icon="ion-load-a" spin="true"></ons-icon>
+                      Checking email
+                     </span>
+                   
+            </ons-col>
+            <ons-col>
+                  <span ng-show="frmSignUp.email.$valid && isEmailAvailable" class="icon-form">
+                      <ons-icon icon="ion-checkmark-round"></ons-icon>
+                  </span>
+                  <span ng-show="(frmSignUp.email.$invalid && frmSignUp.email.$dirty) || (!isEmailAvailable && frmSignUp.email.$dirty)" class="icon-form-error">
+                      <ons-icon icon="ion-close"></ons-icon>
+                  </span>
+            </ons-col>
+        </ons-row>
+        <ons-row class="sign_up_row">
+            <ons-col size="90%">
+                  <input type="tel" class="text-input full form-input" placeholder="Contact Number" ng-model="contact_no">
+            </ons-col>
+        </ons-row>
+
+     <legend><h4>Account Information</h4></legend>
+        <ons-row class="sign_up_row">
+            <ons-col size="90%">
+                    <input type="text" name="username" class="text-input full form-input" placeholder="Username" value="" ng-model="username" ng-minlength="5" ng-maxlength="20" ng-pattern="/^[a-zA-Z0-9 @ _ - . ]*$/" required ng-change="checkUsername()">
+                    
+                    <span ng-show="frmSignUp.username.$error.required" class="form-error">
+                      Username is required
+                    </span>
+                    <span ng-show="frmSignUp.username.$error.minlength" class="form-error">
+                      Username must be atleast 5 characters long
+                    </span>
+                     <span ng-show="frmSignUp.username.$error.maxlength" class="form-error">
+                      Username must not exceeds 20 characters
+                    </span>
+                    <span ng-show="frmSignUp.username.$dirty && frmSignUp.username.$valid && isUsernameAvailable && !usernameChecking" class="form-valid">
+                      Username is available
+                    </span>
+                    <span ng-show="frmSignUp.username.$dirty && frmSignUp.username.$valid && !isUsernameAvailable && !usernameChecking" class="form-error">
+                      Username is not available
+                    </span>
+                    <span ng-show="usernameChecking" class="form-valid">
+                      <ons-icon icon="ion-load-a" spin="true"></ons-icon>
+                      Checking username
+                     </span>
+            </ons-col>
+            <ons-col>
+                    <span ng-show="frmSignUp.username.$valid && isUsernameAvailable" class="icon-form">
+                        <ons-icon icon="ion-checkmark-round"></ons-icon>
+                    </span>
+                    <span ng-show="frmSignUp.username.$dirty && (!isUsernameAvailable || frmSignUp.username.$error.minlength || frmSignUp.username.$error.maxlength)" class="icon-form-error">
+                        <ons-icon icon="ion-close"></ons-icon>
+                    </span>
+            </ons-col>
+        </ons-row>
+         
+        <ons-row class="sign_up_row">
+            <ons-col size="90%">
+                    <input type="password" name="password" class="text-input full form-input" placeholder="Password" value="" ng-model="password" ng-minlength="5" ng-maxlength="20" required>
+                    <span ng-show="frmSignUp.password.$error.required" class="form-error">
+                      Password is required
+                    </span>
+                    <span ng-show="frmSignUp.password.$error.minlength" class="form-error">
+                      Password must be atleast 5 characters long
+                    </span>
+                     <span ng-show="frmSignUp.password.$error.maxlength" class="form-error">
+                      Password must not exceeds 20 characters
+                    </span>
+            </ons-col>
+            <ons-col>
+                    <span ng-show="frmSignUp.password.$valid" class="icon-form">
+                        <ons-icon icon="ion-checkmark-round"></ons-icon>
+                    </span>
+                    <span ng-show="frmSignUp.password.$dirty && (frmSignUp.password.$error.minlength || frmSignUp.password.$error.maxlength)" class="icon-form-error">
+                        <ons-icon icon="ion-close"></ons-icon>
+                    </span>
+            </ons-col>
+        </ons-row>
+      
+
+      <ons-row class="sign_up_row">
+            <ons-col size="90%">
+                    <input type="password" name="confirm_password" class="text-input full form-input" placeholder="Confirm Password" value="" ng-model="confirm_password" ng-minlength="5" ng-maxlength="20" required>
+                    <span ng-show="frmSignUp.confirm_password.$error.required" class="form-error">
+                      You have to confirm your password
+                    </span>
+                    <span ng-show="frmSignUp.password.$dirty && password != '' && confirm_password != '' && confirm_password != undefined && password != confirm_password" class="form-error">
+                      Password don't match
+                    </span>
+                    
+
+            </ons-col>
+            <ons-col>
+                    <span ng-show="frmSignUp.password.$valid && password == confirm_password" class="icon-form">
+                        <ons-icon icon="ion-checkmark-round"></ons-icon>
+                    </span>
+                    <span ng-show="(frmSignUp.password.$invalid && frmSignUp.password.$dirty) || password != confirm_password" class="icon-form-error">
+                        <ons-icon icon="ion-close"></ons-icon>
+                    </span>
+            </ons-col>
+        </ons-row>
+        <ons-row class="sign_up_row">
+          <label class="checkbox">
+              <input type="checkbox" ng-model="agreement">
+              <div class="checkbox__checkmark"></div>
+              I agree to be part of Recipinoy
+            </label>
+        </ons-row>
+
+        <button class="button button--large" class="login-button" ng-disabled="frmSignUp.$invalid || !isUsernameAvailable || !isEmailAvailable || !agreement" type="submit">Sign Up</button>
+        <br><br>
+  </form>
+
+ 
+</div>
+ </ons-scroller>
+ <ons-modal var="signUpModal">  
+    <ons-icon icon="ion-load-c" spin="true"></ons-icon>  <br><br>  Registering your account. <br> Please wait.
+</ons-modal>
+</ons-page>

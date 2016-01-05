@@ -1,0 +1,46 @@
+<ons-dialog cancelable style="padding: 5% 2%;" ng-controller="guestCtrlr" var="filterDialog">
+		<ons-row>
+			<ons-col size="15%">
+				<ons-icon icon="fa-map-marker"></ons-icon>
+			</ons-col>
+			<ons-col size="85%">
+				<select class="text-input" style="width: 80%">
+					<option value="">Region</option>
+                </select>
+			</ons-col>
+		</ons-row>
+		<ons-row style="margin-top: 10px">
+			<ons-col size="15%">
+				<ons-icon icon="fa-map-marker"></ons-icon>
+			</ons-col>
+			<ons-col size="85%">
+				<select class="text-input" style="width: 80%" ng-model="province">
+					<option value="Bataan">Bataan</option>
+					<option value="Pampanga">Pampanga</option>
+                </select>
+			</ons-col>
+		</ons-row>
+
+		<ons-row style="margin-top: 10px">
+			<ons-col size="15%">
+				<ons-icon icon="ion-android-list"></ons-icon>
+			</ons-col>
+			<ons-col size="85%">
+				<select class="text-input" style="width: 80%">
+					<option value="">Categories</option>
+                </select>
+			</ons-col>
+		</ons-row>
+
+		<ons-row style="margin-top: 20px">
+			<ons-col>
+				<ons-button modifier="large--cta" ng-click="changeFilter()">Ok</ons-button>
+			</ons-col>
+			<ons-col size="2%">
+			</ons-col>
+			<ons-col>
+				<ons-button modifier="large" ng-click="filterDialog.hide()"> Casncel</ons-button>
+			</ons-col>
+		</ons-row>
+
+</ons-dialog>

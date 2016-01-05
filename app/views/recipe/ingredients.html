@@ -1,0 +1,51 @@
+<img ng-src="{{ recipe.recipe_img }}" alt="" class="cover-photo">
+
+<!-- <div class="center-align">
+	<h4>Ingredients</h4>
+	<ul>
+		<li ng-repeat="ingredient in ingredients">
+			{{ ingredient.qty }} {{ ingredient.qty_fraction }}  {{ ingredient.measurement }} {{ ingredient.name }} 
+		</li>
+	</ul>
+
+
+</div>
+
+ -->
+<div class="box">
+<div>
+	<h4 style="margin-left: 5px">Ingredients</h4>
+	<ons-row style="font-size: 11px">
+			<ons-col width="70%">	
+			
+			</ons-col>
+			<ons-col>
+			</ons-col>
+			<ons-col width="30%">
+				<b>Calorie</b>
+			</ons-col>
+		</ons-row>
+	<div ng-repeat="ingredient in ingredients" style="margin: 10px 20px 10px 20px;font-size: 11px">
+		
+		<ons-row>
+			<ons-col width="70%">	
+				<span ng-show="ingredient.qty != '0' || ingredient.qty > 0">
+					{{ ingredient.qty }}
+				</span> {{ ingredient.qty_fraction }}  {{ ingredient.ingredient_uom }} {{ ingredient.ingredient_name }} 
+			</ons-col>
+			<ons-col>
+			</ons-col>
+			<ons-col width="30%">
+				<b>{{ calculateCalorie(ingredient.qty,ingredient.qty_fraction,ingredient.ingredient_cal) }}</b>
+			</ons-col>
+		</ons-row>
+		<hr>
+		
+	
+		
+		
+
+	</div><!-- ingredient -->
+	<br><br>
+</div>
+</div><!-- wrapper -->

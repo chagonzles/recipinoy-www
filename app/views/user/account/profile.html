@@ -1,0 +1,111 @@
+<ons-page ng-device-backbutton="backToUserDiscover()">
+    
+    <ons-toolbar class="toolbar" modifier="android">
+          <div class="left">
+              <ons-toolbar-button ng-click="back()">
+                  <ons-icon icon="ion-android-arrow-back"></ons-icon>
+              </ons-toolbar-button>
+          </div>
+          <div class="center">
+              Profile
+          </div>
+    </ons-toolbar>
+  
+ <div class="profile-card">
+          <img src="img/user.png" class="profile-image" ng-click="goToUserProfiles(user.username)">        
+              <div class="profile-name">{{ userProfile.fname + " " + userProfile.mname + " " + userProfile.lname }}</div>
+              <div class="profile-id">{{ userProfile.username }}</div>
+              <div class="profile-desc"></div>
+          </div>
+          
+
+            
+          </div><!-- tabbar -->
+                     
+          <div style="margin: 10px 20px 10px 20px" style="color: #57594D" ng-hide="isResults">
+            
+              <ons-list modifier="noborder">
+                <ons-list-item class="list-items">
+                  <ons-row>
+                    <ons-col width="30%">
+                    Email
+                    </ons-col>
+                    <ons-col width="70%">
+                    {{ userProfile.email }}
+                    </ons-col>
+                  </ons-row>
+                </ons-list-item>
+                <ons-list-item class="list-items">
+                  <ons-row>
+                    <ons-col width="50%">
+                    Username
+                    </ons-col>
+                    <ons-col width="50%">
+                    {{ userProfile.username }}
+                    </ons-col>
+                  </ons-row>
+                </ons-list-item>
+                <ons-list-item class="list-items">
+                  <ons-row>
+                    <ons-col width="50%">
+                    First Name
+                    </ons-col>
+                    <ons-col width="50%">
+                    {{ userProfile.fname }}
+                    </ons-col>
+                  </ons-row>
+                </ons-list-item>
+                <ons-list-item class="list-items">
+                  <ons-row>
+                    <ons-col width="50%">
+                    Middle Name
+                    </ons-col>
+                    <ons-col width="50%">
+                    {{ userProfile.mname }}
+                    </ons-col>
+                  </ons-row>
+                </ons-list-item>
+                <ons-list-item class="list-items">
+                  <ons-row>
+                    <ons-col width="50%">
+                    Last Name
+                    </ons-col>
+                    <ons-col width="50%">
+                    {{ userProfile.lname }}
+                    </ons-col>
+                  </ons-row>
+                </ons-list-item>
+                <ons-list-item class="list-items">
+                  <ons-row>
+                    <ons-col width="50%">
+                    Date of Birth
+                    </ons-col>
+                    <ons-col width="50%">
+                    {{ userProfile.dob | date:"MMM d,yyyy" }}
+                    </ons-col>
+                  </ons-row>
+                </ons-list-item>
+                <ons-list-item class="list-items">
+                  <ons-row>
+                    <ons-col width="50%">
+                    Address
+                    </ons-col>
+                    <ons-col width="50%">
+                    {{ userProfile.address }}
+                    </ons-col>
+                  </ons-row>
+                </ons-list-item>
+                <ons-list-item class="list-items">
+                  <ons-row>
+                    <ons-col width="50%">
+                    Contact No
+                    </ons-col>
+                    <ons-col width="50%">
+                    {{ userProfile.contactno }}
+                    </ons-col>
+                  </ons-row>
+                </ons-list-item>
+              </ons-list>
+          </div>
+
+  </ons-page>

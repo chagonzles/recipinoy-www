@@ -1,0 +1,68 @@
+<div ng-controller="userCtrlr">
+<ons-page style="background: #333834;">
+<div style="background: url('assets/img/sidebar2.jpg');background-size:100%;width:100%;height: 125px;border-bottom: 2px solid #E0E0E0">
+  <br>
+  <img ng-src="assets/img/user.png" class="profile-image" style="float: left;margin-left: 10px" ng-click="goToUserProfiles(user.username)"> 
+  <div style="margin-right: 20px;">
+    <span style="float: right;margin-top: 10px;font-weight: bold;">{{ loggedUsername }}</span>
+    <button class="button" style="float: right;background: #F7CD07 !important;margin-top: -25px" ng-click="goToAddRecipe()">
+        <ons-icon icon="ion-plus"></ons-icon> Add Recipe
+    </button>
+  </div>
+</div>
+<ons-list style="width: 100% !important">
+      
+      <span ng-click="goToDiscover()" class="menu-item"> 
+        <ons-icon icon="ion-search"></ons-icon>
+        Discover
+      </span>
+
+      <span ng-click="goToMyRecipes()" class="menu-item">
+        <ons-icon icon="ion-spoon"></ons-icon>
+        <ons-icon icon="ion-fork"></ons-icon>
+        My Recipe
+      </span>
+
+      <span ng-click="goToMyProfile()" class="menu-item">
+        <ons-icon icon="fa-user"></ons-icon>
+        My Profile
+      </span>
+
+      <span onclick="menu.setMainPage('templates/general/about.html', {closeMenu: true})" class="menu-item">
+        <ons-icon icon="ion-android-favorite"></ons-icon>
+        Favorites
+      </span>
+
+       <span onclick="menu.setMainPage('about.html', {closeMenu: true})" class="menu-item">
+        <ons-icon icon="ion-android-list"></ons-icon>
+        Categories
+      </span>
+
+     <!--  <hr style=> -->
+     <br>
+      
+       <span onclick="menu.setMainPage('about.html', {closeMenu: true})" class="menu-item">
+        <ons-icon icon="ion-gear-a"></ons-icon>
+        Setting
+      </span> 
+
+       <span ng-click="goToLogin();"class="menu-item">
+        <ons-icon icon="ion-log-out"></ons-icon>
+        Logout
+      </span>
+      <br>
+      <!--  <hr> -->
+       <span onclick="menu.setMainPage('about.html', {closeMenu: true})" class="menu-item">
+        <ons-icon icon="fa fa-info-circle"></ons-icon>
+        About
+      </span> 
+
+       <span ng-click="exitApplication()" class="menu-item">
+        <ons-icon icon="ion-android-exit"></ons-icon>
+        Exit Application
+      </span>
+
+</ons-list>
+
+</ons-page>
+</div>

@@ -1,0 +1,72 @@
+
+  <ons-page modifier="bg-login" ng-controller="loginCtrl" ng-device-backbutton="exitApplication()">
+
+  <div class="login-form">
+
+ <!--  <div class="center">
+      <img src="assets/img/logo.png" height="80px" width="80px" style="margin-top: 10%">
+  </div> -->
+  <form accept-charset="utf-8" ng-submit="auth()" class="login" style="margin-top: 100%">
+
+        <ons-row>
+            <!-- <ons-col width="20px">
+               <ons-icon icon="fa-user" style="color: #F44336" class="icon"></ons-icon>
+            </ons-col>
+            <ons-col size="8px">
+            </ons-col> -->
+            <ons-col>
+                <input type="text" class="text-input" placeholder="Username" value="" ng-model="username" ng-change="checkInput()">
+            </ons-col>  
+        </ons-row>
+        
+        <ons-row>
+            <!-- <ons-col width="20px">
+               <ons-icon icon="fa-lock" style="color: #F44336" class="icon"></ons-icon>
+            </ons-col> -->
+            <!--  <ons-col size="8px">
+            </ons-col> -->
+            <ons-col>
+                <input type="password" class="text-input" placeholder="Password" value="" ng-model="password" ng-change="checkInput()">
+                <span class="form-error" style="color:#ff0000;opacity:1" ng-show="showLoginError">Username or password is incorrrect.</span>
+            </ons-col>  
+            
+        
+        </ons-row>    
+
+        <ons-row style="margin-top: 10px">
+              <button class="button button--large--cta" style="background: #F44336" class="login-button" ng-disabled="!isValid" type="submit"><ons-icon icon="ion-log-in"></ons-icon> Sign In</button>
+            </ons-row>
+  </form>
+  <button class="button button--large" class="login-button" ng-click="goToAdminBackDoor()" ng-show="inDevice">Admin</button>
+<!--    <div ons-keyboard-inactive> -->
+        <!--   <ons-bottom-toolbar style="background: transparent;height:100px;width:80%;margin:0 auto"> -->
+
+       
+              <ons-row style="margin-top: 5px;">
+                 
+              </ons-row>
+      
+              <ons-row>
+                <ons-col>
+                  <ons-button modifier="large" style="background: #FFC107" ng-click="goToSignUp()">
+
+                  Sign Up</ons-button>
+                </ons-col>
+                
+                <ons-col size="1%">
+                </ons-col>
+                <ons-col>
+                  <ons-button modifier="large" ng-click="goToGuestFeed()"> Sign as Guest</ons-button>
+                </ons-col>
+              </ons-row>
+
+         
+      <!--     </ons-bottom-toolbar> -->
+<!--   </div> -->
+</div>
+<ons-modal var="loginModal">  
+    <ons-icon icon="ion-load-c" spin="true"></ons-icon>  <br><br>  Logging In.
+</ons-modal>
+
+
+</ons-page>

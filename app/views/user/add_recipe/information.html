@@ -1,0 +1,204 @@
+<ons-page>
+ <ons-toolbar>
+                <div class="left">
+                      <ons-toolbar-button>
+                              <ons-icon icon="ion-android-arrow-back" ng-click="back()"></ons-icon>
+                      </ons-toolbar-button>
+                </div>
+                <div class="center">
+                    Add New Recipe
+                </div>
+</ons-toolbar>
+<ons-scroller>
+
+  <ons-list>
+  <ons-list-header>Recipe Information</ons-list-header>
+      <div class="container-form">
+  <form name="frmAddRecipe" style="margin-top: -20px" novalidate>
+  
+       
+      <img ng-src="{{ addRecipeImg }}" style="background: #D7D7D7" height="320px" width="320px"/>
+        <ons-row>
+        <ons-col size="10%">
+        </ons-col>
+        <ons-col>
+          <ons-button ng-click="takeRecipeImg()" modifier="large"><ons-icon icon="ion-android-camera"></ons-icon></ons-button>
+        </ons-col>
+        <ons-col>
+          <ons-button ng-click="selectRecipeImg()" modifier="large--cta"><ons-icon icon="ion-android-image"></ons-icon></ons-button>
+        </ons-col>
+        <ons-col size="10%">
+        </ons-col>
+        </ons-row>
+       
+        
+        <ons-row class="sign_up_row">
+          <ons-col size="20px">
+            <ons-icon icon="ion-android-restaurant" class="filter-icon"></ons-icon>
+          </ons-col>
+          <ons-col size="5px">
+          </ons-col>
+          <!-- RECIPE NAME -->
+          <ons-col size="87%">
+                  <input type="text" name="name" class="text-input full form-input" placeholder="Recipe Name" value="" ng-model="name" required>
+                  <span ng-show="frmAddRecipe.name.$error.required" class="form-error">
+                    Recipe name is required
+                  </span>
+          </ons-col>
+          <ons-col>
+                  <span ng-show="frmAddRecipe.name.$valid" class="icon-form">
+                      <ons-icon icon="ion-checkmark-round" size="20px"></ons-icon>
+                  </span>
+                  <span ng-show="frmAddRecipe.name.$invalid && frmAddRecipe.name.$dirty" class="icon-form-error">
+                      <ons-icon icon="ion-close" size="20px"></ons-icon>
+                  </span>
+          </ons-col>
+        </ons-row>
+
+
+        
+        
+        <!-- DESCRIPTION -->
+        <ons-row class="sign_up_row">
+          <ons-col size="20px">
+            <ons-icon icon="ion-information-circled" class="filter-icon"></ons-icon>
+          </ons-col>
+           <ons-col size="5px">
+          </ons-col>
+            <ons-col size="87%">
+                  <textarea class="textarea full" rows="10" name="description" ng-model="description" placeholder="Description"></textarea>
+                  
+            </ons-col>
+        </ons-row>
+
+        <!-- CATEGORY -->
+        <ons-row class="sign_up_row">
+              <ons-col size="20px">
+                <ons-icon icon="ion-android-list" class="filter-icon"></ons-icon>
+              </ons-col>
+               <ons-col size="5px">
+            </ons-col>
+
+              <ons-col size="87%">
+                <select class="text-input form-input" style="width: 100%" ng-model="category" ng-options="category.category_name for category in categories track by category.category_name" required ng-change="console.log(category.category_name)">
+                      <option value="">Select Category</option>
+                </select>
+                <span ng-show="category == undefined || category.category_name == null" class="form-error">
+                        Category is required
+                </span>
+
+              </ons-col>
+
+              <ons-col>
+                     <span ng-show="category != undefined" class="icon-form">
+                        <ons-icon icon="ion-checkmark-round" size="20px"></ons-icon>
+                      </span>
+                     
+              </ons-col>
+        </ons-row>
+
+
+        <ons-row class="sign_up_row">
+          <ons-col size="20px">
+            <ons-icon icon="fa-map-marker" class="filter-icon"></ons-icon>
+          </ons-col>
+           <ons-col size="5px">
+          </ons-col>
+          <ons-col size="87%">
+            <select class="text-input form-input" style="width: 100%" ng-model="region"
+            ng-options="region.name for region in regions track by region.name" ng-change="getProvinces(region.id)" required>
+                <option value="">Select Region</option>
+                <option value="Entire Philippines">Entire Philippines</option>
+            </select>
+            <span ng-show="region == undefined" class="form-error">
+                        Region is required
+            </span>
+          </ons-col>
+          <ons-col>
+                     <span ng-show="region != undefined" class="icon-form">
+                        <ons-icon icon="ion-checkmark-round" size="20px"></ons-icon>
+                      </span>
+                   
+          </ons-col>
+        </ons-row>
+
+
+
+
+
+        <ons-row class="sign_up_row">
+          <ons-col size="20px">
+            <ons-icon icon="ion-android-map" class="filter-icon"></ons-icon>
+          </ons-col>
+           <ons-col size="5px">
+          </ons-col>
+          <ons-col size="87%"> 
+            <select class="text-input form-input" style="width: 100%" ng-model="province" ng-options="selectedProvince for selectedProvince in selectedProvinces" required>
+                <option value="">Select Province</option>
+            </select>
+
+            <span ng-show="province == undefined" class="form-error">
+                        Province is required
+            </span>
+          </ons-col>
+
+          <ons-col>
+                     <span ng-show="province != undefined" class="icon-form">
+                        <ons-icon icon="ion-checkmark-round" size="20px"></ons-icon>
+                      </span>
+                     
+          </ons-col>
+      
+        </ons-row>
+      
+
+      
+
+   
+      <ons-row>
+          <ons-col size="20px">
+            <ons-icon icon="ion-ios-calculator" class="filter-icon"></ons-icon>
+          </ons-col>
+           <ons-col size="5px">
+          </ons-col>
+       <!-- NO OF SERVING -->
+          <ons-col size="87%">
+                  <input type="number" name="no_of_serving" class="text-input full form-input" placeholder="No of Serving" value="" ng-model="no_of_serving" required>
+                  
+                  <span ng-show="frmAddRecipe.no_of_serving.$error.required" class="form-error">
+                    No of serving is required
+                  </span>
+          </ons-col>
+          <ons-col>
+                  <span ng-show="frmAddRecipe.no_of_serving.$valid && no_of_serving > 0" class="icon-form">
+                      <ons-icon icon="ion-checkmark-round" size="20px"></ons-icon>
+                  </span>
+                  <span ng-show="(frmAddRecipe.no_of_serving.$invalid || no_of_serving <= 0) && frmAddRecipe.no_of_serving.$dirty" class="icon-form-error">
+                      <ons-icon icon="ion-close" size="20px"></ons-icon>
+                  </span>
+          </ons-col>
+        </ons-row>
+    
+
+       <!--  <ons-button ng-click="goToAddRcpIngrdntProc(name,description,category,region,province,no_of_serving)" ng-disabled="frmAddRecipe.$invalid || addRecipeImg == '' || addRecipeImg == null || addRecipeImg == undefined || no_of_serving <= 0" style="float:right!important"> Continue 
+                   <ons-icon icon="ion-arrow-right-c"></ons-icon>
+        </ons-button> -->
+
+ <ons-button ng-click="goToAddRcpIngrdntProc(name,description,category,region,province,no_of_serving)" style="float:right!important"> Continue 
+                   <ons-icon icon="ion-arrow-right-c"></ons-icon>
+        </ons-button>
+
+
+
+        
+        <br>
+  </form>
+
+ 
+  </div><!-- container form -->
+
+
+  </ons-list>
+  
+</ons-scroller>
+</ons-page>

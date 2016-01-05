@@ -1,0 +1,200 @@
+@font-face {
+     font-family: 'Myfont';
+     src: url('../../fonts/Montserrat-Regular.ttf') format('truetype');
+     font-weight: 400;
+     font-style: normal;
+
+}
+
+
+body,p,div,h1,h2,h3,h4,h5,h6,span, 
+button, input,ons-button,ons-tab,
+ons-tabbar,ons-toolbar,ons-toolbar-button,
+label,select,textarea {
+  font-family: 'Myfont' !important;
+  font-weight: normal;
+}
+
+ons-icon,ons-toolbar-button {
+    font-size: 1.35em !important;
+    font-weight: 800;
+}
+
+/*page--name__background*/
+.page--bg-main__background {
+    /*background: #E4E4E4;*/
+    background: #FFFFFF;
+}
+
+.page--bg-login__background {
+    background-image: url('../../img/login2.png');
+    background-size: 100%;
+    opacity: 0.9;
+}
+
+.page--bg-feeds__background {
+	background: #E4E4E4;
+}
+
+
+.popover {
+	background: #FFFFFF;
+}
+
+.list__header {
+  	font-weight: bold;
+}
+
+input.full, select.full, textarea.full {
+	width: 100%;
+}
+
+input,textarea,select {
+  font-weight: bold !important;
+}
+
+input[type="date"] {
+
+}
+.container-form {
+  text-align: center;
+  width: 90%;
+  margin: 50px auto 0;
+}
+
+.form-header {
+  background: #A5E03E;
+  color: #FFFFFF;
+}
+.form-input {
+  font-weight: bold;
+  height: 42px;
+}
+
+.form-label {
+  font-size: 15px;
+  font-weight:bold;
+  opacity: 0.3;
+}
+
+.form-error {
+	font-weight: bold;
+	font-size: 14px;
+	opacity: 0.7;
+	float: left;
+	color: #E91818;
+}
+
+.form-valid {
+	font-weight: bold;
+	font-size: 14px;
+	opacity: 0.7;
+	float: left;
+	color: #03AB23;
+}
+
+
+
+
+/*.row {
+	margin-top: 5%;
+}*/
+
+.center {
+	/*margin:0 auto;*/
+}
+
+#btn-home {
+	margin-top: 20%
+}
+
+/*.toolbar {
+	background: #1DBE5D;
+}
+*/
+.icon {
+	margin: 15px 0 0;
+	color: #FF9800;
+}
+
+.icon-dialog {
+	color: #1C740B;
+}
+
+
+.center-align {
+  text-align: justify;
+  width: 90%;
+  margin: 20px auto 0;
+}
+
+.center-align-dialog {
+  width: 80%;
+  margin: 0 auto;
+}
+
+select,.text-input.select {
+	background: transparent;
+	border-color: #23aa64;
+	border-width: 0 0 2px 0;
+	color: rgba(0,0,0,0.73);
+	text-align: left;
+	z-index: 1;
+
+}
+
+
+
+.menu-item {
+  padding: 0 0 0 20px;
+  line-height: 52px;
+  height: 52px;
+  font-size: 0.90em;
+  display: block;
+  background-color: #333834;
+  border-bottom: none;
+  border-top: none;
+  color: white;
+}
+
+.profile-image {
+  height: 84px;
+  width: 84px;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  background-color: #F3F3F1;
+  border 1px solid white;
+  box-shadow:rgba(0, 0, 0, 0.2) 0px 2px 0px 0px;
+  -webkit-box-shadow:rgba(0, 0, 0, 0.2) 0px 2px 0px 0px;
+}
+
+
+.recipe-list-posted_by {
+  font-size: 10px;
+  opacity: 0.8;
+  color:#8E8E8E;
+  font-weight:bold;
+  line-height: 1px;
+}
+
+.recipe-list-username {
+  color: #73B067;
+}
+
+.recipe-list-no-views {
+  display:block;
+  font-size:10px;
+  opacity: 0.4;
+  margin-top: 5px;
+}
+
+
+.rating-star {
+  color: #FDC61F;
+  vertical-align: 0%;
+}
+
+.no-rating-star {
+  color: #939393;
+  vertical-align: 0%;
+}

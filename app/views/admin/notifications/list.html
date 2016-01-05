@@ -1,0 +1,36 @@
+
+<ons-pull-hook var="loaderNotif" ng-action="loadNotifications($done)">
+    <span ng-switch="loaderNotif.getCurrentState()" style="padding-top: 0px;padding-bottom: 0px">
+	    <span ng-switch-when="initial"><ons-icon icon="ion-arrow-down-a"></ons-icon> Pull down to refresh</span>
+	    <span ng-switch-when="preaction"><ons-icon icon="ion-arrow-up-a"></ons-icon> Release to refresh</span>
+	    <span ng-switch-when="action"><ons-icon spin="true" icon="ion-load-d"></ons-icon> Loading request...</span>
+  	</span>
+</ons-pull-hook>
+<ons-list class="timeline" modifier="inset" style="background-color: white">
+  <ons-list-item class="timeline-li" modifier="tappable" ng-repeat="notification in notifications" ng-click="showAddCalorieDialog(notification)">
+    <ons-row>
+      <ons-col width="50px">
+        <img ng-src="assets/img/user.png" class="timeline-image">
+      </ons-col>
+
+      <ons-col>
+       
+        <div class="timline-from">
+          <!-- <span class="timeline-name">Dave Graham</span> -->
+          <span class="timeline-id">{{ notification.username }}
+          <div class="timeline-message">
+            requested {{ notification.ingredient_name + ', ' + notification.ingredient_uom }}
+          </div>
+           <div class="timeline-date">added <span am-time-ago="notification.date_added"></span></div>
+
+          </span>
+
+        </div>
+
+        
+      </ons-col>
+    </ons-row>
+  </ons-list-item>
+</ons-list>
+
+

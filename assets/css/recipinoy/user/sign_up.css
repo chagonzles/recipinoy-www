@@ -1,0 +1,22 @@
+.sign_up_row {
+	margin-bottom: 10px;
+}
+
+
+
+.dropdown {
+	line-height:30px;height:30px
+}
+
+.icon-form-error {
+	float: right;
+	margin-top: 10px;
+	color: #FF4444;
+}
+
+.icon-form {
+	float: right;
+	margin-top: 10px;
+	color: #4caf50;
+}
+

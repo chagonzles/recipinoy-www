@@ -1,0 +1,40 @@
+<!-- <ons-pull-hook var="loaderIng" ng-action="loadIngredients($done)">
+    <span ng-switch="loaderIng.getCurrentState()" style="padding-top: 0px;padding-bottom: 0px">
+      <span ng-switch-when="initial"><ons-icon icon="ion-arrow-down-a"></ons-icon> Pull down to refresh</span>
+      <span ng-switch-when="preaction"><ons-icon icon="ion-arrow-up-a"></ons-icon> Release to refresh</span>
+      <span ng-switch-when="action"><ons-icon spin="true" icon="ion-load-d"></ons-icon> Loading ingredients...</span>
+    </span>
+</ons-pull-hook> -->
+
+<ons-list>
+      <ons-list-header>
+        <ons-row>
+          <ons-col size="10%">ID</ons-col>
+          <ons-col size="40%">Name</ons-col>
+          <ons-col size="35%">Measurement</ons-col>
+          <ons-col size="15%">Cal</ons-col>
+        </ons-row>  
+      </ons-list-header>
+      <ons-list-item ng-repeat="ingredient in ingredients | filterBy:['ingredient_name']: query |  orderBy: ingredient_id: true"
+      ng-click="showUpdateIngredientDialog(ingredient)" id="list">
+          <ons-row>
+          <ons-col size="10%">{{ ingredient.ingredient_id }}</ons-col>
+          <ons-col size="40%">
+          {{ ingredient.ingredient_name }}
+          </ons-col>
+          <ons-col size="35%">
+          {{ ingredient.ingredient_uom }}
+          </ons-col>
+          <ons-col size="15%">
+          {{ ingredient.ingredient_cal }}
+          </ons-col>
+          </ons-row>
+      </ons-list-item>
+</ons-list>
+
+<nav mfb-menu position="br" effect="zoomin" label="Add New Ingredient"
+     active-icon="ion-plus-round" resting-icon="ion-plus-round"
+     toggling-method="click" ng-click="showAddIngredientDialog()">
+</nav>
+
+

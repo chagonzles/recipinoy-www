@@ -1,0 +1,10 @@
+<ons-dialog var="confirmDeleteIngredient">
+<div class="alert-dialog-title">Confirm</div>
+    <div class="alert-dialog-content">
+     	{{ message}}
+    </div>
+    <div class="alert-dialog-footer">
+    	<button class="alert-dialog-button" style="width: 50%;float: left" ng-click="confirmDeleteIngredient.hide()">No</button>
+      	<button class="alert-dialog-button" style="width: 50%;float: right" ng-click="removeIngredient()">Yes</button>
+    </div>
+</ons-dialog>

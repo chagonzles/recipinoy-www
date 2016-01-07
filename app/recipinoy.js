@@ -12,7 +12,7 @@ recipinoy.config(function($httpProvider){
 
 var restUrl = 'http://localhost/rpserver/api/';
 // var restUrl = 'https://recipinoyv2-sdpixels.rhcloud.com/api/';
-// var restUrl = 'https://rpserver-sdpixels.rhcloud.com/api/';
+// var restUrl = 'https://rpserver-sdpixels.rhcloud.com/api/'; -ito un latest
 var localStorage = window.localStorage;
 var adminViewUrl = 'app/views/admin/';
 var guestViewUrl = 'app/views/guest/';
@@ -57,11 +57,11 @@ recipinoy.controller('AppController',['$scope','$rootScope','recipinoyService','
 	      console.log(networkState);
 	      if(networkState == '2g' || networkState == 'cell')
 	      {
-	      	noInternetDialog.show();
+	      	// noInternetDialog.show();
 	      }
 	      else
 	      {
-	      	noInternetDialog.hide();
+	      	// noInternetDialog.hide();
 	      }
 	      
 	    

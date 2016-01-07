@@ -1,20 +1,20 @@
-<ons-page ng-device-backbutton="backToUserDiscover()">
+<ons-page ng-device-backbutton="back()">
     
     <ons-toolbar class="toolbar" modifier="android">
           <div class="left">
-              <ons-toolbar-button ng-click="backToUserDiscover()">
+              <ons-toolbar-button ng-click="back()">
                   <ons-icon icon="ion-arrow-left-c"></ons-icon>
               </ons-toolbar-button>
           </div>
           <div class="center">
-              My Recipes
+              My Favorite Recipes
           </div>
     </ons-toolbar>
   
   <ons-list>
      
       <ons-list-item modifier="chevron" class="list-item-container" 
-      ng-repeat="recipe in myrecipes" ng-click="goToRecipeView(recipe.recipe_id);">
+      ng-repeat="recipe in myfavorites" ng-click="goToRecipeView(recipe.recipe_id);">
           <ons-row>
               <ons-col width="95px">
                 <img ng-src="{{ recipe.recipe_img }}" class="thumbnail-my-recipes">

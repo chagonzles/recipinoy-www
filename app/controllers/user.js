@@ -1,9 +1,9 @@
 var user = angular.module('user',['recipeService','userService']);
 
 user.controller('userCtrlr',['$scope','$rootScope','$timeout','$filter','$interval','$http','userService',
-	'recipeService','adminService','$cordovaCamera','$cordovaFileTransfer','$cordovaToast',
+	'recipeService','adminService','$cordovaCamera','$cordovaFileTransfer','$cordovaSQLite',
 	function($scope,$rootScope,$timeout,$filter,$interval,$http,userService,recipeService,adminService,
-			 $cordovaCamera,$cordovaFileTransfer,$cordovaToast){
+			 $cordovaCamera,$cordovaFileTransfer,$cordovaSQLite){
 	$scope.userChecking = false;
 	$scope.emailChecking = false;
 	$scope.gender = 'Male';
@@ -48,9 +48,7 @@ user.controller('userCtrlr',['$scope','$rootScope','$timeout','$filter','$interv
 		nav.pushPage(userViewUrl + 'home.html');
 	};
 	
-	$rootScope.addToFavorites = function(id) {
-		console.log(id);
-	};
+	
 	$scope.changeTitle = function(title) {
 		$scope.title = title;
 	};
@@ -223,6 +221,7 @@ user.controller('userCtrlr',['$scope','$rootScope','$timeout','$filter','$interv
 	$rootScope.goToRecipeView = function(recipe_id) {
 		$rootScope.view_recipe_id = recipe_id;
 		nav.pushPage('app/views/recipe/main.html');
+		$rootScope.userAlreadyReviewed = false;
 		recipeService.update_view_no({id: $rootScope.view_recipe_id}).$promise.then(function(){
 			refreshRatingReviews(recipe_id);
 		});
@@ -827,27 +826,52 @@ user.controller('userCtrlr',['$scope','$rootScope','$timeout','$filter','$interv
 	$rootScope.goToUserReplies = function(review) {
 		nav.pushPage(userViewUrl + 'review/replies.html');
 		$rootScope.userRepliesReview = review;
-
 		refreshUserReplies(review);
 	}
 
 
 	$rootScope.addReply = function(reply,review) {
-		
 		$scope.reply = {
 			review_id: $rootScope.userRepliesReview.review_id,
 			reply_content: reply,
 			date_replied: moment().format('YYYY-MM-DD HH:mm:ss'),
 			username: $rootScope.loggedUsername
 		};
-
-
 		userService.addReply({},$scope.reply).$promise.then(function(res){
 			console.log(res);
 
 			refreshUserReplies(review);
 		});
-		
+	}
+
+
+	$rootScope.addToFavorites = function(recipe_id) {
+		$scope.favorite = {
+			recipe_id: recipe_id,
+			username: $rootScope.loggedUsername
+		};
+		userService.addToFavorites({},$scope.favorite).$promise.then(function(res){
+			console.log(res);
+		});
+
+	};
+
+	$rootScope.removeToFavorites = function(favorite_id) {
+		userService.removeToFavorites({id: favorite_id}).$promise.then(function(res){
+			console.log(res);
+		});
+	}
+
+	function refreshMyFavorites()
+	{
+		userService.getFavorites({id: $rootScope.loggedUsername}).$promise.then(function(res){
+			$rootScope.myfavorites = res;
+		});
+	}
+
+	$rootScope.getMyFavorites = function() {
+		nav.pushPage(userViewUrl + 'my_favorites/list.html');
+		refreshMyFavorites();
 	}
 
 }]);

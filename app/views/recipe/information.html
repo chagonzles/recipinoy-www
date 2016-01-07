@@ -65,11 +65,21 @@
               
 
 
-              <ons-button modifier="large" class="button-text" ng-click="showRateDialog(recipe.recipe_id,recipe.name,recipeReviews[0].review_content,recipeReviews[0].rating)"
-              ng-hide="userAlreadyReviewed || (loggedUsername == undefined || loggedUsername == null)"
+              <ons-button class="button-text" ng-click="showRateDialog(recipe.recipe_id,recipe.name,recipeReviews[0].review_content,recipeReviews[0].rating)"
+              ng-disabled="userAlreadyReviewed" ng-hide="(loggedUsername == undefined || loggedUsername == null)"
               ><ons-icon icon="ion-star"></ons-icon> 
               
               <span>Review</span> Recipe</ons-button>
+
+
+              <ons-button modifier="cta" class="button-text" ng-click="addToFavorites(recipe.recipe_id)" ng-hide="(loggedUsername == undefined || loggedUsername == null)"><ons-icon icon="ion-heart"></ons-icon> 
+              
+              <span>Add to </span> Favorites</ons-button>
+
+
+              <ons-button modifier="cta" class="button-text" ng-click="removeToFavorites(2)" ng-hide="(loggedUsername == undefined || loggedUsername == null)"><ons-icon icon="ion-heart"></ons-icon> 
+              
+              <span>Remove to </span> Favorites</ons-button>
               <!-- (loggedUsername == null || loggedUsername == undefined || loggedUsername == '') --> 
 
               <br><br>
@@ -85,7 +95,7 @@
   <h4 style="text-align: center;color: #636556; font-size: 13px">User Reviews</h4>
       <ons-list>
        <div ng-repeat="review in recipeReviews">
-          <ons-list-item class="list-item-container" ng-click="goToUserReplies(review)">
+          <ons-list-item class="list-item-container">
           <ons-row>
           <ons-col width="80px">
           <img src="assets/img/user.png" alt="" style="width: 50px;height: 50px" ng-click="goToUserProfile(review.rvwpostedby)">
@@ -137,7 +147,7 @@
                   {{ review.review_content }} 
                   </div>
 
-                  <div style="font-size: 0.88em;opacity: 0.90;float: right;margin-right: 10px">
+                  <div style="font-size: 0.88em;opacity: 0.90;float: right;margin-right: 10px" ng-click="goToUserReplies(review)">
                     <ons-icon icon="ion-chatboxes"></ons-icon> <span></span> reply
                   </div>
             </div>

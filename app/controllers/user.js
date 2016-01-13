@@ -19,6 +19,7 @@ user.controller('userCtrlr',['$scope','$rootScope','$timeout','$filter','$interv
 	$rootScope.starRating = [];
 	$rootScope.noStarRating = [];
 	$rootScope.userAlreadyReviewed = false;
+	$rootScope.userAlreadyFavorited = false;
 
 	$scope.suggestionsClicked = false;
 	$scope.ingnamelist = [];
@@ -221,12 +222,14 @@ user.controller('userCtrlr',['$scope','$rootScope','$timeout','$filter','$interv
 	$rootScope.goToRecipeView = function(recipe_id) {
 		$rootScope.view_recipe_id = recipe_id;
 		nav.pushPage('app/views/recipe/main.html');
+		$rootScope.recipe = {};
 		$rootScope.userAlreadyReviewed = false;
 		recipeService.update_view_no({id: $rootScope.view_recipe_id}).$promise.then(function(){
 			refreshRatingReviews(recipe_id);
 		});
 
 		$scope.getUserReviewCount($rootScope.loggedUsername,recipe_id);
+		checkIfFavorited(recipe_id);
 		
 	};
 	
@@ -845,33 +848,125 @@ user.controller('userCtrlr',['$scope','$rootScope','$timeout','$filter','$interv
 	}
 
 
-	$rootScope.addToFavorites = function(recipe_id) {
+	$rootScope.addToFavorites = function(recipe) {
 		$scope.favorite = {
-			recipe_id: recipe_id,
+			recipe_id: recipe.recipe_id,
 			username: $rootScope.loggedUsername
 		};
 		userService.addToFavorites({},$scope.favorite).$promise.then(function(res){
 			console.log(res);
-		});
+			ons.notification.alert({
+		      message: 'Successfully added to your favorites!',
+		      title: 'Success',
+		      modifier: true ? 'material' : undefined
+		    });
 
+		    checkIfFavorited(recipe.recipe_id);
+
+		    addToFavoritesOffline(recipe);
+		});
 	};
 
-	$rootScope.removeToFavorites = function(favorite_id) {
-		userService.removeToFavorites({id: favorite_id}).$promise.then(function(res){
-			console.log(res);
-		});
+	function addToFavoritesOffline(recipe)
+	{
+		var rp = recipe;
+
+		var query = "INSERT INTO Favorite_Recipes VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        $cordovaSQLite.execute(db, query, [rp.recipe_id, 
+        rp.recipe_img, rp.recipe_name, rp.recipe_desc,
+        rp.region, rp.province, rp.city, rp.ave_rating,
+        rp.date_posted, rp.category, rp.no_of_serving,
+        rp.no_of_view, rp.procedures, rp.username]).then(function(res) {
+            console.log("Insert id -> " + res.insertId);
+        }, function (err) {
+            console.error(err);
+        });
+
+
+        userService.getRecipeIngredients({id: rp.recipe_id}).$promise.then(function(res){
+        	angular.forEach(res,function(rcpi,i){
+
+        		query = "SELECT ingredient_id FROM Ingredient WHERE ingredient_id = ?";
+        		$cordovaSQLite.execute(db,query, [rcpi.ingredient_id]).then(function(resulta){
+        			//if meron na sa ingredient table na existing ingredient data 
+        			if(resulta.rows.length > 0 )
+        			{
+        				console.log('meron na sa ingredient table e');
+        			}
+        			else
+        			{
+        				query = "INSERT INTO Ingredient VALUES(?,?,?,?,?,?,?)";
+				        $cordovaSQLite.execute(db, query,[rcpi.ingredient_id,
+			        	rcpi.ingredient_name, rcpi.ingredient_uom, 
+			        	rcpi.ingredient_cal, rcpi.date_added, 
+			        	rcpi.date_updated, rcpi.username]).then(function(res){
+				        	console.log("Insert ingredient id -> " + res.insertId);
+				        },function(err){
+				        	console.log(err);
+				        });
+        			}
+
+        			query = "INSERT INTO Recipe_Ingredient VALUES(?,?,?,?,?)";
+			        $cordovaSQLite.execute(db, query,[rcpi.rcp_ingrdnt_id, rcpi.qty,
+			        	rcpi.qty_fraction, rcpi.recipe_id, rcpi.ingredient_id
+			        	]).then(function(res){
+			        	console.log("Insert recipe ingredient id -> " + res.insertId);
+			        },function(err){
+			        	console.log(err);
+			        });
+
+        		}); //select if meron na sa ingredient atble
+		     
+        	}); //for each
+        }); //get recipe ingredients service
 	}
+
+	$rootScope.removeToFavorites = function(recipe) {
+		userService.removeToFavorites({id: recipe.recipe_id, params: $rootScope.loggedUsername}).$promise.then(function(res){
+			console.log(res);
+			ons.notification.alert({
+		      message: 'Successfully removed to your favorites!',
+		      title: 'Success',
+		      modifier: true ? 'material' : undefined
+		    });
+
+		    checkIfFavorited(recipe.recipe_id);
+		    refreshMyFavorites();
+		});
+	};
 
 	function refreshMyFavorites()
 	{
 		userService.getFavorites({id: $rootScope.loggedUsername}).$promise.then(function(res){
 			$rootScope.myfavorites = res;
 		});
-	}
+	};
 
 	$rootScope.getMyFavorites = function() {
 		nav.pushPage(userViewUrl + 'my_favorites/list.html');
 		refreshMyFavorites();
+	};
+
+	$rootScope.refreshMyFavorites = function() {
+		refreshMyFavorites();
 	}
+
+	function checkIfFavorited(recipe_id)
+	{
+		userService.checkIfFavorited({id: recipe_id, params: $rootScope.loggedUsername}).$promise.then(function(res){
+			if(res.response > 0 )
+			{
+				$rootScope.userAlreadyFavorited = true;
+				console.log('favorite mo na to');
+			}
+			else
+			{
+				$rootScope.userAlreadyFavorited = false;
+				console.log('di mo pa favorite');
+			}	
+
+		});
+	};
+	
 
 }]);

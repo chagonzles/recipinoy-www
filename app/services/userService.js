@@ -23,7 +23,10 @@ return $resource(restUrl + 'user/:action/:id/:params',{id:'@id',params:'@params'
         'getReplies': {method: 'GET', params: {action: 'review_replies'},isArray: true},
         'addToFavorites': {method: 'POST', params: {action: 'favorite'}},
         'removeToFavorites': {method: 'DELETE', params: {action: 'favorite'}},
-        'getFavorites': {method: 'GET', params: {action: 'view',params: 'favorites'},isArray: true}
+        'getFavorites': {method: 'GET', params: {action: 'view',params: 'favorites'},isArray: true},
+        'checkIfFavorited': {method: 'GET', params: {action: 'favorited'}},
+        'getRecipeById': {method: 'GET', params: {action: 'recipe'},isArray: true},
+        'getRecipeIngredients': {method: 'GET', params: {action: 'rcp_ingredients'},isArray: true}
     });
 }]);
 

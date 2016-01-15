@@ -26,7 +26,7 @@
                
                  <div>
                    <ons-icon icon="ion-android-list" style="vertical-align: 0%" class="filter-icon"></ons-icon>
-                    {{ recipe.category_name }}
+                    {{ recipe.category }}
 
                
                  </div>
@@ -58,7 +58,7 @@
                   </div>
                   <div style="float: right">
                       <ons-icon icon="ion-calculator" class="filter-icon"></ons-icon> 
-                      <b>{{ getTotalCalorie(ingredients,recipe.no_of_serving) }}</b>
+                      <b>{{ getTotalCalorie(rcpingOffline,recipe.no_of_serving) }}</b>
                   </div>
 
                </div>

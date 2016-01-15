@@ -20,6 +20,7 @@ user.controller('userCtrlr',['$scope','$rootScope','$timeout','$filter','$interv
 	$rootScope.noStarRating = [];
 	$rootScope.userAlreadyReviewed = false;
 	$rootScope.userAlreadyFavorited = false;
+	$scope.totalCalorie = 0;
 
 	$scope.suggestionsClicked = false;
 	$scope.ingnamelist = [];
@@ -865,6 +866,7 @@ user.controller('userCtrlr',['$scope','$rootScope','$timeout','$filter','$interv
 		    checkIfFavorited(recipe.recipe_id);
 
 		    addToFavoritesOffline(recipe);
+		    refreshMyFavorites();
 		});
 	};
 
@@ -925,14 +927,30 @@ user.controller('userCtrlr',['$scope','$rootScope','$timeout','$filter','$interv
 	$rootScope.removeToFavorites = function(recipe) {
 		userService.removeToFavorites({id: recipe.recipe_id, params: $rootScope.loggedUsername}).$promise.then(function(res){
 			console.log(res);
-			ons.notification.alert({
-		      message: 'Successfully removed to your favorites!',
-		      title: 'Success',
-		      modifier: true ? 'material' : undefined
-		    });
+			
 
-		    checkIfFavorited(recipe.recipe_id);
-		    refreshMyFavorites();
+		    var query = "DELETE FROM Favorite_Recipes WHERE recipe_id = ?";
+	        $cordovaSQLite.execute(db, query,[recipe.recipe_id]).then(function(res) {
+	            if(res.rowsAffected < 1)
+	            {
+	            	console.log('naremove');
+			        ons.notification.alert({
+				      message: 'Successfully removed to your favorites!',
+				      title: 'Success',
+				      modifier: true ? 'material' : undefined
+				    });
+
+				    checkIfFavorited(recipe.recipe_id);
+				    refreshMyFavorites();
+
+	            }
+	            	
+	  
+	        }, function (err) {
+	            console.error(err);
+	        });
+
+
 		});
 	};
 
@@ -988,15 +1006,25 @@ user.controller('userCtrlr',['$scope','$rootScope','$timeout','$filter','$interv
 
 	$rootScope.viewRecipeOffline = function(recipe_id) {
 		$rootScope.view_recipe_id = recipe_id;
-		console.log('recipe_id: ' + recipe_id);
-		nav.pushPage(userViewUrl + 'my_favorites/recipe/main.html');
 		var rcp_id =  findIndex($rootScope.offlineFavorites,'recipe_id',recipe_id);
+		console.log('recipe_id: ' + recipe_id);
+		console.log('ave rating' + $rootScope.offlineFavorites[rcp_id].ave_rating);
+		for(var i = 0; i < Math.round($rootScope.offlineFavorites[rcp_id].ave_rating); i++)
+		{
+					$rootScope.starRating[i] = i;
+					console.log('star rating ' + i);
+		}
+		$rootScope.noStarRating.length = 5 - $rootScope.starRating.length;
+		console.log('no star rating ' + $rootScope.noStarRating.length);
+		nav.pushPage(userViewUrl + 'my_favorites/recipe/main.html');
+
+		
 		console.log('index ng recipe id n un ' + rcp_id);
 		$rootScope.recipe = $rootScope.offlineFavorites[rcp_id];
 
 		
 
-		 $rootScope.rcpingOffline = [];
+		$rootScope.rcpingOffline = [];
         var query = "SELECT rcp_ingrdnt_id,qty,qty_fraction,recipe_id,ingredient_name,ingredient_uom,ingredient_cal FROM Recipe_Ingredient JOIN Ingredient ON Ingredient.ingredient_id = Recipe_Ingredient.ingredient_id WHERE recipe_id = ?";
         $cordovaSQLite.execute(db, query,[recipe_id]).then(function(res) {
             if(res.rows.length > 0) {
@@ -1037,7 +1065,7 @@ user.controller('userCtrlr',['$scope','$rootScope','$timeout','$filter','$interv
 
 
 
-	$scope.calculateCalorie = function(qty,qty_fraction,cal)
+	$rootScope.calculateCalorie = function(qty,qty_fraction,cal)
 	{
 		if(cal == null)
 		{
@@ -1045,25 +1073,27 @@ user.controller('userCtrlr',['$scope','$rootScope','$timeout','$filter','$interv
 		}
 		else
 		{
-			console.log(qty + ' ' + $scope.convertFractionToDecimal(qty_fraction) + ' ' + cal);
-			return ((parseInt(qty) + $scope.convertFractionToDecimal(qty_fraction)) * cal) + ' calories';
+			console.log(qty + ' ' + $rootScope.convertFractionToDecimal(qty_fraction) + ' ' + cal);
+			return ((parseInt(qty) + $rootScope.convertFractionToDecimal(qty_fraction)) * cal) + ' calories';
 		}
 
 	}
 
-	$scope.getTotalCalorie = function(ingredients,no_of_serving) 
+	$rootScope.getTotalCalorie = function(ingredients,no_of_serving) 
 	{
 		$scope.totalCalorie = 0;
 		if(!angular.isUndefined(ingredients))
 		{
 			angular.forEach(ingredients, function(ingredient,index){
-				$scope.calorie = (parseInt(ingredient.qty) + $scope.convertFractionToDecimal(ingredient.qty_fraction)) * ingredient.ingredient_cal;
+				$scope.calorie = (parseInt(ingredient.qty) + $rootScope.convertFractionToDecimal(ingredient.qty_fraction)) * ingredient.ingredient_cal;
 				$scope.totalCalorie += parseInt($scope.calorie);
 				if(ingredient.ingredient_cal == null)
 				{
 					$scope.totalisNull = true;
 				}
 			});
+
+			console.log('Total calorie ' + $scope.totalCalorie + ' totalisNull' + $scope.totalisNull);
 			
 			// console.log('total calorie' + $scope.totalCalorie);
 			if($scope.totalisNull)
@@ -1076,6 +1106,36 @@ user.controller('userCtrlr',['$scope','$rootScope','$timeout','$filter','$interv
 			}
 		}
 		
+	}
+	$rootScope.convertFractionToDecimal = function(qty_fraction) {
+		if(qty_fraction == '1/2')
+		{
+			return 0.5;
+		}
+		else if(qty_fraction == '1/4')
+		{
+			return 0.25;
+		}
+		else if(qty_fraction == '1/8')
+		{
+			return 0.125;
+		}
+		else if(qty_fraction == '1/3')
+		{
+			return 0.33;
+		}
+		else if(qty_fraction == '2/3')
+		{
+			return 0.67;	
+		}
+		else if(qty_fraction == '3/4')
+		{
+			return 0.75;
+		}
+		else 
+		{
+			return 0;
+		}
 	}
 	
 

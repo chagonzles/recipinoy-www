@@ -10,9 +10,9 @@ recipinoy.config(function($httpProvider){
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
  }); //to allow cross origin request
 
-// var restUrl = 'http://localhost/rpserver/api/';
+var restUrl = 'http://localhost/rpserver/api/';
 // var restUrl = 'https://recipinoyv2-sdpixels.rhcloud.com/api/';
-var restUrl = 'https://rpserver-sdpixels.rhcloud.com/api/'; //-ito un latest
+// var restUrl = 'https://rpserver-sdpixels.rhcloud.com/api/'; //-ito un latest
 var localStorage = window.localStorage;
 var adminViewUrl = 'app/views/admin/';
 var guestViewUrl = 'app/views/guest/';
@@ -22,7 +22,7 @@ var rootViewUrl = 'app/views/';
 var view_recipe_id;
 recipinoy.controller('AppController',['$scope','$rootScope','recipinoyService','recipeService','$cordovaCamera','$cordovaNetwork','$cordovaSQLite',
 	function($scope,$rootScope,recipinoyService,recipeService,$cordovaCamera,$cordovaNetwork,$cordovaSQLite){
-
+	
 	if(localStorage.getItem('user') != null || localStorage.getItem('admin') != null)
 	{
 		$scope.loggedIn = true;
@@ -74,7 +74,7 @@ recipinoy.controller('AppController',['$scope','$rootScope','recipinoyService','
 		  // noInternetDialog.show();
 	    });
 
-	    // $cordovaSQLite.deleteDB("my.db");
+	    $cordovaSQLite.deleteDB("my.db");
 	    db = $cordovaSQLite.openDB("my.db");
 	    var query1 = "CREATE TABLE IF NOT EXISTS Favorite_Recipes(recipe_id INT,recipe_img VARCHAR(100),recipe_name VARCHAR(50),recipe_desc VARCHAR(500),region VARCHAR(30),province VARCHAR(30),city VARCHAR(30),ave_rating DECIMAL(3,2) DEFAULT 0,date_posted TIMESTAMP,category VARCHAR(30),no_of_serving INT,no_of_view INT,procedures VARCHAR(10000),username VARCHAR(20),PRIMARY KEY(recipe_id));";
 		var query2 = "CREATE TABLE IF NOT EXISTS Ingredient(ingredient_id INT,ingredient_name VARCHAR(50),ingredient_uom VARCHAR(20),ingredient_cal INT, date_added TIMESTAMP, date_updated TIMESTAMP,username VARCHAR(20),PRIMARY KEY(ingredient_id))";

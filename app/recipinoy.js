@@ -78,8 +78,7 @@ recipinoy.controller('AppController',['$scope','$rootScope','recipinoyService','
 	    db = $cordovaSQLite.openDB("my.db");
 	    var query1 = "CREATE TABLE IF NOT EXISTS Favorite_Recipes(recipe_id INT,recipe_img VARCHAR(100),recipe_name VARCHAR(50),recipe_desc VARCHAR(500),region VARCHAR(30),province VARCHAR(30),city VARCHAR(30),ave_rating DECIMAL(3,2) DEFAULT 0,date_posted TIMESTAMP,category VARCHAR(30),no_of_serving INT,no_of_view INT,procedures VARCHAR(10000),username VARCHAR(20),PRIMARY KEY(recipe_id));";
 		var query2 = "CREATE TABLE IF NOT EXISTS Ingredient(ingredient_id INT,ingredient_name VARCHAR(50),ingredient_uom VARCHAR(20),ingredient_cal INT, date_added TIMESTAMP, date_updated TIMESTAMP,username VARCHAR(20),PRIMARY KEY(ingredient_id))";
-		var query3 = "CREATE TABLE IF NOT EXISTS Recipe_Ingredient(rcp_ingrdnt_id INT,qty INT,qty_fraction VARCHAR(5),recipe_id INT,ingredient_id INT, PRIMARY KEY(rcp_ingrdnt_id))"
-
+		var query3 = "CREATE TABLE IF NOT EXISTS Recipe_Ingredient(rcp_ingrdnt_id INT,qty INT,qty_fraction VARCHAR(5),recipe_id INT,ingredient_id INT, PRIMARY KEY(rcp_ingrdnt_id))";
 
 		
 		
@@ -88,12 +87,12 @@ recipinoy.controller('AppController',['$scope','$rootScope','recipinoyService','
 	    $cordovaSQLite.execute(db,query3);
 	   
 	  
-	    var query = "INSERT INTO Favorite_Recipes VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-        $cordovaSQLite.execute(db, query, [1,'image','Kare kare','Favorite ko to','Region III','Bataan','Balanga',5,'2016-01-31 11:00:00','Main dishes',5,100,'Luto mo na lang','charlene']).then(function(res) {
-            console.log("Insert id -> " + res.insertId);
-        }, function (err) {
-            console.error(err);
-        });
+	    // var query = "INSERT INTO Favorite_Recipes VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+     //    $cordovaSQLite.execute(db, query, [1,'image','Kare kare','Favorite ko to','Region III','Bataan','Balanga',5,'2016-01-31 11:00:00','Main dishes',5,100,'Luto mo na lang','charlene']).then(function(res) {
+     //        console.log("Insert id -> " + res.insertId);
+     //    }, function (err) {
+     //        console.error(err);
+     //    });
 
 
      //    query = "INSERT INTO Ingredient VALUES(?,?,?,?,?,?,?)";
@@ -103,32 +102,70 @@ recipinoy.controller('AppController',['$scope','$rootScope','recipinoyService','
      //    	console.log(err);
      //    });
 
+
+     //    query = "INSERT INTO Ingredient VALUES(?,?,?,?,?,?,?)";
+     //    $cordovaSQLite.execute(db, query, [2,'salt','kilo(s)',5,'2016-01-31 12:00:00','','charlene']).then(function(res){
+     //    	console.log("Insert ingredient id -> " + res.insertId);
+     //    },function(err){
+     //    	console.log(err);
+     //    });
      //    query = "INSERT INTO Recipe_Ingredient VALUES(?,?,?,?,?)";
-     //    $cordovaSQLite.execute(db, query,[1,2,'1/2',1,1]).then(function(res){
+     //    $cordovaSQLite.execute(db, query,[1,2,'1/2',1,2]).then(function(res){
      //    	console.log("Insert recipe ingredient id -> " + res.insertId);
      //    },function(err){
      //    	console.log(err);
      //    })
 
-        $scope.frcp = [];
+     //    query = "INSERT INTO Recipe_Ingredient VALUES(?,?,?,?,?)";
+     //    $cordovaSQLite.execute(db, query,[2,2,'1/2',1,1]).then(function(res){
+     //    	console.log("Insert recipe ingredient id -> " + res.insertId);
+     //    },function(err){
+     //    	console.log(err);
+     //    })
 
-        var query = "SELECT recipe_name, recipe_desc FROM Favorite_Recipes";
-        $cordovaSQLite.execute(db, query).then(function(res) {
-            if(res.rows.length > 0) {
-                // console.log("SELECTED -> " + res.rows.item(0).recipe_name + " " + res.rows.item(0).recipe_desc);
-         		console.log('list of item');
-            	for (var i = 0; i < res.rows.length; i++) {
-            		console.log(res.rows.item(i).recipe_name);
-            		$scope.frcp = res.rows.item(i);
-            	};
 
-            	console.log($scope.frcp);
-            } else {
-                console.log("No results found");
-            }
-        }, function (err) {
-            console.error(err);
-        });
+       
+
+
+     //    $rootScope.rcpingOffline = [];
+     //    var query = "SELECT rcp_ingrdnt_id,qty,qty_fraction,recipe_id,ingredient_name,ingredient_uom,ingredient_cal FROM Recipe_Ingredient JOIN Ingredient ON Ingredient.ingredient_id = Recipe_Ingredient.ingredient_id WHERE recipe_id = ?";
+     //    $cordovaSQLite.execute(db, query,[1]).then(function(res) {
+     //        if(res.rows.length > 0) {
+     //            // console.log("SELECTED -> " + res.rows.item(0).recipe_name + " " + res.rows.item(0).recipe_desc);
+     //     		console.log('list of recipe ing item');
+     //        	for (var i = 0; i < res.rows.length; i++) {
+            		
+     //        		$rootScope.rcpingOffline[i] = res.rows.item(i);
+     //        		console.log(res.rows.item(i).rcp_ingrdnt_id);
+     //        	};
+            
+            	
+     //        } else {
+     //            console.log("No recipe ingredient found");
+     //        }
+     //    }, function (err) {
+     //        console.error(err);
+     //    });
+
+     //    $scope.frcp = [];
+
+     //    var query = "SELECT recipe_name, recipe_desc FROM Favorite_Recipes";
+     //    $cordovaSQLite.execute(db, query).then(function(res) {
+     //        if(res.rows.length > 0) {
+     //            // console.log("SELECTED -> " + res.rows.item(0).recipe_name + " " + res.rows.item(0).recipe_desc);
+     //     		console.log('list of item');
+     //        	for (var i = 0; i < res.rows.length; i++) {
+     //        		console.log(res.rows.item(i).recipe_name);
+     //        		$scope.frcp = res.rows.item(i);
+     //        	};
+
+     //        	console.log($scope.frcp);
+     //        } else {
+     //            console.log("No results found");
+     //        }
+     //    }, function (err) {
+     //        console.error(err);
+     //    });
 
      //    $scope.ing = [];
      //    var query = "SELECT ingredient_id, ingredient_name FROM Ingredient";

@@ -592,6 +592,7 @@ user.controller('userCtrlr',['$scope','$rootScope','$timeout','$filter','$interv
 	
 
 	$rootScope.goToLogin = function() {
+		$cordovaSQLite.deleteDB("my.db");
 		logoutModal.show();
 		$timeout(function(){
 			localStorage.removeItem('user');
@@ -942,6 +943,7 @@ user.controller('userCtrlr',['$scope','$rootScope','$timeout','$filter','$interv
 		});
 	};
 
+
 	$rootScope.getMyFavorites = function() {
 		nav.pushPage(userViewUrl + 'my_favorites/list.html');
 		refreshMyFavorites();
@@ -949,6 +951,71 @@ user.controller('userCtrlr',['$scope','$rootScope','$timeout','$filter','$interv
 
 	$rootScope.refreshMyFavorites = function() {
 		refreshMyFavorites();
+	};
+
+	$rootScope.getMyFavoritesOffline = function() {
+		
+		$rootScope.offlineFavorites = [];
+		var query = "SELECT recipe_id,recipe_name, recipe_desc, ave_rating, region, province, city, category, no_of_view, date_posted, no_of_serving, procedures, username FROM Favorite_Recipes";
+        $cordovaSQLite.execute(db, query).then(function(res) {
+            if(res.rows.length > 0) {
+                // console.log("SELECTED -> " + res.rows.item(0).recipe_name + " " + res.rows.item(0).recipe_desc);
+         		console.log('list of item');
+            	for (var i = 0; i < res.rows.length; i++) {
+            		
+            		$rootScope.offlineFavorites[i] = res.rows.item(i);
+            		console.log($rootScope.offlineFavorites[i].recipe_name);
+
+            	};
+
+
+
+            	console.log($rootScope.offlineFavorites);
+            	nav.pushPage(userViewUrl + 'my_favorites/list_offline.html');
+            	// angular.forEach(res.rows.item, function(){
+
+            	// })
+
+            	
+            } else {
+                console.log("No results found");
+            }
+        }, function (err) {
+            console.error(err);
+        });
+	}
+
+
+	$rootScope.viewRecipeOffline = function(recipe_id) {
+		$rootScope.view_recipe_id = recipe_id;
+		console.log('recipe_id: ' + recipe_id);
+		nav.pushPage(userViewUrl + 'my_favorites/recipe/main.html');
+		var rcp_id =  findIndex($rootScope.offlineFavorites,'recipe_id',recipe_id);
+		console.log('index ng recipe id n un ' + rcp_id);
+		$rootScope.recipe = $rootScope.offlineFavorites[rcp_id];
+
+		
+
+		 $rootScope.rcpingOffline = [];
+        var query = "SELECT rcp_ingrdnt_id,qty,qty_fraction,recipe_id,ingredient_name,ingredient_uom,ingredient_cal FROM Recipe_Ingredient JOIN Ingredient ON Ingredient.ingredient_id = Recipe_Ingredient.ingredient_id WHERE recipe_id = ?";
+        $cordovaSQLite.execute(db, query,[recipe_id]).then(function(res) {
+            if(res.rows.length > 0) {
+                // console.log("SELECTED -> " + res.rows.item(0).recipe_name + " " + res.rows.item(0).recipe_desc);
+         		console.log('list of recipe ing item');
+            	for (var i = 0; i < res.rows.length; i++) {
+            		
+            		$rootScope.rcpingOffline[i] = res.rows.item(i);
+            		console.log(res.rows.item(i).rcp_ingrdnt_id);
+            	};
+            
+            	
+            } else {
+                console.log("No recipe ingredient found");
+            }
+        }, function (err) {
+            console.error(err);
+        });
+
 	}
 
 	function checkIfFavorited(recipe_id)
@@ -967,6 +1034,49 @@ user.controller('userCtrlr',['$scope','$rootScope','$timeout','$filter','$interv
 
 		});
 	};
+
+
+
+	$scope.calculateCalorie = function(qty,qty_fraction,cal)
+	{
+		if(cal == null)
+		{
+			return 'Not yet available';
+		}
+		else
+		{
+			console.log(qty + ' ' + $scope.convertFractionToDecimal(qty_fraction) + ' ' + cal);
+			return ((parseInt(qty) + $scope.convertFractionToDecimal(qty_fraction)) * cal) + ' calories';
+		}
+
+	}
+
+	$scope.getTotalCalorie = function(ingredients,no_of_serving) 
+	{
+		$scope.totalCalorie = 0;
+		if(!angular.isUndefined(ingredients))
+		{
+			angular.forEach(ingredients, function(ingredient,index){
+				$scope.calorie = (parseInt(ingredient.qty) + $scope.convertFractionToDecimal(ingredient.qty_fraction)) * ingredient.ingredient_cal;
+				$scope.totalCalorie += parseInt($scope.calorie);
+				if(ingredient.ingredient_cal == null)
+				{
+					$scope.totalisNull = true;
+				}
+			});
+			
+			// console.log('total calorie' + $scope.totalCalorie);
+			if($scope.totalisNull)
+			{
+				return 'Calorie per serving: N/A';
+			}
+			else
+			{
+				return 'Calorie per serving: ' + Math.round(($scope.totalCalorie / no_of_serving));
+			}
+		}
+		
+	}
 	
 
 }]);

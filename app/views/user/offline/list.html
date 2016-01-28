@@ -1,0 +1,123 @@
+<ons-page ng-device-backbutton="exitApplication()">
+    
+    <ons-toolbar class="toolbar" modifier="android">
+        <div class="left">
+            
+        </div>
+        <div class="center">
+
+          <ons-icon icon="ion-search" style="color: #388e3c"></ons-icon>
+            <input type="text" class="text-input--transparent" style="margin-top: 5px" placeholder="Search Recipe" ng-model="query" value="" ng-change="isValidSearchInput(query)">
+        </div>
+
+        <div class="right">
+            
+            <ons-toolbar-button style="margin-left: -15px; !important">
+                <ons-icon icon="ion-android-arrow-down" ng-click="toggleFilter(showFilter)" ng-show="showFilter == false"></ons-icon>
+                <ons-icon icon="ion-android-arrow-up" ng-click="toggleFilter(showFilter)" ng-show="showFilter == true"></ons-icon>
+            </ons-toolbar-button>
+        </div>
+    </ons-toolbar>
+
+
+    <ons-list>
+      <div ng-show="showFilter">
+        <ons-list-header>Filter By</ons-list-header>
+        <ons-row style="margin-left: 5%">
+          <ons-col size="30px">
+            <ons-icon icon="fa-map-marker" class="filter-icon"></ons-icon>
+          </ons-col>
+          <ons-col size="80%">
+            <select class="text-input select" style="width: 100%" ng-model="region"
+            ng-options="region.name for region in regions track by region.name" ng-change="getProvinces(region.id)">
+            <option value="">Entire Philippines</option>
+                    </select>
+          </ons-col>
+        </ons-row>
+
+        <ons-row style="margin-left: 5%" ng-show="isSelectedRegion">
+          <ons-col size="30px">
+            <ons-icon icon="ion-android-map" class="filter-icon"></ons-icon>
+          </ons-col>
+          <ons-col size="80%">
+            <select class="text-input select" style="width: 100%" ng-model="province" ng-options="selectedProvince for selectedProvince in selectedProvinces">
+            <option value="">Entire Region</option>
+                    </select>
+          </ons-col>
+        </ons-row>
+        <ons-row style="margin-left: 5%;">
+          <ons-col size="30px">
+            <ons-icon icon="ion-android-list" class="filter-icon"></ons-icon>
+          </ons-col>
+          <ons-col size="80%">
+            <select class="text-input select" style="width: 100%" ng-model="category" ng-options="category.category_name for category in categories track by category.category_name">
+            <option value="">All Categories</option>
+                    </select>
+          </ons-col>
+        </ons-row>
+      </div>
+    </ons-list>
+
+  
+  <ons-list>
+     <ons-list-item modifier="chevron" class="list-item-container" 
+      ng-repeat="recipe in offlineRecipes | filterBy:['recipe_name']: query | filterBy: ['region']: region.name | filterBy: ['province']: province | filterBy: ['category_name']: category.category_name | limitTo: range"
+          ng-click="viewRecipeOffline(recipe.recipe_id);">
+      
+          <ons-row>
+              <ons-col width="95px">
+                <img ng-src="{{ recipe.recipe_img }}" class="thumbnail-my-recipes">
+              </ons-col>
+              <ons-col>
+                <div class="myrecipes-name">
+                  {{ recipe.recipe_name }}
+                </div>
+                
+
+
+                <div class="location">
+                 <div ng-init="(arrRating = []).length = (recipe.ave_rating | number: 0);(noRating = []).length = 5 - arrRating.length">
+                      <ons-icon icon="fa-star" ng-repeat="i in arrRating track by $index" size="18px" style="color: #FDC61F"></ons-icon>
+                      <ons-icon icon="star" style="color: #939393" size="18px" ng-repeat="i in noRating track by $index"></ons-icon>
+                  </div>  
+
+                  
+                  <div style="font-size: 10px">
+                    <ons-icon icon="fa-map-marker" style="color: red" size="11px"></ons-icon icon> {{ recipe.province }}
+                  </div>
+               
+
+                </div>
+        
+                <br>
+                <div class="recipe-list-no-views">
+                  {{ recipe.no_of_view }} views
+                </div>
+
+              </ons-col>
+                
+          </ons-row>
+        <ons-row>
+        <ons-col>
+        </ons-col>
+        <ons-col size="80%">
+          <div class="timeline-date">added  <span am-time-ago="recipe.date_posted"></span></div>
+        </ons-col>
+        <ons-col size="5%">
+        </ons-col>
+        </ons-row>
+        </ons-list-item>
+  
+      </ons-list>
+       <ons-row ng-show="isEmptySearch">
+          <div class="login-form">
+            <p>Recipe not found.</p>
+          </div>
+      </ons-row>
+<!-- <nav mfb-menu position="br" effect="zoomin" label="Add New Recipe"
+     active-icon="ion-plus-round" resting-icon="ion-plus-round"
+     toggling-method="click" ng-click="goToAddRecipe()">
+</nav>
+ -->
+
+  </ons-page>

@@ -2,6 +2,18 @@ var recipe = angular.module('recipe',['recipeService']);
 
 
 recipe.controller('recipeCtrl',['$rootScope','$scope','recipeService',function($rootScope,$scope,recipeService){
+	
+
+	// if($rootScope.noInternet == false)
+	// {
+	// 	$.getScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyB80ok1kdISiT-NTApqD6iqaC3Wezpm2Cw');
+	// }
+
+	$rootScope.removeMap = function() {
+		$rootScope.map = null;
+		$('#map').remove();
+
+	}
 	$scope.totalCalorie = 0;
 	$rootScope.starRating = [];
 	$rootScope.noStarRating = [];
@@ -14,58 +26,11 @@ recipe.controller('recipeCtrl',['$rootScope','$scope','recipeService',function($
 		}
 		$rootScope.noStarRating.length = 5 - $scope.starRating.length; 
 
-
-
-		var geocoder = new google.maps.Geocoder();
-		var map = new google.maps.Map(document.getElementById('map'), {
-		    zoom: 8,
-		    center: {lat: -34.397, lng: 150.644}
-		  });
-
-
-
-	    geocodeAddress(geocoder,map,recipe[0].province,recipe);
-	   
-
-
-
-
-
-
-
-
-
-	    
-    
 	});
 
 
 
-	 function geocodeAddress(geocoder, resultsMap,address,recipe) {
 	
-	  geocoder.geocode({'address': address}, function(results, status) {
-	    if (status === google.maps.GeocoderStatus.OK) {
-	      resultsMap.setCenter(results[0].geometry.location);
-	      var marker = new google.maps.Marker({
-	        map: resultsMap,
-	        position: results[0].geometry.location,
-	        title: recipe[0].recipe_name
-	      });
-
-
-	      $rootScope.map = new google.maps.Map(document.getElementById('map'), marker);
-
-	      google.maps.event.addListener(marker, 'click', function(){
-	            infoWindow.setContent('<h2>' + marker.title + '</h2>' + marker.content);
-	            infoWindow.open($rootScope.map, marker);
-	        });
-        
-   
-	    } else {
-	      alert('Geocode was not successful for the following reason: ' + status);
-	    }
-	  });
-	}
 
 	recipeService.view({id: $rootScope.view_recipe_id, content: 'ingredients'}).$promise.then(function(ingredients){
 		$scope.ingredients = ingredients;
@@ -152,4 +117,170 @@ recipe.controller('recipeCtrl',['$rootScope','$scope','recipeService',function($
 			return 0;
 		}
 	}
+
+
+	$rootScope.goToMapView = function(recipe) {
+		$rootScope.recipe_map = recipe;
+		
+		nav.pushPage('app/views/recipe/mapview.html');
+		
+	}
+
+	$rootScope.backToRecipeView = function() {
+		nav.popPage();
+		
+	}
+	
+
+
+
+
+
+
+
+
+
+
+
 }]);
+
+recipe.controller('mapCtrl',['$scope','$rootScope','$timeout',function($scope,$rootScope,$timeout){
+
+	$rootScope.backToRecipeView = function() {
+		nav.popPage();
+		 $('.page__background').not('.page--menu-page__background').css('background-color', 'transparent');
+		 $('#menu-page').css('background', '#333834 !important');
+		 $rootScope.map.clear();
+         $rootScope.map.remove();
+         $('.gmap_div:not(:last)').remove();
+         // $rootScope.map = '';
+	}
+	// $.getScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyB80ok1kdISiT-NTApqD6iqaC3Wezpm2Cw').done(function( script, textStatus ) {
+	// 		var geocoder = new google.maps.Geocoder();
+	// 		var map = new google.maps.Map(document.getElementById('map'), {
+	// 		    zoom: 8,
+	// 		    center: {lat: 13.0000, lng: 122.0000}
+	// 		  });
+	
+		
+	// 	    geocodeAddress(geocoder,map,$rootScope.recipe_map.province,$rootScope.recipe_map);
+ // 	});
+
+
+ // 	 function geocodeAddress(geocoder, resultsMap,address,recipe) {
+	
+	//   geocoder.geocode({'address': address}, function(results, status) {
+	//     if (status === google.maps.GeocoderStatus.OK) {
+	//       resultsMap.setCenter(results[0].geometry.location);
+	//       var marker = new google.maps.Marker({
+	//         map: resultsMap,
+	//         position: results[0].geometry.location,
+	//         title: recipe.recipe_name
+	//       });
+
+	      
+	//       var infowindow = new google.maps.InfoWindow({
+	// 	    content: '<span style="font-size: 15px;"><b>' + recipe.recipe_name + '</b></span>' +
+	// 	    		 '<br /><span> ' + recipe.province + '</span>' + '<p>' + recipe.recipe_desc + '</p>'
+	// 	  });
+
+	// 	  marker.addListener('click', function() {
+	// 	    infowindow.open(resultsMap, marker);
+	// 	  });
+
+	   
+
+	//       $scope.map = new google.maps.Map(document.getElementById('map'), marker);
+      
+
+   
+	//     } else {
+	//       alert('Geocode was not successful for the following reason: ' + status);
+	//     }
+	//   });
+	// }
+
+
+	$rootScope.initMap = function() {
+        $('.page__background').not('.page--menu-page__background').css('background-color', 'transparent');
+        $('#menu-page').css('background', '#333834 !important');
+        if($rootScope.map) {
+            $rootScope.map.clear();
+            $rootScope.map.remove();
+            $('.gmap_div:not(:last)').remove();
+            $rootScope.map = '';
+        }
+        const PH = new plugin.google.maps.LatLng(13.000,122.0000);
+        $timeout(function(){
+            var div = document.getElementById("map_canvas");
+            $rootScope.map = plugin.google.maps.Map.getMap(div,{
+                    'backgroundColor': '#f9f9f9',
+                    'mapType': plugin.google.maps.MapTypeId.ROADMAP,
+                    'controls': {
+                    'compass': true,
+                    'myLocationButton': false,
+                    'indoorPicker': false,
+                    'zoom': true
+                },
+                    'gestures': {
+                    'scroll': true,
+                    'tilt': true,
+                    'rotate': true
+                },
+                	'camera': {
+                	'latLng': PH,
+                	'zoom': 5
+                }
+            });
+            $rootScope.map.setDebuggable(true);
+            $rootScope.map.on(plugin.google.maps.event.MAP_READY, function(map){
+            	var request = {
+				  'address': $rootScope.recipe_map.province
+				};
+                plugin.google.maps.Geocoder.geocode(request, function(results) {
+				  if (results.length) {
+				    var result = results[0];
+				    var position = result.position; 
+
+				    map.addMarker({
+				      'position': position,
+				       icon: 'green',
+				      'title': $rootScope.recipe_map.recipe_name,
+				      'snippet': $rootScope.recipe_map.recipe_desc,
+				      'styles' : {
+						    'font-weight': 'bold'
+						  } 
+				    }, function(marker) {
+
+				      map.animateCamera({
+				        'target': position,
+				        'zoom': 9,
+				        'duration': 3000
+				      }, function() {
+				        marker.showInfoWindow();
+				      });
+
+				    });
+				  } else {
+				    alert("Not found");
+				  }
+				}); //geocode
+            }); // on map ready
+        }, 600, false);
+    } 
+
+
+    ons.ready(function(){console.log('Map onsen ready');
+        $rootScope.initMap();
+    });
+
+
+
+
+
+
+
+
+
+		
+}])

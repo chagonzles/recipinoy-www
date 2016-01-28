@@ -25,30 +25,18 @@
 
                
                  <div>
-
                    <ons-icon icon="ion-android-list" style="vertical-align: 0%" class="filter-icon"></ons-icon>
-                    {{ recipe.category_name }}
-                    
+                    {{ recipe.category }}
 
-                
-                     
-
-                
+               
                  </div>
                  <div>
                    <ons-icon icon="ion-location" style="color: #EC0C0C"></ons-icon>
                 {{ recipe.region }}
                   <ons-icon icon="ion-android-map" style="color: #EC0C0C"></ons-icon>
                   {{ recipe.province }}
-
                  </div>
-                  
-                
-                 <div style="font-size: 11px">
-                    <button ng-click="goToMapView(recipe)"><ons-icon icon="ion-location"></ons-icon>View in Map</button>
-                 </div>
-                  
-
+  
                 <div class="location">
                   
                <div style="font-size: 11px">
@@ -58,7 +46,7 @@
                     {{ recipe.no_of_view }} views
                </div>
                  
-
+                  
                 </div>
                 <p style="white-space: pre-line;text-align: justify;margin-right: 10px">
                   {{ recipe.recipe_desc }}
@@ -70,14 +58,14 @@
                   </div>
                   <div style="float: right">
                       <ons-icon icon="ion-calculator" class="filter-icon"></ons-icon> 
-                      <b>{{ getTotalCalorie(ingredients,recipe.no_of_serving) }}</b>
+                      <b>{{ getTotalCalorie(rcpingOffline,recipe.no_of_serving) }}</b>
                   </div>
 
                </div>
               
 
 
-              <ons-button class="button-text" ng-click="showRateDialog(recipe.recipe_id,recipe.name,recipeReviews[0].review_content,recipeReviews[0].rating)"
+             <!--  <ons-button class="button-text" ng-click="showRateDialog(recipe.recipe_id,recipe.name,recipeReviews[0].review_content,recipeReviews[0].rating)"
               ng-disabled="userAlreadyReviewed" ng-hide="(loggedUsername == undefined || loggedUsername == null)"
               ><ons-icon icon="ion-star"></ons-icon> 
               
@@ -91,7 +79,7 @@
 
               <ons-button modifier="cta" class="button-text" ng-click="removeToFavorites(recipe)" ng-if="!(loggedUsername == undefined || loggedUsername == null || !userAlreadyFavorited)"><ons-icon icon="ion-close"></ons-icon> 
               
-              <span>Remove </span>Favorite</ons-button>
+              <span>Remove </span>Favorite</ons-button> -->
 
 
               <!-- <ons-button modifier="cta" class="button-text" ng-click="removeToFavorites(2)" ng-hide="(loggedUsername == undefined || loggedUsername == null)"><ons-icon icon="ion-heart"></ons-icon> 
@@ -107,7 +95,7 @@
         </ons-list-item>
 </ons-list>
 
-<div style="font-size: 10px !important" ng-show="recipeReviews.length > 0 && loggedUsername">
+<!-- <div style="font-size: 10px !important" ng-show="recipeReviews.length > 0 && loggedUsername">
     
   <h4 style="text-align: center;color: #636556; font-size: 13px">User Reviews</h4>
       <ons-list>
@@ -131,14 +119,11 @@
 
                   
                   <span style="font-size: 10px;color: #A7A7A7">
-                    
+                    <ons-icon icon="ion-android-time"></ons-icon>
                     <div ng-if="review.date_edited == '0000-00-00 00:00:00'">
-                      <ons-icon icon="ion-android-time"></ons-icon>
-                      <span ng-hide="review.review_content == null || review.review_content == ''">posted <span am-time-ago="review.date_reviewed"></span></span>
-                      <span ng-show="review.review_content == null || review.review_content == ''">rated <span am-time-ago="review.date_reviewed"></span></span>
+                      posted <span am-time-ago="review.date_reviewed"></span>
                     </div>
                     <div ng-if="review.date_edited != '0000-00-00 00:00:00'">
-                    <ons-icon icon="ion-android-time"></ons-icon>
                       updated <span am-time-ago="review.date_edited"></span>
                     </div>
                     
@@ -149,7 +134,7 @@
                       <ons-icon icon="ion-android-star" ng-repeat="i in userRating track by $index" size="18px" class="rating-star"></ons-icon>
                       <span style="margin-left: -4px"></span>
                       <ons-icon icon="ion-android-star" class="no-rating-star" size="18px" ng-repeat="i in noUserRating track by $index"></ons-icon>
-                  </div> 
+                  </div>  -->
                   <!-- <div style="font-size: 0.95em" ng-init="">
                     {{ review.rating }}
                      <span style=""> 
@@ -163,12 +148,11 @@
                   
                  
 
-                  <div style="font-size: 0.90em;">
+                 <!--  <div style="font-size: 0.90em;">
                   {{ review.review_content }} 
                   </div>
 
-                  <div style="font-size: 0.88em;opacity: 0.90;float: right;margin-right: 10px" ng-click="goToUserReplies(review)"
-                  ng-hide="review.review_content == null || review.review_content == ''">
+                  <div style="font-size: 0.88em;opacity: 0.90;float: right;margin-right: 10px" ng-click="goToUserReplies(review)">
                     <ons-icon icon="ion-chatboxes"></ons-icon> <span></span> reply
                   </div>
             </div>
@@ -182,7 +166,7 @@
       
 </div>
 
-
+ -->
 
 <!--  <ons-bottom-toolbar style="background: #FFFFFF"> -->
 <!--  	<input type="text" class="text-input--underbar" ng-model="userreview"

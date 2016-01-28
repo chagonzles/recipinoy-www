@@ -1,0 +1,36 @@
+<div ng-controller="userCtrlr">
+  <ons-page>
+    
+    <ons-toolbar class="toolbar" modifier="android">
+          <div class="left">
+              <ons-toolbar-button ng-click="back()">
+                  <ons-icon icon="ion-arrow-left-c"></ons-icon>
+              </ons-toolbar-button>
+          </div>
+          <div class="center">
+              {{ recipe.recipe_name }}
+          </div>
+    </ons-toolbar>
+
+    <ons-tabbar position="top" modifier="top-border">
+            <ons-tab page="app/views/user/my_favorites/recipe/information.html" active="true">
+              <ons-icon icon="fa-info-circle"></ons-icon>
+            </ons-tab>
+       
+            <ons-tab page="app/views/user/my_favorites/recipe/ingredients.html">
+              <!-- <ons-icon icon="ion-spoon"></ons-icon>
+              <ons-icon icon="ion-fork"></ons-icon> -->
+              <ons-icon icon="ion-ios-nutrition"></ons-icon>
+            </ons-tab>
+            
+            <ons-tab page="app/views/user/my_favorites/recipe/procedures.html">
+              <ons-icon icon="ion-android-list"></ons-icon>
+            </ons-tab>
+
+           <!--  <ons-tab page="app/views/recipe/map.html">
+              <ons-icon icon="fa-map-marker"></ons-icon>
+            </ons-tab> -->
+    </ons-tabbar>
+
+  </ons-page>
+</div>

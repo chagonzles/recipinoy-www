@@ -1,9 +1,9 @@
 <div ng-controller="recipeCtrl">
   <ons-page>
     
-    <ons-toolbar class="toolbar" modifier="android">
+    <ons-toolbar class="toolbar" fixed-style modifier="android">
           <div class="left">
-              <ons-toolbar-button ng-click="back()">
+              <ons-toolbar-button ng-click="back();">
                   <ons-icon icon="ion-arrow-left-c"></ons-icon>
               </ons-toolbar-button>
           </div>
@@ -12,18 +12,18 @@
           </div>
     </ons-toolbar>
 
-    <ons-tabbar position="top" modifier="top-border">
-            <ons-tab page="app/views/recipe/information.html" active="true">
+    <ons-tabbar position="top" modifier="top-border" var="recipeViewTabBar">
+            <ons-tab page="app/views/recipe/information.html" active="true" ng-click="check(recipeViewTabBar)">
               <ons-icon icon="fa-info-circle"></ons-icon>
             </ons-tab>
        
-            <ons-tab page="app/views/recipe/ingredients.html">
+            <ons-tab page="app/views/recipe/ingredients.html" ng-click="check(recipeViewTabBar)">
               <!-- <ons-icon icon="ion-spoon"></ons-icon>
               <ons-icon icon="ion-fork"></ons-icon> -->
               <ons-icon icon="ion-ios-nutrition"></ons-icon>
             </ons-tab>
             
-            <ons-tab page="app/views/recipe/procedures.html">
+            <ons-tab page="app/views/recipe/procedures.html"ng-click="check(recipeViewTabBar)">
               <ons-icon icon="ion-android-list"></ons-icon>
             </ons-tab>
 
@@ -32,9 +32,9 @@
             </ons-tab>
  -->
 
-            <ons-tab page="app/views/recipe/map.html">
+          <!--   <ons-tab page="app/views/recipe/mapview.html" ng-if="!noInternet && loggedUsername">
               <ons-icon icon="fa-map-marker"></ons-icon>
-            </ons-tab>
+            </ons-tab> -->
     </ons-tabbar>
 
   </ons-page>

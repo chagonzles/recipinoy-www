@@ -65,7 +65,7 @@
           <ons-list-item modifier="chevron" class="list-item-container" 
 		  ng-repeat="recipe in recipes | filterBy:['recipe_name']: query | filterBy: ['region']: region.name | filterBy: ['province']: province | filterBy: ['category_name']: category.category_name | limitTo: range"
           ng-click="goToRecipeView(recipe.recipe_id);">
-          <ons-row>
+         <ons-row>
               <ons-col width="95px">
                 <img ng-src="{{ recipe.recipe_img }}" class="thumbnail-my-recipes">
               </ons-col>
@@ -73,25 +73,40 @@
                 <div class="myrecipes-name">
                   {{ recipe.recipe_name }}
                 </div>
+                
+
+
                 <div class="location">
-                <div ng-init="(arrRating = []).length = (recipe.ave_rating | number: 0);(noRating = []).length = 5 - arrRating.length">
+                 <div ng-init="(arrRating = []).length = (recipe.ave_rating | number: 0);(noRating = []).length = 5 - arrRating.length">
                       <ons-icon icon="fa-star" ng-repeat="i in arrRating track by $index" size="18px" style="color: #FDC61F"></ons-icon>
                       <ons-icon icon="star" style="color: #939393" size="18px" ng-repeat="i in noRating track by $index"></ons-icon>
                   </div>  
 
-    			<br>
-                  <ons-icon icon="fa-map-marker" style="color: red"></ons-icon icon>
-                 	{{ recipe.region }} <br>
-                    {{ recipe.date_posted }}
-           
+                  
+                  <div style="font-size: 10px">
+                    <ons-icon icon="fa-map-marker" style="color: red" size="11px"></ons-icon icon> {{ recipe.province }}
+                  </div>
+               
+
+                </div>
+        
+                <br>
+                <div class="recipe-list-no-views">
+                  {{ recipe.no_of_view }} views
                 </div>
 
-                <div class="desc">
-                 	Viewed {{ recipe.no_of_view }} times
-                </div>
               </ons-col>
-
+                
           </ons-row>
+        <ons-row>
+        <ons-col>
+        </ons-col>
+        <ons-col size="80%">
+          <div class="timeline-date">added  <span am-time-ago="recipe.date_posted"></span></div>
+        </ons-col>
+        <ons-col size="5%">
+        </ons-col>
+        </ons-row>
   			
         </ons-list-item>
       </ons-list>	

@@ -10,9 +10,9 @@ recipinoy.config(function($httpProvider){
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
  }); //to allow cross origin request
 
-var restUrl = 'http://localhost/rpserver/api/';
+// var restUrl = 'http://localhost/rpserver/api/';
 // var restUrl = 'https://recipinoyv2-sdpixels.rhcloud.com/api/';
-// var restUrl = 'https://rpserver-sdpixels.rhcloud.com/api/'; //-ito un latest
+var restUrl = 'https://rpserver-sdpixels.rhcloud.com/api/'; //-ito un latest
 var localStorage = window.localStorage;
 var adminViewUrl = 'app/views/admin/';
 var guestViewUrl = 'app/views/guest/';
@@ -22,7 +22,7 @@ var rootViewUrl = 'app/views/';
 var view_recipe_id;
 recipinoy.controller('AppController',['$scope','$rootScope','recipinoyService','recipeService','$cordovaCamera','$cordovaNetwork','$cordovaSQLite',
 	function($scope,$rootScope,recipinoyService,recipeService,$cordovaCamera,$cordovaNetwork,$cordovaSQLite){
-	
+	$rootScope.noInternet = false;
 	if(localStorage.getItem('user') != null || localStorage.getItem('admin') != null)
 	{
 		$scope.loggedIn = true;
@@ -42,6 +42,7 @@ recipinoy.controller('AppController',['$scope','$rootScope','recipinoyService','
 		console.log('d login');
 	}
 
+
 	ons.createDialog(rootViewUrl + 'noInternetDialog.html');
 	document.addEventListener("deviceready", function () {
 		
@@ -57,26 +58,33 @@ recipinoy.controller('AppController',['$scope','$rootScope','recipinoyService','
 	      console.log(networkState);
 	      if(networkState == '2g' || networkState == 'cell')
 	      {
-	      	// noInternetDialog.show();
+	      	noInternetDialog.show();
+	      	$rootScope.noInternet = true;
 	      }
 	      else
 	      {
-	      	// noInternetDialog.hide();
+	      	noInternetDialog.hide();
+	      	$rootScope.noInternet = false;
+	      	
 	      }
 	      
-	    
+	 
+	    	console.log('meron internet');
 	    });
 
 	    // listen for Offline event
 	    $rootScope.$on('$cordovaNetwork:offline', function(event, networkState){
 	      var offlineState = networkState;
 	      console.log(networkState);
-		  // noInternetDialog.show();
+		  noInternetDialog.show();
+		  console.log('walang internet');
+		  $rootScope.noInternet = true;
 	    });
 
-	    $cordovaSQLite.deleteDB("my.db");
+	    
 	    db = $cordovaSQLite.openDB("my.db");
-	    var query1 = "CREATE TABLE IF NOT EXISTS Favorite_Recipes(recipe_id INT,recipe_img VARCHAR(100),recipe_name VARCHAR(50),recipe_desc VARCHAR(500),region VARCHAR(30),province VARCHAR(30),city VARCHAR(30),ave_rating DECIMAL(3,2) DEFAULT 0,date_posted TIMESTAMP,category VARCHAR(30),no_of_serving INT,no_of_view INT,procedures VARCHAR(10000),username VARCHAR(20),PRIMARY KEY(recipe_id));";
+	    // var query1 = "CREATE TABLE IF NOT EXISTS Favorite_Recipes(recipe_id INT,recipe_img VARCHAR(100),recipe_name VARCHAR(50),recipe_desc VARCHAR(500),region VARCHAR(30),province VARCHAR(30),city VARCHAR(30),ave_rating DECIMAL(3,2) DEFAULT 0,date_posted TIMESTAMP,category VARCHAR(30),no_of_serving INT,no_of_view INT,procedures VARCHAR(10000),username VARCHAR(20),PRIMARY KEY(recipe_id));";
+		var query1 = "CREATE TABLE IF NOT EXISTS Recipe(recipe_id INT,recipe_img VARCHAR(100),recipe_name VARCHAR(50),recipe_desc VARCHAR(500),region VARCHAR(30),province VARCHAR(30),city VARCHAR(30),ave_rating DECIMAL(3,2) DEFAULT 0,date_posted TIMESTAMP,category VARCHAR(30),no_of_serving INT,no_of_view INT,procedures VARCHAR(10000),username VARCHAR(20),PRIMARY KEY(recipe_id));";
 		var query2 = "CREATE TABLE IF NOT EXISTS Ingredient(ingredient_id INT,ingredient_name VARCHAR(50),ingredient_uom VARCHAR(20),ingredient_cal INT, date_added TIMESTAMP, date_updated TIMESTAMP,username VARCHAR(20),PRIMARY KEY(ingredient_id))";
 		var query3 = "CREATE TABLE IF NOT EXISTS Recipe_Ingredient(rcp_ingrdnt_id INT,qty INT,qty_fraction VARCHAR(5),recipe_id INT,ingredient_id INT, PRIMARY KEY(rcp_ingrdnt_id))";
 

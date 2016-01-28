@@ -15,10 +15,12 @@
 			  		 {{ userRating }}
 			  	</div>
 			  	
-			   	<ons-icon icon="ion-android-star" ng-class="{'rating-star': i < userRating,'no-rating-star': i >= userRating}" ng-repeat="i in dialogInitRating track by $index" size="18px" ng-click="getRatingNo(i)"></ons-icon>
+			   	
 			   </div>
 			
-
+				<div class="login-form" style="margin-top: -5px">
+					<ons-icon icon="ion-android-star" ng-class="{'rating-star': i < userRating,'no-rating-star': i >= userRating}" ng-repeat="i in dialogInitRating track by $index" size="18px" style="font-size: 2.50em !important" ng-click="getRatingNo(i)"></ons-icon>
+				</div>
 			   <textarea class="textarea" rows="10" style="width: 100%;font-size: 11px" placeholder="Write a review for this recipe" ng-model="user_review" name="user_review" required></textarea>
 			   <span ng-show="frmAddRatingReview.review.$error.required || userRating == undefined || userRating == 0 || userRating == null" class="form-error" style="font-size: 11px">
                    
@@ -32,7 +34,8 @@
 		
 		<ons-row style="margin-top: 20px">
 			<ons-col>
-				<button class="button button--large--cta" ng-disabled="(user_review == null || user_review == undefined || user_review == '')  || (userRating == null || userRating == undefined || userRating == 0)">Submit</button>
+				<!-- <button class="button button--large--cta" ng-disabled="(user_review == null || user_review == undefined || user_review == '')  || (userRating == null || userRating == undefined || userRating == 0)">Submit</button> -->
+				<button class="button button--large--cta" ng-disabled="(userRating == null || userRating == undefined || userRating == 0)">Submit</button>
 			</ons-col>
 		</ons-row>
 	</form>

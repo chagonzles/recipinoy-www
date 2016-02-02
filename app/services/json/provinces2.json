@@ -1,0 +1,668 @@
+[
+  {
+    "id": "1",
+    "name": "Abra",
+    "region_id": "2",
+    "lat": "17.5833",
+    "lng": "120.7500"
+
+  },
+  {
+    "id": "2",
+    "name": "Agusan del Norte",
+    "region_id": "16",
+    "lat": "9.1667",
+    "lng": "125.5000"
+  },
+  {
+    "id": "3",
+    "name": "Agusan del Sur",
+    "region_id": "16",
+    "lat": "8.5055",
+    "lng": "125.7407"
+  },
+  {
+    "id": "4",
+    "name": "Aklan",
+    "region_id": "9",
+    "lat": "11.6667",
+    "lng": "122.3333"
+  },
+  {
+    "id": "5",
+    "name": "Albay",
+    "region_id": "8",
+    "lat": "13.2333",
+    "lng": "123.6333"
+  },
+  {
+    "id": "6",
+    "name": "Antique",
+    "region_id": "9",
+    "lat": "11.2333",
+    "lng": "122.1000"
+  },
+  {
+    "id": "7",
+    "name": "Apayao",
+    "region_id": "2",
+    "lat": "17.7500",
+    "lng": "121.2500"
+  },
+  {
+    "id": "8",
+    "name": "Aurora",
+    "region_id": "4",
+    "lat": "15.8833",
+    "lng": "121.5500"
+  },
+  {
+    "id": "9",
+    "name": "Basilan",
+    "region_id": "17",
+    "lat": "6.6929",
+    "lng": "122.0232"
+  },
+  {
+    "id": "10",
+    "name": "Bataan",
+    "region_id": "4",
+    "lat": "14.6667",
+    "lng": "120.4167"
+  },
+  {
+    "id": "11",
+    "name": "Batanes",
+    "region_id": "3",
+    "lat": "20.5833",
+    "lng": "121.9000"
+  },
+  {
+    "id": "12",
+    "name": "Batangas",
+    "region_id": "6",
+    "lat": "13.7565",
+    "lng": "121.0583"
+  },
+  {
+    "id": "13",
+    "name": "Benguet",
+    "region_id": "2",
+    "lat": "16.5577",
+    "lng": "120.8039"
+  },
+  {
+    "id": "14",
+    "name": "Biliran",
+    "region_id": "11",
+    "lat": "11.5230",
+    "lng": "124.5350"
+  },
+  {
+    "id": "15",
+    "name": "Bohol",
+    "region_id": "10",
+    "lat": "9.8800",
+    "lng": "124.2200"
+  },
+  {
+    "id": "16",
+    "name": "Bukidnon",
+    "region_id": "13",
+    "lat": "7.9862",
+    "lng": "125.0388"
+  },
+  {
+    "id": "17",
+    "name": "Bulacan",
+    "region_id": "4",
+    "lat": "15.0000",
+    "lng": "121.0833"
+  },
+  {
+    "id": "18",
+    "name": "Cagayan",
+    "region_id": "3",
+    "lat": "16.9754",
+    "lng": "121.8107"
+  },
+  {
+    "id": "19",
+    "name": "Camarines Norte",
+    "region_id": "8",
+    "lat": "14.1667",
+    "lng": "122.7500"
+  },
+  {
+    "id": "20",
+    "name": "Camarines Sur",
+    "region_id": "8",
+    "lat": "13.6667",
+    "lng": "123.3333"
+  },
+  {
+    "id": "21",
+    "name": "Camiguin",
+    "region_id": "13",
+    "lat": "9.1667",
+    "lng": "124.7167"
+  },
+  {
+    "id": "22",
+    "name": "Capiz",
+    "region_id": "9",
+    "lat": "11.3833",
+    "lng": "122.6333"
+  },
+  {
+    "id": "23",
+    "name": "Catanduanes",
+    "region_id": "8",
+    "lat": "13.8333",
+    "lng": "124.2500"
+  },
+  {
+    "id": "24",
+    "name": "Cavite",
+    "region_id": "6",
+    "lat": "14.2667",
+    "lng": "120.8667"
+  },
+  {
+    "id": "25",
+    "name": "Cebu",
+    "region_id": "10",
+    "lat": "10.2800",
+    "lng": "123.9000"
+  },
+  {
+    "id": "26",
+    "name": "Compostela Valley",
+    "region_id": "14",
+    "lat": "7.5125",
+    "lng": "126.1763"
+  },
+  {
+    "id": "27",
+    "name": "Cotabato",
+    "region_id": "15",
+    "lat": "7.2167",
+    "lng": "124.25"
+  },
+  {
+    "id": "28",
+    "name": "Davao del Norte",
+    "region_id": "14",
+    "lat": "7.3500",
+    "lng": "125.7000"
+  },
+  {
+    "id": "29",
+    "name": "Davao del Sur",
+    "region_id": "14",
+    "lat": "6.3333",
+    "lng": "125.5000"
+  },
+  {
+    "id": "30",
+    "name": "Davao Oriental",
+    "region_id": "14",
+    "lat": "7.1667",
+    "lng": "126.3333"
+  },
+  {
+    "id": "31",
+    "name": "Eastern Samar",
+    "region_id": "11",
+    "lat": "11.6667",
+    "lng": "125.5000"
+  },
+  {
+    "id": "32",
+    "name": "Guimaras",
+    "region_id": "9",
+    "lat": "10.5667",
+    "lng": "122.5833"
+  },
+  {
+    "id": "33",
+    "name": "Ifugao",
+    "region_id": "2",
+    "lat": "16.8333",
+    "lng": "121.1667"
+  },
+  {
+    "id": "34",
+    "name": "Ilocos Norte",
+    "region_id": "1",
+    "lat": "18.1667",
+    "lng": "120.7500"
+  },
+  {
+    "id": "35",
+    "name": "Ilocos Sur",
+    "region_id": "1",
+    "lat": "17.3333",
+    "lng": "120.5833"
+  },
+  {
+    "id": "36",
+    "name": "Iloilo",
+    "region_id": "9",
+    "lat": "11.0000",
+    "lng": "122.6667"
+  },
+  {
+    "id": "37",
+    "name": "Isabela",
+    "region_id": "3",
+    "lat": "17.0000",
+    "lng": "122.0000"
+  },
+  {
+    "id": "38",
+    "name": "Kalinga",
+    "region_id": "2",
+    "lat": "17.7500",
+    "lng": "121.2500"
+  },
+  {
+    "id": "39",
+    "name": "La Union",
+    "region_id": "1",
+    "lat": "16.5000",
+    "lng": "120.4167"
+  },
+  {
+    "id": "40",
+    "name": "Laguna",
+    "region_id": "6",
+    "lat": "14.1667",
+    "lng": "121.3333"
+  },
+  {
+    "id": "41",
+    "name": "Lanao del Norte",
+    "region_id": "13",
+    "lat": "8.0333",
+    "lng": "124.0000"
+  },
+  {
+    "id": "42",
+    "name": "Lanao del Sur",
+    "region_id": "17",
+    "lat": "7.9167",
+    "lng": "124.3333"
+  },
+  {
+    "id": "43",
+    "name": "Leyte",
+    "region_id": "11",
+    "lat": "11.0000",
+    "lng": "124.8500"
+  },
+  {
+    "id": "44",
+    "name": "Maguindanao",
+    "region_id": "17",
+    "lat": "7.1333",
+    "lng": "124.3000"
+  },
+  {
+    "id": "45",
+    "name": "Marinduque",
+    "region_id": "7",
+    "lat": "13.4000",
+    "lng": "121.9667"
+  },
+  {
+    "id": "46",
+    "name": "Masbate",
+    "region_id": "8",
+    "lat": "12.1667",
+    "lng": "123.5833"
+  },
+  {
+    "id": "47",
+    "name": "Manila",
+    "region_id": "5",
+    "lat": "14.5800",
+    "lng": "121.0000"
+  },
+  {
+    "id": "48",
+    "name": "Misamis Occidental",
+    "region_id": "13",
+    "lat": "8.3333",
+    "lng": "123.7000"
+  },
+  {
+    "id": "49",
+    "name": "Misamis Oriental",
+    "region_id": "13",
+    "lat": "8.7500",
+    "lng": "125.0000"
+  },
+  {
+    "id": "50",
+    "name": "Mountain Province",
+    "region_id": "2",
+    "lat": "17.0833",
+    "lng": "121.1667"
+  },
+  {
+    "id": "51",
+    "name": "Negros Occidental",
+    "region_id": "9",
+    "lat": "10.4167",
+    "lng": "123.0000"
+  },
+  {
+    "id": "52",
+    "name": "Negros Oriental",
+    "region_id": "10",
+    "lat": "9.7500",
+    "lng": "123.0000"
+  },
+  {
+    "id": "53",
+    "name": "Northern Samar",
+    "region_id": "11",
+    "lat": "12.3333",
+    "lng": "124.6667"
+  },
+  {
+    "id": "54",
+    "name": "Nueva Ecija",
+    "region_id": "4",
+    "lat": "15.5833",
+    "lng": "121.0000"
+  },
+  {
+    "id": "55",
+    "name": "Nueva Vizcaya",
+    "region_id": "3",
+    "lat": "16.4833",
+    "lng": "121.1500"
+  },
+  {
+    "id": "56",
+    "name": "Occidental Mindoro",
+    "region_id": "7",
+    "lat": "13.0000",
+    "lng": "120.9167"
+  },
+  {
+    "id": "57",
+    "name": "Oriental Mindoro",
+    "region_id": "7",
+    "lat": "13.0000",
+    "lng": "121.0833"
+  },
+  {
+    "id": "58",
+    "name": "Palawan",
+    "region_id": "7",
+    "lat": "10.0000",
+    "lng": "118.8333"
+  },
+  {
+    "id": "59",
+    "name": "Pampanga",
+    "region_id": "4",
+    "lat": "15.0794",
+    "lng": "120.62"
+  },
+  {
+    "id": "60",
+    "name": "Pangasinan",
+    "region_id": "1",
+    "lat": "15.9167",
+    "lng": "120.3333"
+  },
+  {
+    "id": "61",
+    "name": "Quezon",
+    "region_id": "6",
+    "lat": "14.1667",
+    "lng": "121.8333"
+  },
+  {
+    "id": "62",
+    "name": "Quirino",
+    "region_id": "3",
+    "lat": "17.1333",
+    "lng": "121.7"
+  },
+  {
+    "id": "63",
+    "name": "Rizal",
+    "region_id": "6",
+    "lat": "14.6037",
+    "lng": "121.3084"
+  },
+  {
+    "id": "64",
+    "name": "Romblon",
+    "region_id": "7",
+    "lat": "12.5500",
+    "lng": "122.2833"
+  },
+  {
+    "id": "65",
+    "name": "Samar",
+    "region_id": "11",
+    "lat": "12.0000",
+    "lng": "125.0000"
+  },
+  {
+    "id": "66",
+    "name": "Sarangani",
+    "region_id": "15",
+    "lat": "5.9267",
+    "lng": "124.9948"
+  },
+  {
+    "id": "67",
+    "name": "Siquijor",
+    "region_id": "10",
+    "lat": "9.2133",
+    "lng": "123.5157"
+  },
+  {
+    "id": "68",
+    "name": "Sorsogon",
+    "region_id": "8",
+    "lat": "12.9927",
+    "lng": "124.0147"
+  },
+  {
+    "id": "69",
+    "name": "South Cotabato",
+    "region_id": "15",
+    "lat": "6.1667",
+    "lng": "125.0000"
+  },
+  {
+    "id": "70",
+    "name": "Southern Leyte",
+    "region_id": "11",
+    "lat": "10.3333",
+    "lng": "125.0833"
+  },
+  {
+    "id": "71",
+    "name": "Sultan Kudarat",
+    "region_id": "15",
+    "lat": "6.5069",
+    "lng": "124.4198"
+  },
+  {
+    "id": "72",
+    "name": "Sulu",
+    "region_id": "17",
+    "lat": "5.9749",
+    "lng": "121.0335"
+  },
+  {
+    "id": "73",
+    "name": "Surigao del Norte",
+    "region_id": "16",
+    "lat": "9.6667",
+    "lng": "125.6333"
+  },
+  {
+    "id": "74",
+    "name": "Surigao del Sur",
+    "region_id": "16",
+    "lat": "8.6667",
+    "lng": "126.0000"
+  },
+  {
+    "id": "75",
+    "name": "Tarlac",
+    "region_id": "4",
+    "lat": "15.4667",
+    "lng": "120.5833"
+  },
+  {
+    "id": "76",
+    "name": "Tawi-Tawi",
+    "region_id": "17",
+    "lat": "5.2000",
+    "lng": "120.2500"
+  },
+  {
+    "id": "77",
+    "name": "Zambales",
+    "region_id": "4",
+    "lat": "15.3333",
+    "lng": "120.1667"
+  },
+  {
+    "id": "78",
+    "name": "Zamboanga del Norte",
+    "region_id": "12",
+    "lat": "8.1333",
+    "lng": "123.0000"
+  },
+  {
+    "id": "79",
+    "name": "Zamboanga del Sur",
+    "region_id": "12",
+    "lat": "7.8333",
+    "lng": "123.2500"
+  },
+  {
+    "id": "80",
+    "name": "Zamboanga Sibugay",
+    "region_id": "12",
+    "lat": "7.8000",
+    "lng": "122.6667"
+  },
+  {
+    "id": "81",
+    "name": "Caloocan",
+    "region_id": "5",
+    "lat": "14.6500",
+    "lng": "120.9700"
+  },
+  {
+    "id": "82",
+    "name": "Las Piñas",
+    "region_id": "5",
+    "lat": "14.4500",
+    "lng": "120.9800"
+  },
+  {
+    "id": "83",
+    "name": "Makati",
+    "region_id": "5",
+    "lat": "14.5500",
+    "lng": "121.0300"
+  },
+  {
+    "id": "84",
+    "name": "Malabon",
+    "region_id": "5",
+    "lat": "14.6600",
+    "lng": "120.9600"
+  },
+  {
+    "id": "85",
+    "name": "Mandaluyong",
+    "region_id": "5",
+    "lat": "14.5800",
+    "lng": "121.0300"
+  },
+  {
+    "id": "86",
+    "name": "Marikina",
+    "region_id": "5",
+    "lat": "14.6500",
+    "lng": "121.1000"
+  },
+  {
+    "id": "87",
+    "name": "Muntinlupa",
+    "region_id": "5",
+    "lat": "14.3800",
+    "lng": "121.0500"
+  },
+  {
+    "id": "88",
+    "name": "Navotas",
+    "region_id": "5",
+    "lat": "14.6667",
+    "lng": "120.9417"
+  },
+  {
+    "id": "89",
+    "name": "Parañaque",
+    "region_id": "5",
+    "lat": "14.4700",
+    "lng": "121.0200"
+  },
+  {
+    "id": "90",
+    "name": "Pasay",
+    "region_id": "5",
+    "lat": "14.5500",
+    "lng": "121.0000"
+  },
+  {
+    "id": "91",
+    "name": "Pasig",
+    "region_id": "5",
+    "lat": "14.5750",
+    "lng": "121.0833"
+  },
+  {
+    "id": "92",
+    "name": "Quezon City",
+    "region_id": "5",
+    "lat": "14.6300",
+    "lng": "121.0300"
+  },
+  {
+    "id": "93",
+    "name": "San Juan",
+    "region_id": "5",
+    "lat": "14.6000",
+    "lng": "121.0300"
+  },
+  {
+    "id": "94",
+    "name": "Taguig",
+    "region_id": "5",
+    "lat": "14.5500",
+    "lng": "121.0500"
+  },
+  {
+    "id": "95",
+    "name": "Valenzuela",
+    "region_id": "5",
+    "lat": "14.7000",
+    "lng": "120.9800"
+  }
+]

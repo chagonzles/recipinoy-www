@@ -36,16 +36,20 @@
                 
                  </div>
                  <div>
-                   <ons-icon icon="ion-location" style="color: #EC0C0C"></ons-icon>
+                 <span ng-click="goToRegionRecipesList(recipe.region)">
+                     <ons-icon icon="ion-location" style="color: #EC0C0C"></ons-icon>
                 {{ recipe.region }}
-                  <ons-icon icon="ion-android-map" style="color: #EC0C0C"></ons-icon>
+                 </span>
+                  <span ng-click="goToProvinceRecipesList(recipe.province)">
+                       <ons-icon icon="ion-android-map" style="color: #EC0C0C"></ons-icon>
                   {{ recipe.province }}
 
+                  </span>
                  </div>
                   
                 
-                 <div style="font-size: 11px">
-                    <button ng-click="goToMapView(recipe)"><ons-icon icon="ion-location"></ons-icon>View in Map</button>
+                 <div style="font-size: 11px" ng-show="loggedUsername">
+                    <button ng-click="goToMapView(recipe)" class="btn-mapview"><ons-icon icon="ion-location"></ons-icon> View in Map</button>
                  </div>
                   
 
@@ -194,3 +198,26 @@
 
 
 </ons-scroller>
+<ons-modal var="addReviewRatingModal">  
+    <ons-icon icon="ion-load-c" spin="true"></ons-icon>
+
+     <br><br> Posting your review/rating..
+</ons-modal>
+<ons-modal var="updateReviewRatingModal">  
+    <ons-icon icon="ion-load-c" spin="true"></ons-icon>
+
+     <br><br> Updating your review/rating..
+</ons-modal>
+
+
+<ons-modal var="addToFavoritesModal">  
+    <ons-icon icon="ion-load-c" spin="true"></ons-icon>
+
+     <br><br> Adding to your favorites
+</ons-modal>
+
+<ons-modal var="removeToFavoritesModal">  
+    <ons-icon icon="ion-load-c" spin="true"></ons-icon>
+
+     <br><br> Removing to your favorites
+</ons-modal>

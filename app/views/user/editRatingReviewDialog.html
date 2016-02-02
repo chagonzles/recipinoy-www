@@ -15,7 +15,7 @@
 			  		 {{ userRating }}
 			  	</div>
 			  	
-			   	<ons-icon icon="ion-android-star" ng-class="{'rating-star': i < userRating,'no-rating-star': i >= userRating}" ng-repeat="i in dialogInitRating track by $index" size="18px" ng-click="getRatingNo(i)"></ons-icon>
+			   	<ons-icon icon="ion-android-star" ng-class="{'rating-star': i < userRating,'no-rating-star': i >= userRating}" ng-repeat="i in dialogInitRating track by $index" size="18px" style="font-size: 2.50em !important" ng-click="getRatingNo(i)"></ons-icon>
 			   </div>
 			
 
@@ -32,7 +32,7 @@
 		
 		<ons-row style="margin-top: 20px">
 			<ons-col>
-				<button class="button button--large--cta" ng-disabled="(review == null || review == undefined || review == '')  || (userRating == null || userRating == undefined || userRating == 0)">Submit</button>
+				<button class="button button--large--cta" ng-disabled="(userRating == null || userRating == undefined || userRating == 0)">Submit</button>
 			</ons-col>
 		</ons-row>
 	</form>

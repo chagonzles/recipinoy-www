@@ -17,3 +17,18 @@
 .button-text {
 	font-size: 14px;
 }
+
+.btn-mapview {
+	line-height: 32px;
+	letter-spacing: 0;
+	color: #fff;
+	vertical-align: middle;
+	background-color:  #f44336;
+	border: 0 solid currentColor;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	-webkit-transition: none;
+	-moz-transition: none;
+	-o-transition: none;
+	transition: none;
+}

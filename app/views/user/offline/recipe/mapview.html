@@ -1,0 +1,19 @@
+
+<ons-page ng-device-backbutton="backToRecipeView()">
+ <ons-toolbar class="toolbar" fixed-style modifier="android" ng-device-backbutton="backToRecipeView()">
+          <div class="left">
+              <ons-toolbar-button ng-click="backToRecipeView();">
+                  <ons-icon icon="ion-arrow-left-c"></ons-icon>
+              </ons-toolbar-button>
+          </div>
+          <div class="center">
+              {{ recipe.recipe_name }}
+          </div>
+    </ons-toolbar>
+	<div style="width: 100%;height:100%;max-width:100%;">
+		<div ng-controller="mapCtrl" id="map_canvas" style="width:100%;height:100%;" class="gmap_div">
+
+		</div>
+
+	</div>
+</ons-page>

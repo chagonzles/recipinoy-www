@@ -61,7 +61,7 @@
   
   <ons-list>
      <ons-list-item modifier="chevron" class="list-item-container" 
-      ng-repeat="recipe in offlineRecipes | filterBy:['recipe_name']: query | filterBy: ['region']: region.name | filterBy: ['province']: province | filterBy: ['category_name']: category.category_name | limitTo: range"
+      ng-repeat="recipe in offlineRecipes | filterBy:['recipe_name']: query | filterBy: ['region']: region.name | filterBy: ['province']: province | filterBy: ['category']: category.category_name | limitTo: range"
           ng-click="viewRecipeOffline(recipe.recipe_id);">
       
           <ons-row>
@@ -109,11 +109,7 @@
         </ons-list-item>
   
       </ons-list>
-       <ons-row ng-show="isEmptySearch">
-          <div class="login-form">
-            <p>Recipe not found.</p>
-          </div>
-      </ons-row>
+    
 <!-- <nav mfb-menu position="br" effect="zoomin" label="Add New Recipe"
      active-icon="ion-plus-round" resting-icon="ion-plus-round"
      toggling-method="click" ng-click="goToAddRecipe()">

@@ -18,6 +18,9 @@ guest.controller('guestCtrlr',['$rootScope','$scope','recipeService',function($r
 	
 	$rootScope.i = getRandomNumber(6);
 
+	$rootScope.refreshData = function() {
+		refreshData();
+	}
 	refreshData();
 
 	function refreshData()
@@ -29,19 +32,23 @@ guest.controller('guestCtrlr',['$rootScope','$scope','recipeService',function($r
 		recipeService.query().$promise.then(function(recipes){
 			$rootScope.recipes = recipes;
 			$scope.isLoadingRecent= false;
+			// $scope.isLoadingMostViewed = false;
+			$scope.isLoadingTopRated = false;
 		});
 
 		recipeService.most_viewed().$promise.then(function(most_viewed){
 			$rootScope.most_viewed = most_viewed;
 			$scope.isLoadingMostViewed = false;
 		});
-		
-		recipeService.top_rated().$promise.then(function(top_rated){
-			$rootScope.top_rated = top_rated;
-			$scope.isLoadingTopRated = false;
-		});
-	};
 
+
+		
+		// recipeService.top_rated().$promise.then(function(top_rated){
+		// 	$rootScope.top_rated = top_rated;
+		// 	$scope.isLoadingTopRated = false;
+		// });
+	};
+	
 	function refreshRecipes()
 	{
 		$scope.isLoadingRecent= false;
@@ -78,8 +85,9 @@ guest.controller('guestCtrlr',['$rootScope','$scope','recipeService',function($r
 	};
 	$rootScope.goToRecipeView = function(recipe_id) {
 		$rootScope.view_recipe_id = recipe_id;
+		nav.pushPage('app/views/recipe/main.html');
 		recipeService.update_view_no({id: $rootScope.view_recipe_id}).$promise.then(function(){
-			nav.pushPage('app/views/recipe/main.html');
+			
 		});
 	};
 	

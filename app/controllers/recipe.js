@@ -25,9 +25,9 @@ recipe.controller('recipeCtrl',['$rootScope','$scope','recipeService',function($
 			$rootScope.starRating[i] = i;
 		}
 		$rootScope.noStarRating.length = 5 - $scope.starRating.length; 
-
 	});
 
+	
 
 
 	
@@ -201,80 +201,164 @@ recipe.controller('mapCtrl',['$scope','$rootScope','$timeout',function($scope,$r
 	// }
 
 
-	$rootScope.initMap = function() {
-        $('.page__background').not('.page--menu-page__background').css('background-color', 'transparent');
-        $('#menu-page').css('background', '#333834 !important');
-        if($rootScope.map) {
-            $rootScope.map.clear();
-            $rootScope.map.remove();
-            $('.gmap_div:not(:last)').remove();
-            $rootScope.map = '';
-        }
-        const PH = new plugin.google.maps.LatLng(13.000,122.0000);
-        $timeout(function(){
-            var div = document.getElementById("map_canvas");
-            $rootScope.map = plugin.google.maps.Map.getMap(div,{
-                    'backgroundColor': '#f9f9f9',
-                    'mapType': plugin.google.maps.MapTypeId.ROADMAP,
-                    'controls': {
-                    'compass': true,
-                    'myLocationButton': false,
-                    'indoorPicker': false,
-                    'zoom': true
-                },
-                    'gestures': {
-                    'scroll': true,
-                    'tilt': true,
-                    'rotate': true
-                },
-                	'camera': {
-                	'latLng': PH,
-                	'zoom': 5
-                }
-            });
-            $rootScope.map.setDebuggable(true);
-            $rootScope.map.on(plugin.google.maps.event.MAP_READY, function(map){
-            	var request = {
-				  'address': $rootScope.recipe_map.province
-				};
-                plugin.google.maps.Geocoder.geocode(request, function(results) {
-				  if (results.length) {
-				    var result = results[0];
-				    var position = result.position; 
+	// $rootScope.initMap = function() {
+ //        $('.page__background').not('.page--menu-page__background').css('background-color', 'transparent');
+ //        $('#menu-page').css('background', '#333834 !important');
+ //        if($rootScope.map) {
+ //            $rootScope.map.clear();
+ //            $rootScope.map.remove();
+ //            $('.gmap_div:not(:last)').remove();
+ //            $rootScope.map = '';
+ //        }
+ //        const PH = new plugin.google.maps.LatLng(13.000,122.0000);
+ //        $timeout(function(){
+ //            var div = document.getElementById("map_canvas");
+ //            $rootScope.map = plugin.google.maps.Map.getMap(div,{
+ //                    'backgroundColor': '#f9f9f9',
+ //                    'mapType': plugin.google.maps.MapTypeId.ROADMAP,
+ //                    'controls': {
+ //                    'compass': true,
+ //                    'myLocationButton': false,
+ //                    'indoorPicker': false,
+ //                    'zoom': true
+ //                },
+ //                    'gestures': {
+ //                    'scroll': true,
+ //                    'tilt': true,
+ //                    'rotate': true
+ //                },
+ //                	'camera': {
+ //                	'latLng': PH,
+ //                	'zoom': 5
+ //                }
+ //            });
+ //            $rootScope.map.setDebuggable(true);
+ //            $rootScope.map.on(plugin.google.maps.event.MAP_READY, function(map){
+ //            	var request = {
+	// 			  'address': $rootScope.recipe_map.province
+	// 			};
+ //                plugin.google.maps.Geocoder.geocode(request, function(results) {
+	// 			  if (results.length) {
+	// 			    var result = results[0];
+	// 			    var position = result.position; 
 
-				    map.addMarker({
-				      'position': position,
-				       icon: 'green',
-				      'title': $rootScope.recipe_map.recipe_name,
-				      'snippet': $rootScope.recipe_map.recipe_desc,
-				      'styles' : {
-						    'font-weight': 'bold'
+	// 			    map.addMarker({
+	// 			      'position': position,
+	// 			       icon: 'green',
+	// 			      'title': $rootScope.recipe_map.recipe_name,
+	// 			      'snippet': $rootScope.recipe_map.recipe_desc,
+	// 			      'styles' : {
+	// 					    'font-weight': 'bold'
+	// 					  } 
+	// 			    }, function(marker) {
+
+	// 			      map.animateCamera({
+	// 			        'target': position,
+	// 			        'zoom': 9,
+	// 			        'duration': 3000
+	// 			      }, function() {
+	// 			        marker.showInfoWindow();
+	// 			      });
+
+	// 			    });
+	// 			  } else {
+	// 			    alert("Not found");
+	// 			  }
+	// 			}); //geocode
+ //            }); // on map ready
+ //        }, 600, false);
+ //    } 
+
+
+
+
+	 $rootScope.initMap = function() {
+	        $('.page__background').not('.page--menu-page__background').css('background-color', 'transparent');
+	        $('#menu-page').css('background', '#333834 !important');
+	        if($rootScope.map) {
+	            $rootScope.map.clear();
+	            $rootScope.map.remove();
+	            $('.gmap_div:not(:last)').remove();
+	            $rootScope.map = '';
+	        }
+	        const PH = new plugin.google.maps.LatLng(13.000,122.0000);
+	        $timeout(function(){
+	            var div = document.getElementById("map_canvas");
+	            $rootScope.map = plugin.google.maps.Map.getMap(div,{
+	                    'backgroundColor': '#f9f9f9',
+	                    'mapType': plugin.google.maps.MapTypeId.ROADMAP,
+	                    'controls': {
+	                    'compass': true,
+	                    'myLocationButton': false,
+	                    'indoorPicker': false,
+	                    'zoom': true
+	                },
+	                    'gestures': {
+	                    'scroll': true,
+	                    'tilt': true,
+	                    'rotate': true
+	                },
+	                	'camera': {
+	                	'latLng': PH,
+	                	'zoom': 5
+	                }
+	            });
+	            $rootScope.map.setDebuggable(true);
+	            $rootScope.map.on(plugin.google.maps.event.MAP_READY, function(map){
+	            
+					recipelat = findCoor($rootScope.provinces,'name',$rootScope.recipe_map.province,'lat');
+					recipelng = findCoor($rootScope.provinces,'name',$rootScope.recipe_map.province,'lng');
+				    console.log(recipelat + ' ' + recipelng);
+	                const recipeCoor = new plugin.google.maps.LatLng(recipelat,recipelng);
+	                map.addMarker({
+					      'position': recipeCoor,
+					       icon: '#169216',
+					      'title': $rootScope.recipe_map.recipe_name,
+					      'snippet': $rootScope.recipe_map.recipe_desc,
+					      'styles' : {
+							    'font-weight': 'bold'},
+						  'infoClick': function(marker) {
+						    	
 						  } 
-				    }, function(marker) {
+					    }, function(marker) {
 
-				      map.animateCamera({
-				        'target': position,
-				        'zoom': 9,
-				        'duration': 3000
-				      }, function() {
-				        marker.showInfoWindow();
-				      });
+					      map.animateCamera({
+					        'target': recipeCoor,
+					        'zoom': 8,
+					        'duration': 3000
+					      }, function() {
+					        marker.showInfoWindow();
+					      }); // anime camera
 
-				    });
-				  } else {
-				    alert("Not found");
-				  }
-				}); //geocode
-            }); // on map ready
-        }, 600, false);
-    } 
+					}); // add marker
+
+	              
+				
+
+				
+	              
+
+
+	            }); // on map ready
+	        }, 600, false);
+	    } 
+
 
 
     ons.ready(function(){console.log('Map onsen ready');
         $rootScope.initMap();
     });
 
-
+    function findCoor(arraytosearch, key, valuetosearch,coor) {
+ 
+		for (var i = 0; i < arraytosearch.length; i++) {
+	 
+			if (arraytosearch[i][key] == valuetosearch) {
+				return arraytosearch[i][coor];
+			}
+		}
+		return null;
+	}
 
 
 

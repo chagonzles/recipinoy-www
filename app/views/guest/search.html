@@ -51,16 +51,19 @@
 						<ons-icon icon="ion-android-list" class="filter-icon"></ons-icon>
 					</ons-col>
 					<ons-col size="80%">
-						<select class="text-input select" style="width: 100%" ng-model="category" ng-options="category.category_name for category in categories track by category.category_name">
+						<select class="text-input select" style="width: 100%" ng-model="category" ng-options="category.category_name for category in categories">
 						<option value="">All Categories</option>
 		                </select>
 					</ons-col>
 				</ons-row>
+
+				
+				
 			</div>
 		</ons-list>
 
 
-	  <ons-list ng-hide="isEmptySearch">
+	  <ons-list>
 	  	<ons-list-header>Search Results</ons-list-header>
           <ons-list-item modifier="chevron" class="list-item-container" 
 		  ng-repeat="recipe in recipes | filterBy:['recipe_name']: query | filterBy: ['region']: region.name | filterBy: ['province']: province | filterBy: ['category_name']: category.category_name | limitTo: range"
@@ -116,11 +119,11 @@
 
       </ons-list>	
 
-
+<!-- 
       <ons-row ng-show="isEmptySearch">
       		<p>{{ noInputAlert[i] }}</p>
       </ons-row>
-
+ -->
 
 
 	</ons-page>

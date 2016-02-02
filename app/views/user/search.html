@@ -56,11 +56,20 @@
 		                </select>
 					</ons-col>
 				</ons-row>
+			<!-- 	<ons-row style="margin-left: 5%;">
+					<ons-col size="30px">
+						<ons-icon icon="ion-ios-nutrition" class="filter-icon"></ons-icon>
+					</ons-col>
+					<ons-col size="80%">
+						<input type="text" class="text-input text-input--underbar" style="width: 100% !important"
+  placeholder="Ingredients" value="" ng-model="q_ing">
+					</ons-col>
+				</ons-row> -->
 			</div>
 		</ons-list>
 
 
-	  <ons-list ng-hide="isEmptySearch">
+	  <ons-list>
 	  	<ons-list-header>Search Results</ons-list-header>
           <ons-list-item modifier="chevron" class="list-item-container" 
 		  ng-repeat="recipe in recipes | filterBy:['recipe_name']: query | filterBy: ['region']: region.name | filterBy: ['province']: province | filterBy: ['category_name']: category.category_name | limitTo: range"
@@ -112,10 +121,6 @@
       </ons-list>	
 
 
-      <ons-row ng-show="isEmptySearch">
-      		<p>{{ noInputAlert[i] }}</p>
-      </ons-row>
-
-
+  
 
 	</ons-page>

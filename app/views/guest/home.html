@@ -17,6 +17,9 @@
           <ons-toolbar-button ng-click="search()">
               <ons-icon icon="ion-search"></ons-icon>
           </ons-toolbar-button>
+          <ons-toolbar-button ng-click="refreshData()">
+              <ons-icon icon="ion-refresh"></ons-icon>
+          </ons-toolbar-button>
       </div>
   </ons-toolbar>
  
@@ -30,7 +33,7 @@
           <div ng-hide="isLoadingMostViewed">
               
               <ul class="rig columns-4">
-                <li ng-repeat="recipe in most_viewed | limitTo: 4" ng-click="goToRecipeView(recipe.recipe_id)" ng-hide="isLoading">
+                <li ng-repeat="recipe in most_viewed |limitTo: 4" ng-click="goToRecipeView(recipe.recipe_id)" ng-hide="isLoading">
                   <img ng-src="{{ recipe.recipe_img }}" class="thumbnail"/>
                   <p class="recipe-name">{{ recipe.recipe_name }}</p>
                   <div class="rating" ng-init="(arrRating = []).length = (recipe.ave_rating | number: 0);(noRating = []).length = 5 - arrRating.length">
@@ -75,7 +78,7 @@
           <div ng-hide="isLoadingTopRated">
               
               <ul class="rig columns-4"> 
-                <li ng-repeat="recipe in top_rated| limitTo: 4" ng-click="goToRecipeView(recipe.recipe_id)">
+                <li ng-repeat="recipe in recipes | orderBy: '-ave_rating' |limitTo: 4" ng-click="goToRecipeView(recipe.recipe_id)">
                   <img ng-src="{{ recipe.recipe_img }}" class="thumbnail"/>
                   <p class="recipe-name">{{ recipe.recipe_name }}</p>
                   <div class="rating" ng-init="(arrRating = []).length = (recipe.ave_rating | number: 0);(noRating = []).length = 5 - arrRating.length">

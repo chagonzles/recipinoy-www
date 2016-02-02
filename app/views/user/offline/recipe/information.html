@@ -36,6 +36,12 @@
                   <ons-icon icon="ion-android-map" style="color: #EC0C0C"></ons-icon>
                   {{ recipe.province }}
                  </div>
+
+
+                 <div style="font-size: 11px" ng-show="loggedUsername">
+                    <button ng-click="goToMapView(recipe)" class="btn-mapview"><ons-icon icon="ion-location"></ons-icon> View in Map</button>
+                 </div>
+
   
                 <div class="location">
                   

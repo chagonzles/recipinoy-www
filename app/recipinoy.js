@@ -44,6 +44,7 @@ recipinoy.controller('AppController',['$scope','$rootScope','recipinoyService','
 
 
 	ons.createDialog(rootViewUrl + 'noInternetDialog.html');
+	ons.createDialog(rootViewUrl + 'onlineDialog.html');
 	document.addEventListener("deviceready", function () {
 		
 	    var type = $cordovaNetwork.getNetwork()
@@ -58,24 +59,35 @@ recipinoy.controller('AppController',['$scope','$rootScope','recipinoyService','
 	      console.log(networkState);
 	      if(networkState == '2g' || networkState == 'cell')
 	      {
-	      	noInternetDialog.show();
+	      	// noInternetDialog.show();
 	      	$rootScope.noInternet = true;
 	      }
 	      else
 	      {
-	      	noInternetDialog.hide();
+	      	// noInternetDialog.hide();
 	      	$rootScope.noInternet = false;
 	      	
 	      }
 	      
 	 
 	    	console.log('meron internet');
+	    	noInternetDialog.hide();
+	    	onlineDialog.show();
+	    	// if(localStorage.getItem('user'))
+	    	// {
+	    	// 	nav.resetToPage(userViewUrl	+ 'home.html');
+	    	// }
+	    	// else
+	    	// {
+	    	// 	nav.resetToPage(rootViewUrl + 'login.html');
+	    	// }
 	    });
 
 	    // listen for Offline event
 	    $rootScope.$on('$cordovaNetwork:offline', function(event, networkState){
 	      var offlineState = networkState;
 	      console.log(networkState);
+	      onlineDialog.hide();
 		  noInternetDialog.show();
 		  console.log('walang internet');
 		  $rootScope.noInternet = true;
@@ -87,114 +99,90 @@ recipinoy.controller('AppController',['$scope','$rootScope','recipinoyService','
 		var query1 = "CREATE TABLE IF NOT EXISTS Recipe(recipe_id INT,recipe_img VARCHAR(100),recipe_name VARCHAR(50),recipe_desc VARCHAR(500),region VARCHAR(30),province VARCHAR(30),city VARCHAR(30),ave_rating DECIMAL(3,2) DEFAULT 0,date_posted TIMESTAMP,category VARCHAR(30),no_of_serving INT,no_of_view INT,procedures VARCHAR(10000),username VARCHAR(20),PRIMARY KEY(recipe_id));";
 		var query2 = "CREATE TABLE IF NOT EXISTS Ingredient(ingredient_id INT,ingredient_name VARCHAR(50),ingredient_uom VARCHAR(20),ingredient_cal INT, date_added TIMESTAMP, date_updated TIMESTAMP,username VARCHAR(20),PRIMARY KEY(ingredient_id))";
 		var query3 = "CREATE TABLE IF NOT EXISTS Recipe_Ingredient(rcp_ingrdnt_id INT,qty INT,qty_fraction VARCHAR(5),recipe_id INT,ingredient_id INT, PRIMARY KEY(rcp_ingrdnt_id))";
-
+		var query4 = "CREATE TABLE IF NOT EXISTS Category(category_id INT,category_name VARCHAR(100),category_img VARCHAR(100), PRIMARY KEY(category_id))";
 		
 		
 	    $cordovaSQLite.execute(db,query1);
 	    $cordovaSQLite.execute(db,query2);
 	    $cordovaSQLite.execute(db,query3);
+	    $cordovaSQLite.execute(db,query4);
 	   
+
+	 //   	recipeService.categories().$promise.then(function(categories){
+		// 		$rootScope.categories = categories;
+		// 		console.log('categoriesss');
+		// 		console.log(categories);
+		// });
+
+		checkCategories();
+	   	function checkCategories()
+		{
+
+			recipeService.categories().$promise.then(function(categories){
+				
+				$rootScope.no_of_online_categories = categories.length;
+				$scope.categories_online = categories;
+				var q = "SELECT category_id FROM Category";
+				console.log('no of online categories ' + categories.length);
+		        $cordovaSQLite.execute(db, q).then(function(res) {
+		        	if(res.rows.length > 0 || res.rows.length == 0)
+		        	{
+		        		$rootScope.no_of_offline_categories = res.rows.length;
+		        		console.log('no of offline categories ' + res.rows.length);
+		        		if($rootScope.no_of_online_categories > $rootScope.no_of_offline_categories)
+		        		{
+		        			//drop the db and insert everything on online to offline
+		        			angular.forEach($scope.categories_online, function(category,i){
+		        					var query = "INSERT INTO Category VALUES (?,?,?)";
+							        $cordovaSQLite.execute(db, query, [category.category_id,category.category_name,category.category_img]).then(function(res) {
+							            console.log("Insert category id -> " + res.insertId);
+							        }, function (err) {
+							            console.error(err);
+							        });
+
+		        			});
+
+		        		}
+		        	}
+		           getCategories();
+		        }, function (err) {
+		            console.error(err);
+		        });
+				
+			}); //get categories online
+
+			
+			
+
+		} //check categories
+
+
+		function getCategories()
+		{
+
+				$rootScope.categories = [];
+				var query = "SELECT category_id, category_name, category_img FROM Category";
+		        $cordovaSQLite.execute(db, query).then(function(res) {
+		            if(res.rows.length > 0) {
+		                // console.log("SELECTED -> " + res.rows.item(0).recipe_name + " " + res.rows.item(0).recipe_desc);
+		         		console.log('list of category');
+		            	for (var i = 0; i < res.rows.length; i++) {
+		            		
+		            		$rootScope.categories[i] = res.rows.item(i);
+		            		console.log($rootScope.categories[i].category_name);
+
+		            	};
+		            	
+		            } else {
+		                console.log("No results found");
+		            }
+		        }, function (err) {
+		            console.error(err);
+		        });
+
+		}
+
 	  
-	    // var query = "INSERT INTO Favorite_Recipes VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-     //    $cordovaSQLite.execute(db, query, [1,'image','Kare kare','Favorite ko to','Region III','Bataan','Balanga',5,'2016-01-31 11:00:00','Main dishes',5,100,'Luto mo na lang','charlene']).then(function(res) {
-     //        console.log("Insert id -> " + res.insertId);
-     //    }, function (err) {
-     //        console.error(err);
-     //    });
-
-
-     //    query = "INSERT INTO Ingredient VALUES(?,?,?,?,?,?,?)";
-     //    $cordovaSQLite.execute(db, query, [1,'sugar','kilo(s)',5,'2016-01-31 12:00:00','','charlene']).then(function(res){
-     //    	console.log("Insert ingredient id -> " + res.insertId);
-     //    },function(err){
-     //    	console.log(err);
-     //    });
-
-
-     //    query = "INSERT INTO Ingredient VALUES(?,?,?,?,?,?,?)";
-     //    $cordovaSQLite.execute(db, query, [2,'salt','kilo(s)',5,'2016-01-31 12:00:00','','charlene']).then(function(res){
-     //    	console.log("Insert ingredient id -> " + res.insertId);
-     //    },function(err){
-     //    	console.log(err);
-     //    });
-     //    query = "INSERT INTO Recipe_Ingredient VALUES(?,?,?,?,?)";
-     //    $cordovaSQLite.execute(db, query,[1,2,'1/2',1,2]).then(function(res){
-     //    	console.log("Insert recipe ingredient id -> " + res.insertId);
-     //    },function(err){
-     //    	console.log(err);
-     //    })
-
-     //    query = "INSERT INTO Recipe_Ingredient VALUES(?,?,?,?,?)";
-     //    $cordovaSQLite.execute(db, query,[2,2,'1/2',1,1]).then(function(res){
-     //    	console.log("Insert recipe ingredient id -> " + res.insertId);
-     //    },function(err){
-     //    	console.log(err);
-     //    })
-
-
-       
-
-
-     //    $rootScope.rcpingOffline = [];
-     //    var query = "SELECT rcp_ingrdnt_id,qty,qty_fraction,recipe_id,ingredient_name,ingredient_uom,ingredient_cal FROM Recipe_Ingredient JOIN Ingredient ON Ingredient.ingredient_id = Recipe_Ingredient.ingredient_id WHERE recipe_id = ?";
-     //    $cordovaSQLite.execute(db, query,[1]).then(function(res) {
-     //        if(res.rows.length > 0) {
-     //            // console.log("SELECTED -> " + res.rows.item(0).recipe_name + " " + res.rows.item(0).recipe_desc);
-     //     		console.log('list of recipe ing item');
-     //        	for (var i = 0; i < res.rows.length; i++) {
-            		
-     //        		$rootScope.rcpingOffline[i] = res.rows.item(i);
-     //        		console.log(res.rows.item(i).rcp_ingrdnt_id);
-     //        	};
-            
-            	
-     //        } else {
-     //            console.log("No recipe ingredient found");
-     //        }
-     //    }, function (err) {
-     //        console.error(err);
-     //    });
-
-     //    $scope.frcp = [];
-
-     //    var query = "SELECT recipe_name, recipe_desc FROM Favorite_Recipes";
-     //    $cordovaSQLite.execute(db, query).then(function(res) {
-     //        if(res.rows.length > 0) {
-     //            // console.log("SELECTED -> " + res.rows.item(0).recipe_name + " " + res.rows.item(0).recipe_desc);
-     //     		console.log('list of item');
-     //        	for (var i = 0; i < res.rows.length; i++) {
-     //        		console.log(res.rows.item(i).recipe_name);
-     //        		$scope.frcp = res.rows.item(i);
-     //        	};
-
-     //        	console.log($scope.frcp);
-     //        } else {
-     //            console.log("No results found");
-     //        }
-     //    }, function (err) {
-     //        console.error(err);
-     //    });
-
-     //    $scope.ing = [];
-     //    var query = "SELECT ingredient_id, ingredient_name FROM Ingredient";
-     //    $cordovaSQLite.execute(db, query).then(function(res) {
-     //        if(res.rows.length > 0) {
-     //            // console.log("SELECTED -> " + res.rows.item(0).recipe_name + " " + res.rows.item(0).recipe_desc);
-     //     		console.log('list of item');
-     //        	for (var i = 0; i < res.rows.length; i++) {
-     //        		console.log(res.rows.item(i).ingredient_name);
-     //        		$scope.ing = res.rows.item(i);
-     //        	};
-
-     //        	console.log($scope.ing);
-     //        } else {
-     //            console.log("No results found");
-     //        }
-     //    }, function (err) {
-     //        console.error(err);
-     //    });
-	    
-	    
 		
 		
 
@@ -217,14 +205,27 @@ recipinoy.controller('AppController',['$scope','$rootScope','recipinoyService','
 				$scope.regions = regions;
 	});
 
+	
 	recipinoyService.provinces().$promise.then(function(provinces){
 				$scope.provinces = provinces;
+				$rootScope.provinces = provinces;
+				console.log(provinces);
+				var lat = findCoor($scope.provinces,'name','Malabon','lat');
+				var lng = findCoor($scope.provinces,'name','Malabon','lng');
+				console.log(lat + ' ' + lng);
+
 	});	
 
-	recipeService.categories().$promise.then(function(categories){
-				$scope.categories = categories;
-				console.log(categories);
-	});
+	function findCoor(arraytosearch, key, valuetosearch,coor) {
+ 
+		for (var i = 0; i < arraytosearch.length; i++) {
+	 
+			if (arraytosearch[i][key] == valuetosearch) {
+				return arraytosearch[i][coor];
+			}
+		}
+		return null;
+	}
 
 
 
@@ -245,7 +246,9 @@ recipinoy.controller('AppController',['$scope','$rootScope','recipinoyService','
 	}
 
 
-	
+	$rootScope.goBackToUserDiscover = function() {
+		nav.resetToPage(userViewUrl + 'home.html');
+	}
 	
 	
 }]);

@@ -14,7 +14,7 @@
   <ons-list>
      
       <ons-list-item modifier="chevron" class="list-item-container" 
-      ng-repeat="recipe in top_rated" ng-click="goToRecipeView(recipe.recipe_id);">
+      ng-repeat="recipe in recipes | limitTo:10 | orderBy: '-ave_rating'" ng-click="goToRecipeView(recipe.recipe_id);">
           <ons-row>
               <ons-col width="95px">
                 <img ng-src="{{ recipe.recipe_img }}" class="thumbnail-my-recipes">

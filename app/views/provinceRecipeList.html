@@ -1,20 +1,20 @@
-<ons-page ng-device-backbutton="backToUserDiscover()">
+<ons-page>
     
     <ons-toolbar class="toolbar" modifier="android">
           <div class="left">
-              <ons-toolbar-button ng-click="backToUserDiscover()">
+              <ons-toolbar-button ng-click="back()">
                   <ons-icon icon="ion-arrow-left-c"></ons-icon>
               </ons-toolbar-button>
           </div>
           <div class="center">
-              My Recipes
+              Recipes in {{ province_name }}
           </div>
     </ons-toolbar>
   
   <ons-list>
      
       <ons-list-item modifier="chevron" class="list-item-container" 
-      ng-repeat="recipe in myrecipes" ng-click="goToRecipeView(recipe.recipe_id);">
+      ng-repeat="recipe in recipes | filterBy: ['province']: province_name " ng-click="goToRecipeView(recipe.recipe_id);">
           <ons-row>
               <ons-col width="95px">
                 <img ng-src="{{ recipe.recipe_img }}" class="thumbnail-my-recipes">
@@ -24,6 +24,7 @@
                   {{ recipe.recipe_name }}
                 </div>
                 
+
 
 
                 <div class="location">
@@ -39,7 +40,9 @@
                
 
                 </div>
-        
+                <div class="recipe-list-posted_by">
+                  by <span class="recipe-list-username">{{ recipe.username }}</span>
+                </div>    
                 <br>
                 <div class="recipe-list-no-views">
                   {{ recipe.no_of_view }} views
@@ -60,11 +63,5 @@
         </ons-list-item>
   
       </ons-list>
-
-<nav mfb-menu position="br" effect="zoomin"
-     active-icon="ion-plus-round" resting-icon="ion-plus-round"
-     toggling-method="click" ng-click="goToAddRecipe()">
-</nav>
-
 
   </ons-page>

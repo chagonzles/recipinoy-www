@@ -48,7 +48,7 @@ user.controller('userCtrlr',['$scope','$rootScope','$timeout','$filter','$interv
 		
 
 
-
+		getCategories();
 		checkIfThereIsOnlineRecipes();
 		function initializeUserDB()
 		{
@@ -57,47 +57,17 @@ user.controller('userCtrlr',['$scope','$rootScope','$timeout','$filter','$interv
 		    var query1 = "CREATE TABLE IF NOT EXISTS Recipe(recipe_id INT,recipe_img VARCHAR(100),recipe_name VARCHAR(50),recipe_desc VARCHAR(500),region VARCHAR(30),province VARCHAR(30),city VARCHAR(30),ave_rating DECIMAL(3,2) DEFAULT 0,date_posted TIMESTAMP,category VARCHAR(30),no_of_serving INT,no_of_view INT,procedures VARCHAR(10000),username VARCHAR(20),PRIMARY KEY(recipe_id));";
 			var query2 = "CREATE TABLE IF NOT EXISTS Ingredient(ingredient_id INT,ingredient_name VARCHAR(50),ingredient_uom VARCHAR(20),ingredient_cal INT, date_added TIMESTAMP, date_updated TIMESTAMP,username VARCHAR(20),PRIMARY KEY(ingredient_id))";
 			var query3 = "CREATE TABLE IF NOT EXISTS Recipe_Ingredient(rcp_ingrdnt_id INT,qty INT,qty_fraction VARCHAR(5),recipe_id INT,ingredient_id INT, PRIMARY KEY(rcp_ingrdnt_id))";
-
+		
 			
 			
 		    $cordovaSQLite.execute(db,query1);
 		    $cordovaSQLite.execute(db,query2);
 		    $cordovaSQLite.execute(db,query3);
-			   
+	
+			 
 		}
 
 
-		// function checkIfThereIsOnlineFavorites()
-		// {
-		// 	initializeUserDB();
-		// 	userService.getFavorites({id: $rootScope.loggedUsername}).$promise.then(function(result){
-		// 		$rootScope.no_of_online_favorites = result.length;
-		// 		$scope.favorites_online = result;
-		// 		console.log('no of online favorites ' + result.length)
-		// 		var query = "SELECT recipe_id FROM Favorite_Recipes";
-		//         $cordovaSQLite.execute(db, query).then(function(res) {
-		//         	if(res.rows.length > 0 || res.rows.length == 0)
-		//         	{
-		//         		$rootScope.no_of_offline_favorites = res.rows.length;
-		//         		console.log('no of offline favorites ' + res.rows.length);
-		//         		if($rootScope.no_of_online_favorites > $rootScope.no_of_offline_favorites)
-		//         		{
-		//         			//drop the db and insert everything on online to offline
-		//         			angular.forEach($scope.favorites_online, function(recipe,i){
-		//         				console.log(recipe);
-		//         				addToFavoritesOffline(recipe);
-		//         			});
-
-		//         		}
-		//         	}
-		           
-		//         }, function (err) {
-		//             console.error(err);
-		//         });
-
-
-		// 	});
-		// };
 
 		function checkIfThereIsOnlineRecipes()
 		{
@@ -137,16 +107,38 @@ user.controller('userCtrlr',['$scope','$rootScope','$timeout','$filter','$interv
 
 
 
+		function getCategories()
+		{
+
+				$rootScope.categories = [];
+				var query = "SELECT category_id, category_name, category_img FROM Category";
+		        $cordovaSQLite.execute(db, query).then(function(res) {
+		            if(res.rows.length > 0) {
+		                // console.log("SELECTED -> " + res.rows.item(0).recipe_name + " " + res.rows.item(0).recipe_desc);
+		         		console.log('list of category');
+		            	for (var i = 0; i < res.rows.length; i++) {
+		            		
+		            		$rootScope.categories[i] = res.rows.item(i);
+		            		console.log($rootScope.categories[i].category_name);
+
+		            	};
+		            	
+		            } else {
+		                console.log("No results found");
+		            }
+		        }, function (err) {
+		            console.error(err);
+		        });
+
+		}
+
+
+
+		
+
 	}, false);
 
-	// var offlineDb = new loki('favorites.json');
-	// var favorites = offlineDb.addCollection('favorites');
-	// favorites.insert({name:'Sisig'});
-	// favorites.insert({name:'Kare kares'});
-	// favorites.insert({name:'Bicol express'});
 
-	// offlineDb.saveDatabase();
-	
 	
 
 
@@ -273,6 +265,12 @@ user.controller('userCtrlr',['$scope','$rootScope','$timeout','$filter','$interv
 	
 	$rootScope.i = getRandomNumber(6);
 
+	$rootScope.refreshData = function() {
+		$scope.isLoadingMostViewed = true;
+		$scope.isLoadingTopRated = true;
+		$scope.isLoadingRecent = true;
+		refreshData();
+	}
 	refreshData();
 
 	function refreshData()
@@ -284,18 +282,23 @@ user.controller('userCtrlr',['$scope','$rootScope','$timeout','$filter','$interv
 		recipeService.query().$promise.then(function(recipes){
 			$rootScope.recipes = recipes;
 			$scope.isLoadingRecent= false;
+			// $scope.isLoadingMostViewed = false;
+			$scope.isLoadingTopRated = false;
 		});
 
 		recipeService.most_viewed().$promise.then(function(most_viewed){
 			$rootScope.most_viewed = most_viewed;
 			$scope.isLoadingMostViewed = false;
 		});
+
+		console.log('refreshing data');
 		
-		recipeService.top_rated().$promise.then(function(top_rated){
-			$rootScope.top_rated = top_rated;
-			$scope.isLoadingTopRated = false;
-		});
+		// recipeService.top_rated().$promise.then(function(top_rated){
+		// 	$rootScope.top_rated = top_rated;
+		// 	$scope.isLoadingTopRated = false;
+		// });
 	};
+
 
 	function refreshRecipes()
 	{
@@ -477,7 +480,11 @@ user.controller('userCtrlr',['$scope','$rootScope','$timeout','$filter','$interv
            	}
 
           }, function(err) {
-            // alert(JSON.stringify(err.response));
+          		addRecipeModal.hide();
+            	ons.notification.alert({
+			      message: 'Something went wrong! Please try again'
+			    });
+
           }, function (progress) {
           		$timeout(function () {
 		          $scope.uploadRecipeImgProgress = Math.round((progress.loaded / progress.total) * 100);
@@ -709,7 +716,7 @@ user.controller('userCtrlr',['$scope','$rootScope','$timeout','$filter','$interv
 	
 
 	$rootScope.goToLogin = function() {
-		$cordovaSQLite.deleteDB("my.db");
+		// $cordovaSQLite.deleteDB("my.db");
 		logoutModal.show();
 		$timeout(function(){
 			localStorage.removeItem('user');
@@ -763,19 +770,22 @@ user.controller('userCtrlr',['$scope','$rootScope','$timeout','$filter','$interv
 	}
 
 	$rootScope.addRatingReview = function(userRating,review,recipe_id) {
+		ratingReviewDialog.hide();
+		addReviewRatingModal.show();
 		console.log(userRating + ' ' + recipe_id);
 		$scope.ratingReview = {
 			recipe_id: recipe_id,
 			username: localStorage.getItem('user'),
 			rating: userRating,
 			review_content: review,
-			date_reviewed: moment().format('YYYY-MM-DD HH:mm:ss')
+			date_reviewed: moment().format('YYYY-MM-DD HH:mm:ss'),
 		};
 		console.log($scope.ratingReview);
 		userService.addRatingReview({},$scope.ratingReview).$promise.then(function(response){
 			console.log(response);
 			refreshRatedRecipe(recipe_id);
-			ratingReviewDialog.hide();
+			
+			addReviewRatingModal.hide();
 			$rootScope.userRating = 0;
 		});
 
@@ -813,6 +823,7 @@ user.controller('userCtrlr',['$scope','$rootScope','$timeout','$filter','$interv
 
 	function refreshRatingReviews(recipe_id)
 	{
+		$rootScope.recipeReviews = [];
 		recipeService.view({id: recipe_id, content: 'reviews'}).$promise.then(function(reviews){
 			$rootScope.recipeReviews = reviews;
 			if(findIndex(reviews,'username',$rootScope.loggedUsername) != null)
@@ -882,6 +893,8 @@ user.controller('userCtrlr',['$scope','$rootScope','$timeout','$filter','$interv
 	}
 
 	$rootScope.updateReviewRating = function(review) {
+		ratingReviewDialog.hide();
+		updateReviewRatingModal.show();
 		$scope.editReviewRatingInfo = {
 			rating: $rootScope.userRating,
 			review_content: review,
@@ -890,12 +903,13 @@ user.controller('userCtrlr',['$scope','$rootScope','$timeout','$filter','$interv
 		};
 
 		console.log($scope.editReviewRatingInfo);
-		
+		editDeleteReviewPopOver.hide();
 		userService.updateReviewRating({id: $rootScope.editUserReviewId},$scope.editReviewRatingInfo).$promise.then(function(response){
 			console.log(response);
+			
 			refreshRatedRecipe($rootScope.view_recipe_id);
-			ratingReviewDialog.hide();
-			editDeleteReviewPopOver.hide();
+			updateReviewRatingModal.hide();
+		
 		});
 
 
@@ -965,6 +979,17 @@ user.controller('userCtrlr',['$scope','$rootScope','$timeout','$filter','$interv
 
 			refreshUserReplies(review);
 		});
+	}
+
+
+	$rootScope.showEditDeleteReply = function(reply_id,reply_content) {
+		ons.createPopover(userViewUrl + 'editDeleteReply.html').then(function(editpopover){
+			$rootScope.editUserRating = rating;
+			$rootScope.editUserReview = review;
+			$rootScope.editUserReviewId = review_id;
+			editpopover.show('#editDeleteReply');
+		});
+		console.log('fckasd');
 	}
 
 
@@ -1461,6 +1486,137 @@ user.controller('userCtrlr',['$scope','$rootScope','$timeout','$filter','$interv
 			return 0;
 		}
 	}
-	
 
+	$rootScope.goToMapView = function(recipe) {
+		$rootScope.recipe_map = recipe;
+		
+		nav.pushPage(userViewUrl + 'offline/recipe/mapview.html');
+		
+	}
+
+	
+	$rootScope.goToProvinceRecipesList = function(province) {
+		$rootScope.province_name = province;
+		nav.pushPage(rootViewUrl + 'provinceRecipeList.html');
+	}
+
+	$rootScope.goToRegionRecipesList = function(region) {
+		$rootScope.region_name = region;
+		nav.pushPage(rootViewUrl + 'regionRecipeList.html');
+	}
+
+}]);
+
+
+
+
+
+
+user.controller('mapCtrl',['$scope','$rootScope','$timeout',function($scope,$rootScope,$timeout){
+
+	$rootScope.backToRecipeView = function() {
+		nav.popPage();
+		 $('.page__background').not('.page--menu-page__background').css('background-color', 'transparent');
+		 $('#menu-page').css('background', '#333834 !important');
+		 $rootScope.map.clear();
+         $rootScope.map.remove();
+         $('.gmap_div:not(:last)').remove();
+         // $rootScope.map = '';
+	}
+	
+	 $rootScope.initMap = function() {
+	        $('.page__background').not('.page--menu-page__background').css('background-color', 'transparent');
+	        $('#menu-page').css('background', '#333834 !important');
+	        if($rootScope.map) {
+	            $rootScope.map.clear();
+	            $rootScope.map.remove();
+	            $('.gmap_div:not(:last)').remove();
+	            $rootScope.map = '';
+	        }
+	        const PH = new plugin.google.maps.LatLng(13.000,122.0000);
+	        $timeout(function(){
+	            var div = document.getElementById("map_canvas");
+	            $rootScope.map = plugin.google.maps.Map.getMap(div,{
+	                    'backgroundColor': '#f9f9f9',
+	                    'mapType': plugin.google.maps.MapTypeId.ROADMAP,
+	                    'controls': {
+	                    'compass': true,
+	                    'myLocationButton': false,
+	                    'indoorPicker': false,
+	                    'zoom': true
+	                },
+	                    'gestures': {
+	                    'scroll': true,
+	                    'tilt': true,
+	                    'rotate': true
+	                },
+	                	'camera': {
+	                	'latLng': PH,
+	                	'zoom': 5
+	                }
+	            });
+	            $rootScope.map.setDebuggable(true);
+	            $rootScope.map.on(plugin.google.maps.event.MAP_READY, function(map){
+	            
+					recipelat = findCoor($rootScope.provinces,'name',$rootScope.recipe_map.province,'lat');
+					recipelng = findCoor($rootScope.provinces,'name',$rootScope.recipe_map.province,'lng');
+				    console.log(recipelat + ' ' + recipelng);
+	                const recipeCoor = new plugin.google.maps.LatLng(recipelat,recipelng);
+	                map.addMarker({
+					      'position': recipeCoor,
+					       icon: '#169216',
+					      'title': $rootScope.recipe_map.recipe_name,
+					      'snippet': $rootScope.recipe_map.recipe_desc,
+					      'styles' : {
+							    'font-weight': 'bold'},
+						  'infoClick': function(marker) {
+						    	
+						  } 
+					    }, function(marker) {
+
+					      map.animateCamera({
+					        'target': recipeCoor,
+					        'zoom': 8,
+					        'duration': 3000
+					      }, function() {
+					        marker.showInfoWindow();
+					      }); // anime camera
+
+					}); // add marker
+
+	              
+				
+
+				
+	              
+
+
+	            }); // on map ready
+	        }, 600, false);
+	    } 
+
+
+
+    ons.ready(function(){console.log('Map onsen ready');
+        $rootScope.initMap();
+    });
+
+    function findCoor(arraytosearch, key, valuetosearch,coor) {
+ 
+		for (var i = 0; i < arraytosearch.length; i++) {
+	 
+			if (arraytosearch[i][key] == valuetosearch) {
+				return arraytosearch[i][coor];
+			}
+		}
+		return null;
+	}
+
+
+
+
+
+
+
+		
 }]);
